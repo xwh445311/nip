@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.bus.todotask.mapper.TsTodoTaskInfoMapper">
+	<resultMap type="com.efs.bus.todotask.mapper.TsTodoTaskInfo" id="TsTodoTaskInfo">
+		<result property="mainTitle" column="MAIN_TITLE"/>
+		<result property="ttTitle" column="TT_TITLE"/>
+		<result property="ttLvl" column="TT_LVL"/>
+		<result property="ttUrl" column="TT_URL"/>
+	</resultMap>
+	
+	<select id="listTsTodoTaskInfo" resultMap="TsTodoTaskInfo" parameterType="map">
+
+		SELECT '【系统管理】' AS MAIN_TITLE,'系统学期日历还未设置，请马上设置，否则影像系统使用' AS TT_TITLE, 'danger' AS TT_LVL,
+            '/edu/semesterCal/gotoBaseSemesterCalPage.do' AS TT_URL
+             WHERE DBO.FUN_GET_TERMCODE(NULL) IS NULL
+            AND EXISTS(
+                SELECT 1 FROM TS_USER_ROLE_INFO T1 LEFT JOIN TS_ROLE_FUNC_INFO T2
+                ON T1.UR_ROLE_ID = T2.RF_ROLE_ID
+                WHERE T1.UR_USER_ID=#{userId} AND T2.RF_FUNC_ID='MU000076'
+            )
+
+		UNION ALL
+
+		SELECT '【系统管理】' AS MAIN_TITLE, DBO.FUN_GET_TERMNAME(DBO.FUN_GET_TERMCODE(NULL)) + ' 季学期基础信息还未设置，请马上设置，否则将影响系统正常使用' AS TT_TITLE, 'danger' AS TT_LVL,
+            '/edu/baseset/gotoBaseSetInfoPage.do' AS TT_URL
+             WHERE NOT EXISTS(
+				SELECT 1 FROM BASE_SET_INFO T WHERE T.BS_TERM = DBO.FUN_GET_TERMCODE(NULL)
+				AND DBO.FUN_GET_TERMCODE(NULL) IS NOT NULL
+			 )
+            AND EXISTS(
+                SELECT 1 FROM TS_USER_ROLE_INFO T1 LEFT JOIN TS_ROLE_FUNC_INFO T2
+                ON T1.UR_ROLE_ID = T2.RF_ROLE_ID
+                WHERE T1.UR_USER_ID=#{userId} AND T2.RF_FUNC_ID='MU000130'
+            )
+
+        UNION ALL
+
+		SELECT DISTINCT '【教务处】' AS MAIN_TITLE, '你有' + (SELECT CONVERT(VARCHAR(5), COUNT(1))
+                 FROM EDU_TEAPLAN_INFO T
+                WHERE T.TI_CHECKED_USER = #{userId}
+                  AND T.TI_STATUS = '0') + '份教案需要提交，请尽快处理' AS TT_TITLE,
+       'warning' AS TT_LVL,
+       '/edu/teaplan/gotoMyTeachPlan.do' AS TT_URL WHERE EXISTS (SELECT 1
+                                    FROM EDU_TEAPLAN_INFO T
+                                   WHERE T.TI_CHECKED_USER = #{userId}
+                                     AND T.TI_STATUS = '0')
+        UNION ALL
+
+        SELECT DISTINCT '【图书室】' AS MAIN_TITLE,
+                '你有' + (SELECT CONVERT(VARCHAR(5), COUNT(1))
+                          FROM LIB_IN_SEND_INFO T1
+                         WHERE T1.IS_USER_ID = #{userId}  AND T1.IS_SEND_STATUS IN ('01','02')
+                           AND DBO.FUN_USER_SEND_BOOK_DATE(T1.IS_USER_ID,
+                                                           T1.IS_START_DATE,
+                                                           '4',
+                                                           T1.IS_SEND_STATUS,
+                                                           T1.IS_BACK_DATE) > 0) +
+                '本图书已经超期，请及时归还，以免影响后续借阅' AS TT_TITLE,
+                'warning' AS TT_LVL,
+                '/lib/booksend/gotoUserAllSendInfo.do' AS TT_URL
+          FROM LIB_IN_SEND_INFO T
+         WHERE T.IS_USER_ID = #{userId}
+           AND EXISTS (SELECT 1
+                  FROM LIB_IN_SEND_INFO T1
+                 WHERE T1.IS_USER_ID = #{userId} AND T1.IS_SEND_STATUS IN ('01','02')
+                   AND DBO.FUN_USER_SEND_BOOK_DATE(T1.IS_USER_ID,
+                                                   T1.IS_START_DATE,
+                                                   '4',
+                                                   T1.IS_SEND_STATUS,
+                                                   T1.IS_BACK_DATE) > 0)
+         UNION ALL
+
+         SELECT DISTINCT '【图书室】' AS MAIN_TITLE,
+                '你有' + (SELECT CONVERT(VARCHAR(5), COUNT(1))
+                          FROM LIB_IN_SEND_INFO T1
+                         WHERE T1.IS_USER_ID = #{userId}  AND T1.IS_SEND_STATUS IN ('01','02')
+                           AND DBO.FUN_USER_SEND_BOOK_DATE(T1.IS_USER_ID,
+                                                           T1.IS_START_DATE,
+                                                           '4',
+                                                           T1.IS_SEND_STATUS,
+                                                           T1.IS_BACK_DATE) BETWEEN -2 AND 0) +
+                '本图书即将到期，请及时归还' AS TT_TITLE,
+                'success' AS TT_LVL,
+                '/lib/booksend/gotoUserAllSendInfo.do' AS TT_URL
+          FROM LIB_IN_SEND_INFO T
+         WHERE T.IS_USER_ID = #{userId}
+           AND EXISTS (SELECT 1
+                  FROM LIB_IN_SEND_INFO T1
+                 WHERE T1.IS_USER_ID = #{userId} AND T1.IS_SEND_STATUS IN ('01','02')
+                   AND DBO.FUN_USER_SEND_BOOK_DATE(T1.IS_USER_ID,
+                                                   T1.IS_START_DATE,
+                                                   '4',
+                                                   T1.IS_SEND_STATUS,
+                                                   T1.IS_BACK_DATE) BETWEEN -2 AND 0)
+	</select>
+</mapper>

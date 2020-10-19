@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.bus.office.message.mapper.TsMessageInfoMapper">
+	<resultMap type="com.efs.bus.office.message.mapper.TsMessageInfo" id="TsMessageInfo">
+		<id property="miCode" column="MI_CODE"/>
+		<result property="miIssueDept" column="MI_ISSUE_DEPT"/>
+		<result property="miIssueDeptNm" column="MI_ISSUE_DEPT_NM"/>
+		<result property="miIssueUser" column="MI_ISSUE_USER"/>
+		<result property="miIssueUserNm" column="MI_ISSUE_USER_NM"/>
+		<result property="miType" column="MI_TYPE"/>
+		<result property="miTitle" column="MI_TITLE"/>
+		<result property="miContent" column="MI_CONTENT"/>
+		<result property="miLvl" column="MI_LVL"/>
+		<result property="miLvlNm" column="MI_LVL_NM"/>
+		<result property="miFileIds" column="MI_FILE_IDS"/>
+		<result property="miIssueDate" column="MI_ISSUE_DATE"/>
+		<result property="miIssueTime" column="MI_ISSUE_TIME"/>
+	</resultMap>
+	
+	<select id="getTsMessageInfo" resultMap="TsMessageInfo" parameterType="string">
+		select T.*
+		,DBO.FUN_GET_DB_PARAMVAL('TS_MESSAGE_LVL',MI_LVL) AS MI_LVL_NM
+		,T1.OI_NAME AS MI_ISSUE_DEPT_NM
+		from TS_MESSAGE_INFO T
+		LEFT JOIN TS_ORG_INFO T1 ON T.MI_ISSUE_DEPT = T1.OI_CODE
+		where T.MI_CODE = #{miCode}
+	</select>
+	
+	<insert id="addTsMessageInfo" parameterType="com.efs.bus.office.message.mapper.TsMessageInfo">
+		insert into TS_MESSAGE_INFO(
+
+			MI_ISSUE_DEPT
+			,
+		
+			MI_ISSUE_USER
+			,
+		
+			MI_TYPE
+			,
+		
+			MI_TITLE
+			,
+		
+			MI_CONTENT
+			,
+		
+			MI_LVL
+			,
+		
+			MI_FILE_IDS
+			,
+		
+			MI_ISSUE_DATE
+			,
+		
+			MI_ISSUE_TIME
+			)
+			values(
+					#{miIssueDept}
+					,
+					#{miIssueUser}
+					,
+					#{miType}
+					,
+					#{miTitle}
+					,
+					#{miContent}
+					,
+					#{miLvl}
+					,
+					#{miFileIds}
+					,
+					#{miIssueDate}
+					,
+					#{miIssueTime}
+		)
+	</insert>
+	
+	<update id="updateTsMessageInfo" parameterType="com.efs.bus.office.message.mapper.TsMessageInfo">
+		UPDATE TS_MESSAGE_INFO
+		   SET 
+			   MI_ISSUE_DEPT = #{miIssueDept}
+				,
+			   MI_TYPE = #{miType}
+				,
+			   MI_TITLE = #{miTitle}
+				,
+			   MI_CONTENT = #{miContent}
+				,
+			   MI_LVL = #{miLvl}
+				<if test="delFile == 'Y'.toString()">
+				,
+				MI_FILE_IDS = #{miFileIds}
+				</if>
+				,
+			   MI_ISSUE_DATE = #{miIssueDate}
+				,
+			   MI_ISSUE_TIME = #{miIssueTime}
+		 WHERE MI_CODE = #{miCode} AND MI_ISSUE_USER = #{miIssueUser}
+	</update>
+	
+	<delete id="deleteTsMessageInfo"  parameterType="string">
+		delete from TS_MESSAGE_INFO where MI_CODE = #{miCode}
+	</delete>
+	
+	<select id="listTsMessageInfo" resultMap="TsMessageInfo" parameterType="com.efs.bus.office.message.mapper.TsMessageInfo">
+			SELECT T.MI_CODE
+				,T.MI_ISSUE_DEPT
+				,T.MI_ISSUE_USER
+				,T.MI_ISSUE_USER_NM
+				,T.MI_TYPE
+				,T.MI_TITLE
+				,T.MI_LVL
+				,T.MI_FILE_IDS
+				,T.MI_ISSUE_DATE
+				,T.MI_ISSUE_TIME
+				,FUNC_GET_DB_PARAM('TS_MESSAGE_LVL',MI_LVL) AS MI_LVL_NM
+				,T1.OI_NAME AS MI_ISSUE_DEPT_NM
+			FROM TS_MESSAGE_INFO T
+			LEFT JOIN TS_ORG_INFO T1 ON T.MI_ISSUE_DEPT = T1.OI_CODE
+			where 1=1
+
+			<if test="userType =='2'.toString()">
+				and T.MI_TYPE = '02'
+			</if>
+		
+			<if test="miIssueDept != null and miIssueDept != ''">
+				and T.MI_ISSUE_DEPT = #{miIssueDept}
+			</if>
+			<if test="miIssueUser != null and miIssueUser != ''">
+				and T.MI_ISSUE_USER = #{miIssueUser}
+			</if>
+			<if test="miIssueUserNm != null and miIssueUserNm != ''">
+				and T.MI_ISSUE_USER_NM = #{miIssueUserNm}
+			</if>
+			<if test="miTitle != null and miTitle != ''">
+				and T.MI_TITLE = #{miTitle}
+			</if>
+			<if test="miContent != null and miContent != ''">
+				and T.MI_CONTENT = #{miContent}
+			</if>
+			<if test="miLvl != null and miLvl != ''">
+				and T.MI_LVL = #{miLvl}
+			</if>
+			<if test="miFileIds != null and miFileIds != ''">
+				and T.MI_FILE_IDS = #{miFileIds}
+			</if>
+			<if test="miIssueDate != null and miIssueDate != ''">
+				and T.MI_ISSUE_DATE = #{miIssueDate}
+			</if>
+			<if test="miIssueTime != null and miIssueTime != ''">
+				and T.MI_ISSUE_TIME = #{miIssueTime}
+			</if>
+		
+		ORDER BY MI_CODE
+	</select>
+
+	<select id="listMyMessage" resultMap="TsMessageInfo"  parameterType="map">
+		SELECT
+		 T.MI_CODE
+		,T.MI_ISSUE_DEPT
+		,T.MI_ISSUE_USER
+		,T.MI_ISSUE_USER_NM
+		,T.MI_TYPE
+		,T.MI_TITLE
+		,T.MI_LVL
+		,T.MI_FILE_IDS
+		,T.MI_ISSUE_DATE
+		,T.MI_ISSUE_TIME
+		,FUNC_GET_DB_PARAM('TS_MESSAGE_LVL',MI_LVL) AS MI_LVL_NM
+		,T1.OI_NAME AS MI_ISSUE_DEPT_NM
+		FROM TS_MESSAGE_INFO T
+		LEFT JOIN TS_ORG_INFO T1 ON T.MI_ISSUE_DEPT = T1.OI_CODE
+		where 1=1
+
+		<if test="userType =='2'.toString()">
+			and T.MI_TYPE = '02'
+		</if>
+
+		<if test="showType == '1'.toString()">
+			AND ROWNUM &lt;= 10
+		</if>
+
+		ORDER BY MI_ISSUE_DATE DESC, MI_ISSUE_TIME DESC
+	</select>
+
+	<select id="checkUserIssueMessage" parameterType="map" resultType="int">
+		SELECT COUNT(1) AS CNT FROM TS_MESSAGE_INFO T WHERE T.MI_CODE=#{miCode} AND T.MI_ISSUE_USER=#{userId}
+	</select>
+</mapper>

@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.bus.edu.scorerecord.mapper.EduRecordInfoMapper">
+	<cache/>
+	<resultMap type="com.efs.bus.edu.scorerecord.mapper.EduRecordInfo" id="EduRecordInfo">
+		<id property="riId" column="RI_ID"/>
+		<result property="riTerm" column="RI_TERM"/>
+		<result property="riTermName" column="RI_TERM_NAME"/>
+		<result property="riMidTerm" column="RI_MID_TERM"/>
+		<result property="riClass" column="RI_CLASS"/>
+		<result property="riClassName" column="RI_CLASS_NAME"/>
+		<result property="riStuId" column="RI_STU_ID"/>
+		<result property="riStuName" column="RI_STU_NAME"/>
+		<result property="riTestId" column="RI_TEST_ID"/>
+		<result property="riYw" column="RI_YW"/>
+		<result property="riSx" column="RI_SX"/>
+		<result property="riEng" column="RI_ENG"/>
+		<result property="riKx" column="RI_KX"/>
+		<result property="riPs" column="RI_PS"/>
+		<result property="riMs" column="RI_MS"/>
+		<result property="riMus" column="RI_MUS"/>
+		<result property="riTy" column="RI_TY"/>
+		<result property="riZj" column="RI_ZJ"/>
+		<result property="riTot" column="RI_TOT"/>
+        <result property="riYwChg" column="RI_YW_CHG"/>
+        <result property="riSxChg" column="RI_SX_CHG"/>
+        <result property="riEngChg" column="RI_ENG_CHG"/>
+        <result property="riKxChg" column="RI_KX_CHG"/>
+        <result property="riPsChg" column="RI_PS_CHG"/>
+		<result property="riClassRan" column="RI_CLASS_RAN"/>
+		<result property="riClassRanChg" column="RI_CLASS_RAN_CHG"/>
+		<result property="riYwClsRan" column="RI_YW_CLS_RAN"/>
+		<result property="riYwClsRanChg" column="RI_YW_CLS_RAN_CHG"/>
+		<result property="riSxClsRan" column="RI_SX_CLS_RAN"/>
+		<result property="riSxClsRanChg" column="RI_SX_CLS_RAN_CHG"/>
+		<result property="riEngClsRan" column="RI_ENG_CLS_RAN"/>
+		<result property="riEngClsRanChg" column="RI_ENG_CLS_RAN_CHG"/>
+		<result property="riKxClsRan" column="RI_KX_CLS_RAN"/>
+		<result property="riKxClsRanChg" column="RI_KX_CLS_RAN_CHG"/>
+		<result property="riPsClsRan" column="RI_PS_CLS_RAN"/>
+		<result property="riPsClsRanChg" column="RI_PS_CLS_RAN_CHG"/>
+		<result property="riGradeRan2" column="RI_GRADE_RAN2"/>
+		<result property="riGradeRanChg2" column="RI_GRADE_RAN_CHG2"/>
+		<result property="riYwGraRan2" column="RI_YW_GRA_RAN2"/>
+		<result property="riYwGraRanChg2" column="RI_YW_GRA_RAN_CHG2"/>
+		<result property="riSxGraRan2" column="RI_SX_GRA_RAN2"/>
+		<result property="riSxGraRanChg2" column="RI_SX_GRA_RAN_CHG2"/>
+		<result property="riEngGraRan2" column="RI_ENG_GRA_RAN2"/>
+		<result property="riEngGraRanChg2" column="RI_ENG_GRA_RAN_CHG2"/>
+		<result property="riKxGraRan2" column="RI_KX_GRA_RAN2"/>
+		<result property="riKxGraRanChg2" column="RI_KX_GRA_RAN_CHG2"/>
+		<result property="riPsGraRan2" column="RI_PS_GRA_RAN2"/>
+		<result property="riPsGraRanChg2" column="RI_PS_GRA_RAN_CHG2"/>
+		<result property="riConEval" column="RI_CON_EVAL"/>
+		<result property="riGenEval" column="RI_GEN_EVAL"/>
+		<result property="riLeaderCommon" column="RI_LEADER_COMMON"/>
+		<result property="riCommonUserId" column="RI_COMMON_USER_ID"/>
+		<result property="riCommonUserName" column="RI_COMMON_USER_NAME"/>
+		<result property="riCommonDate" column="RI_COMMON_DATE"/>
+		<result property="riCommonTime" column="RI_COMMON_TIME"/>
+		<result property="hasCommon" column="HAS_COMMON"/>
+		<result property="addDate" column="ADD_DATE"/>
+		<result property="addTime" column="ADD_TIME"/>
+		<result property="addUser" column="ADD_USER"/>
+		<result property="addUserName" column="ADD_USER_NAME"/>
+		<result property="updDate" column="UPD_DATE"/>
+		<result property="updTime" column="UPD_TIME"/>
+		<result property="updUser" column="UPD_USER"/>
+		<result property="updUserName" column="UPD_USER_NAME"/>
+	</resultMap>
+	
+	<select id="getEduRecordInfo" resultMap="EduRecordInfo" parameterType="string">
+		select * from EDU_RECORD_INFO where RI_ID = #{riId}
+	</select>
+	
+	<insert id="addEduRecordInfo" parameterType="map">
+		<foreach collection="dataList" item="it" separator=";" close=";">
+		insert into EDU_RECORD_INFO(
+			RI_TERM
+			,
+			RI_MID_TERM
+			,
+		
+			RI_CLASS
+			,
+		
+		
+			RI_STU_ID
+			,
+			RI_STU_NAME
+			,
+			RI_TEST_ID
+			,
+		
+			RI_YW
+			,
+		
+			RI_SX
+			,
+		
+			RI_ENG
+			,
+		
+			RI_KX
+			,
+		
+			RI_PS
+			,
+		
+			RI_MS
+			,
+		
+			RI_MUS
+			,
+		
+			RI_TY
+			,
+		
+			RI_ZJ
+			,
+			RI_CLASS_RAN
+			,
+		
+			RI_CLASS_RAN_CHG
+			,
+		
+			RI_YW_CLS_RAN
+			,
+		
+			RI_YW_CLS_RAN_CHG
+			,
+		
+			RI_SX_CLS_RAN
+			,
+		
+			RI_SX_CLS_RAN_CHG
+			,
+		
+			RI_ENG_CLS_RAN
+			,
+		
+			RI_ENG_CLS_RAN_CHG
+			,
+		
+			RI_KX_CLS_RAN
+			,
+		
+			RI_KX_CLS_RAN_CHG
+			,
+		
+			RI_PS_CLS_RAN
+			,
+		
+			RI_PS_CLS_RAN_CHG
+			,
+		
+			RI_GRADE_RAN2
+			,
+		
+			RI_GRADE_RAN_CHG2
+			,
+		
+			RI_YW_GRA_RAN2
+			,
+		
+			RI_YW_GRA_RAN_CHG2
+			,
+		
+			RI_SX_GRA_RAN2
+			,
+		
+			RI_SX_GRA_RAN_CHG2
+			,
+		
+			RI_ENG_GRA_RAN2
+			,
+		
+			RI_ENG_GRA_RAN_CHG2
+			,
+		
+			RI_KX_GRA_RAN2
+			,
+		
+			RI_KX_GRA_RAN_CHG2
+			,
+		
+			RI_PS_GRA_RAN2
+			,
+		
+			RI_PS_GRA_RAN_CHG2
+			,
+		
+			RI_CON_EVAL
+			,
+		
+			RI_GEN_EVAL
+			,
+		
+			RI_LEADER_COMMON
+			,
+		
+			RI_COMMON_USER_ID
+			,
+		
+		
+			RI_COMMON_DATE
+			,
+		
+			RI_COMMON_TIME
+			,
+		
+			ADD_DATE
+			,
+		
+			ADD_TIME
+			,
+		
+			ADD_USER
+			,
+		
+			ADD_USER_NAME
+			,
+		
+			UPD_DATE
+			,
+		
+			UPD_TIME
+			,
+		
+			UPD_USER
+			,
+		
+			UPD_USER_NAME
+			)
+			values(
+				#{paramBean.riTerm}
+				,
+				#{paramBean.riMidTerm}
+				,
+				#{paramBean.riClass}
+				,
+				#{it.riStuId}
+				,
+				#{it.riStuName}
+				,
+				#{it.riTestId}
+				,
+				#{it.riYw}
+				,
+				#{it.riSx}
+				,
+				#{it.riEng}
+				,
+				#{it.riKx}
+				,
+				#{it.riPs}
+				,
+				#{it.riMs}
+				,
+				#{it.riMus}
+				,
+				#{it.riTy}
+				,
+				#{it.riZj}
+				,
+				#{it.riClassRan}
+				,
+				#{it.riClassRanChg}
+				,
+				#{it.riYwClsRan}
+				,
+				#{it.riYwClsRanChg}
+				,
+				#{it.riSxClsRan}
+				,
+				#{it.riSxClsRanChg}
+				,
+				#{it.riEngClsRan}
+				,
+				#{it.riEngClsRanChg}
+				,
+				#{it.riKxClsRan}
+				,
+				#{it.riKxClsRanChg}
+				,
+				#{it.riPsClsRan}
+				,
+				#{it.riPsClsRanChg}
+				,
+				#{it.riGradeRan2}
+				,
+				#{it.riGradeRanChg2}
+				,
+				#{it.riYwGraRan2}
+				,
+				#{it.riYwGraRanChg2}
+				,
+				#{it.riSxGraRan2}
+				,
+				#{it.riSxGraRanChg2}
+				,
+				#{it.riEngGraRan2}
+				,
+				#{it.riEngGraRanChg2}
+				,
+				#{it.riKxGraRan2}
+				,
+				#{it.riKxGraRanChg2}
+				,
+				#{it.riPsGraRan2}
+				,
+				#{it.riPsGraRanChg2}
+				,
+				#{it.riConEval}
+				,
+				#{it.riGenEval}
+				,
+				#{it.riLeaderCommon}
+				,
+				#{it.riCommonUserId}
+				,
+				#{it.riCommonDate}
+				,
+				#{it.riCommonTime}
+				,
+				#{paramBean.addDate}
+				,
+				#{paramBean.addTime}
+				,
+				#{paramBean.addUser}
+				,
+				#{paramBean.addUserName}
+				,
+				#{paramBean.updDate}
+				,
+				#{paramBean.updTime}
+				,
+				#{paramBean.updUser}
+				,
+				#{paramBean.updUserName}
+		)
+
+		</foreach>
+	</insert>
+	
+	<update id="updateEduRecordInfo" parameterType="com.efs.bus.edu.scorerecord.mapper.EduRecordInfo">
+		UPDATE EDU_RECORD_INFO
+		   SET 
+			   RI_TERM = #{riTerm}
+				,
+			   RI_MID_TERM = #{riMidTerm}
+				,
+			   RI_CLASS = #{riClass}
+				,
+			   RI_STU_ID = #{riStuId}
+				,
+			   RI_TEST_ID = #{riTestId}
+				,
+			   RI_YW = #{riYw}
+				,
+			   RI_SX = #{riSx}
+				,
+			   RI_ENG = #{riEng}
+				,
+			   RI_KX = #{riKx}
+				,
+			   RI_PS = #{riPs}
+				,
+			   RI_MS = #{riMs}
+				,
+			   RI_MUS = #{riMus}
+				,
+			   RI_TY = #{riTy}
+				,
+			   RI_ZJ = #{riZj}
+				,
+			   RI_TOT = #{riTot}
+				,
+			   RI_CLASS_RAN = #{riClassRan}
+				,
+			   RI_CLASS_RAN_CHG = #{riClassRanChg}
+				,
+			   RI_YW_CLS_RAN = #{riYwClsRan}
+				,
+			   RI_YW_CLS_RAN_CHG = #{riYwClsRanChg}
+				,
+			   RI_SX_CLS_RAN = #{riSxClsRan}
+				,
+			   RI_SX_CLS_RAN_CHG = #{riSxClsRanChg}
+				,
+			   RI_ENG_CLS_RAN = #{riEngClsRan}
+				,
+			   RI_ENG_CLS_RAN_CHG = #{riEngClsRanChg}
+				,
+			   RI_KX_CLS_RAN = #{riKxClsRan}
+				,
+			   RI_KX_CLS_RAN_CHG = #{riKxClsRanChg}
+				,
+			   RI_PS_CLS_RAN = #{riPsClsRan}
+				,
+			   RI_PS_CLS_RAN_CHG = #{riPsClsRanChg}
+				,
+			   RI_GRADE_RAN2 = #{riGradeRan2}
+				,
+			   RI_GRADE_RAN_CHG2 = #{riGradeRanChg2}
+				,
+			   RI_YW_GRA_RAN2 = #{riYwGraRan2}
+				,
+			   RI_YW_GRA_RAN_CHG2 = #{riYwGraRanChg2}
+				,
+			   RI_SX_GRA_RAN2 = #{riSxGraRan2}
+				,
+			   RI_SX_GRA_RAN_CHG2 = #{riSxGraRanChg2}
+				,
+			   RI_ENG_GRA_RAN2 = #{riEngGraRan2}
+				,
+			   RI_ENG_GRA_RAN_CHG2 = #{riEngGraRanChg2}
+				,
+			   RI_KX_GRA_RAN2 = #{riKxGraRan2}
+				,
+			   RI_KX_GRA_RAN_CHG2 = #{riKxGraRanChg2}
+				,
+			   RI_PS_GRA_RAN2 = #{riPsGraRan2}
+				,
+			   RI_PS_GRA_RAN_CHG2 = #{riPsGraRanChg2}
+				,
+			   RI_CON_EVAL = #{riConEval}
+				,
+			   RI_GEN_EVAL = #{riGenEval}
+				,
+			   RI_LEADER_COMMON = #{riLeaderCommon}
+				,
+			   RI_COMMON_USER_ID = #{riCommonUserId}
+				,
+			   RI_COMMON_DATE = #{riCommonDate}
+				,
+			   RI_COMMON_TIME = #{riCommonTime}
+				,
+			   ADD_DATE = #{addDate}
+				,
+			   ADD_TIME = #{addTime}
+				,
+			   ADD_USER = #{addUser}
+				,
+			   ADD_USER_NAME = #{addUserName}
+				,
+			   UPD_DATE = #{updDate}
+				,
+			   UPD_TIME = #{updTime}
+				,
+			   UPD_USER = #{updUser}
+				,
+			   UPD_USER_NAME = #{updUserName}
+		 WHERE RI_ID = #{riId}
+	</update>
+	
+	<delete id="deleteEduRecordInfo"  parameterType="string">
+		delete from EDU_RECORD_INFO where RI_ID = #{riId}
+	</delete>
+	
+	<select id="listEduRecordInfo" resultMap="EduRecordInfo" parameterType="com.efs.bus.edu.scorerecord.mapper.EduRecordInfo">
+		select T.*,
+		CASE WHEN (T.RI_GEN_EVAL IS NULL OR T.RI_GEN_EVAL='') THEN '0' ELSE '1' END AS HAS_COMMON
+		from EDU_RECORD_INFO T where 1=1
+
+			and T.RI_TERM = #{riTerm}
+			and T.RI_MID_TERM = #{riMidTerm}
+			and T.RI_CLASS = #{riClass}
+
+			<if test="riStuId != null and riStuId != ''">
+				and T.RI_STU_ID = #{riStuId}
+			</if>
+			<if test="riStuName != null and riStuName != ''">
+				and T.RI_STU_NAME = #{riStuName}
+			</if>
+			<if test="riTestId != null and riTestId != ''">
+				and T.RI_TEST_ID = #{riTestId}
+			</if>
+
+		ORDER BY T.RI_TOT DESC,T.RI_ID
+	</select>
+
+	<select id="getRecordCount" parameterType="com.efs.bus.edu.scorerecord.mapper.EduRecordInfo" resultType="int">
+		SELECT COUNT(1) AS CNT FROM EDU_RECORD_INFO T WHERE T.RI_TERM=#{riTerm} AND T.RI_MID_TERM=#{riMidTerm} AND T.RI_CLASS=#{riClass}
+	</select>
+
+	<delete id="deleteEduRecordFromCls" parameterType="com.efs.bus.edu.scorerecord.mapper.EduRecordInfo">
+		DELETE FROM EDU_RECORD_INFO WHERE RI_TERM=#{riTerm} AND RI_MID_TERM=#{riMidTerm} AND RI_CLASS=#{riClass}
+	</delete>
+
+	<select id="getMaxTermAndMid" resultMap="EduRecordInfo">
+		SELECT TOP 1 RI_ID
+		  ,RI_TERM
+		  ,RI_TERM_NAME
+		  ,RI_MID_TERM
+		  ,RI_CLASS
+		  ,RI_CLASS_NAME
+
+	  FROM EDU_RECORD_INFO T ORDER BY T.RI_TERM DESC,T.RI_MID_TERM DESC,T.RI_CLASS
+	</select>
+
+	<select id="updateLeaderCommont" parameterType="com.efs.bus.edu.scorerecord.mapper.EduRecordInfo">
+		UPDATE EDU_RECORD_INFO
+		   SET
+			   RI_GEN_EVAL = #{riGenEval}
+				,
+			   RI_LEADER_COMMON = #{riLeaderCommon}
+				,
+			   RI_COMMON_USER_ID = #{riCommonUserId}
+				,
+			   RI_COMMON_DATE = #{riCommonDate}
+				,
+			   RI_COMMON_TIME = #{riCommonTime}
+		 WHERE RI_ID = #{riId} AND EXISTS(
+			SELECT 1 FROM BASE_SCH_CLASS_INFO T1 WHERE T1.SC_CLASS_CODE= RI_CLASS AND T1.SC_TERM=RI_TERM AND T1.SC_LEADER=#{riCommonUserId}
+			)
+	</select>
+
+	<select id="getStudentRecordTerm" parameterType="string" resultType="string">
+		SELECT (T.RI_TERM_NAME + ' ' + dbo.FUN_GET_DB_PARAMVAL('BASE_MID_TERM',T.RI_MID_TERM)) AS RI_TERM_NAME
+		FROM EDU_RECORD_INFO T WHERE T.RI_STU_ID=#{stuId} ORDER BY T.RI_TERM,T.RI_MID_TERM
+	</select>
+
+	<select id="getStudentScoreRank" parameterType="map" resultType="int">
+		SELECT ISNULL(T.${coursDbCol} ,0) CLASS_RAN
+		FROM EDU_RECORD_INFO T WHERE T.RI_STU_ID=#{stuId} ORDER BY T.RI_TERM,T.RI_MID_TERM
+	</select>
+
+	<select id="listStudentRecordInfo" resultMap="EduRecordInfo" parameterType="com.efs.bus.edu.scorerecord.mapper.EduRecordInfo">
+		select T.*,
+		CASE WHEN (T.RI_GEN_EVAL IS NULL OR T.RI_GEN_EVAL='') THEN '0' ELSE '1' END AS HAS_COMMON
+		from EDU_RECORD_INFO T where 1=1
+
+		<if test="riTerm != null and riTerm != ''">
+			and T.RI_TERM = #{riTerm}
+		</if>
+
+		<if test="riMidTerm != null and riMidTerm != ''">
+		and T.RI_MID_TERM = #{riMidTerm}
+		</if>
+
+		<if test="riClass != null and riClass != ''">
+		and T.RI_CLASS = #{riClass}
+		</if>
+
+		and T.RI_STU_ID = #{riStuId}
+
+		ORDER BY T.RI_TERM DESC,T.RI_MID_TERM DESC
+	</select>
+
+	<select id="listDownClassRecord" resultMap="EduRecordInfo" parameterType="com.efs.bus.edu.scorerecord.mapper.EduRecordInfo">
+		select T.*
+		from EDU_RECORD_INFO T
+		where
+		 	T.RI_TERM = #{riTerm}
+		and T.RI_MID_TERM = #{riMidTerm}
+		and T.RI_CLASS = #{riClass}
+		ORDER BY T.RI_STU_ID
+	</select>
+</mapper>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.example.org/model_salary" 
+	xmlns:tns="http://www.example.org/model_salary"
+	elementFormDefault="qualified">
+	<xs:annotation></xs:annotation>
+
+    <xs:element name="config">
+    	<xs:complexType>
+    		<xs:all>
+    			<xs:element name="desc" minOccurs="0" type="xs:string"/>
+    			<xs:element name="bean" type="xs:string"/>
+    			<xs:element name="startrow" minOccurs="0" type="tns:indexType" default="1"/>
+    			<xs:element name="endrow" minOccurs="0" type="tns:indexType"/>
+    			<xs:element name="startcol" minOccurs="0" type="tns:indexType" default="1"/>
+    			<xs:element name="endcol" type="tns:indexType"/>
+    			<xs:element name="endrowcol" minOccurs="0" type="tns:indexType"/>
+    			<xs:element name="skipcol" minOccurs="0">
+    				<xs:simpleType>
+    					<xs:restriction base="xs:string">
+    						<xs:pattern value="[0-9,]+"></xs:pattern>
+    					</xs:restriction>
+    				</xs:simpleType>
+    			</xs:element>
+    			<xs:element name="fields">
+    				<xs:complexType>
+    					<xs:sequence>
+    						<xs:element name="field" maxOccurs="unbounded">
+    							<xs:complexType mixed="true">
+    								<xs:attributeGroup ref="tns:fieldGroup"/>
+    							</xs:complexType>
+    						</xs:element>
+    					</xs:sequence>
+    				</xs:complexType>
+    			</xs:element>
+    		</xs:all>
+    	</xs:complexType>
+    </xs:element>
+    
+    <xs:simpleType name="indexType">
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:attributeGroup name="fieldGroup">
+		<xs:attribute name="inputtype">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="string"/>
+					<xs:enumeration value="number"/>
+					<xs:enumeration value="date"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		
+		<xs:attribute name="format" type="xs:string"/>
+		<xs:attribute name="maxlength" type="xs:integer"/>
+		<xs:attribute name="required" default="true">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="true"/>
+					<xs:enumeration value="false"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="regular" type="xs:string"/>
+		<xs:attribute name="desc" type="xs:string"/>
+		<xs:attribute name="convertHandler" type="xs:string"/>
+	</xs:attributeGroup>
+</xs:schema>

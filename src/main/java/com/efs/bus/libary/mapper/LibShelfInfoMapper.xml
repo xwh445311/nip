@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.bus.libary.mapper.LibShelfInfoMapper">
+	<resultMap type="com.efs.bus.libary.mapper.LibShelfInfo" id="LibShelfInfo">
+		<id property="lsNo" column="LS_NO"/>
+		<result property="lsRowCnt" column="LS_ROW_CNT"/>
+		<result property="lsColCnt" column="LS_COL_CNT"/>
+		<result property="lsMaxBookCnt" column="LS_MAX_BOOK_CNT"/>
+		<result property="lsTotAddCnt" column="LS_TOT_ADD_CNT"/>
+		<result property="lsTotBookCnt" column="LS_TOT_BOOK_CNT"/>
+		<result property="lsUseStatus" column="LS_USE_STATUS"/>
+		<result property="lsStarAddr" column="LS_STAR_ADDR"/>
+		<result property="lsEndAddr" column="LS_END_ADDR"/>
+		<result property="addDate" column="ADD_DATE"/>
+		<result property="addTime" column="ADD_TIME"/>
+		<result property="addUser" column="ADD_USER"/>
+		<result property="updDate" column="UPD_DATE"/>
+		<result property="updTime" column="UPD_TIME"/>
+		<result property="updUser" column="UPD_USER"/>
+
+		<collection property="libShelfAddInfoList" column="LS_NO" javaType="ArrayList"
+					ofType="com.efs.bus.lib.addr.mapper.LibShelfAddInfoMapper.LibShelfAddInfo"
+					select="listShelfAddr"/>
+	</resultMap>
+	
+	<select id="getLibShelfInfo" resultMap="LibShelfInfo" parameterType="string">
+		select T.*,dbo.FUN_CHECK_SHIELF_INUSE(T.LS_NO) AS LS_USE_STATUS from LIB_SHELF_INFO T where LS_NO = #{lsNo}
+	</select>
+	
+	<insert id="addLibShelfInfo" parameterType="com.efs.bus.libary.mapper.LibShelfInfo">
+		insert into LIB_SHELF_INFO(
+		LS_NO
+		,
+		LS_ROW_CNT
+		,
+		LS_COL_CNT
+		,
+		LS_MAX_BOOK_CNT
+		,
+		LS_STAR_ADDR
+		,
+		LS_END_ADDR
+		,
+		ADD_DATE
+		,
+		ADD_TIME
+		,
+		ADD_USER
+		,
+		UPD_DATE
+		,
+		UPD_TIME
+		,
+		UPD_USER
+		)
+		values(
+		#{lsNo}
+		,
+		#{lsRowCnt}
+		,
+		#{lsColCnt}
+		,
+		#{lsMaxBookCnt}
+		,
+		#{lsStarAddr}
+		,
+		#{lsEndAddr}
+		,
+		#{addDate}
+		,
+		#{addTime}
+		,
+		#{addUser}
+		,
+		#{updDate}
+		,
+		#{updTime}
+		,
+		#{updUser}
+		)
+	</insert>
+	
+	<update id="updateLibShelfInfo" parameterType="com.efs.bus.libary.mapper.LibShelfInfo">
+		UPDATE LIB_SHELF_INFO
+		   SET 
+		   LS_ROW_CNT = #{lsRowCnt}
+			,
+		   LS_COL_CNT = #{lsColCnt}
+			,
+		   LS_MAX_BOOK_CNT = #{lsMaxBookCnt}
+			,
+		   LS_STAR_ADDR = #{lsStarAddr}
+			,
+		   LS_END_ADDR = #{lsEndAddr}
+			,
+		   UPD_DATE = #{updDate}
+			,
+		   UPD_TIME = #{updTime}
+			,
+		   UPD_USER = #{updUser}
+		 WHERE LS_NO = #{lsNo}
+	</update>
+	
+	<delete id="deleteLibShelfInfo"  parameterType="string">
+		delete from LIB_SHELF_INFO where LS_NO = #{lsNo}
+	</delete>
+	
+	<select id="listLibShelfInfo" resultMap="LibShelfInfo" parameterType="com.efs.bus.libary.mapper.LibShelfInfo">
+		select T.*,dbo.FUN_CHECK_SHIELF_INUSE(T.LS_NO) AS LS_USE_STATUS from LIB_SHELF_INFO T where 1=1
+		
+			<if test="lsRowCnt != null and lsRowCnt != ''">
+				and T.LS_ROW_CNT = #{lsRowCnt}
+			</if>
+			<if test="lsColCnt != null and lsColCnt != ''">
+				and T.LS_COL_CNT = #{lsColCnt}
+			</if>
+			<if test="lsMaxBookCnt != null and lsMaxBookCnt != ''">
+				and T.LS_MAX_BOOK_CNT = #{lsMaxBookCnt}
+			</if>
+			<if test="lsStarAddr != null and lsStarAddr != ''">
+				and T.LS_STAR_ADDR = #{lsStarAddr}
+			</if>
+			<if test="lsEndAddr != null and lsEndAddr != ''">
+				and T.LS_END_ADDR = #{lsEndAddr}
+			</if>
+
+		
+		ORDER BY LS_NO
+	</select>
+
+	<select id="getNexShelfNo" resultType="int">
+		SELECT dbo.FUN_GET_NEXT_SHIELF_NO() AS NEX_VAL
+	</select>
+
+	<select id="listShelfAddr" parameterType="string" resultMap="com.efs.bus.lib.addr.mapper.LibShelfAddInfoMapper.LibShelfAddInfo">
+    SELECT T.*, dbo.FUN_SHIELF_ADDR_STATUS(T.SI_CODE) AS SI_STATUS FROM LIB_SHELF_ADD_INFO T WHERE T.SI_SHELF_NO=#{lsNo} ORDER BY T.SI_CODE
+	</select>
+
+    <select id="listAllShelf" resultMap="LibShelfInfo">
+        select T.*,dbo.FUN_CHECK_SHIELF_INUSE(T.LS_NO) AS LS_USE_STATUS from LIB_SHELF_INFO T ORDER BY LS_NO
+    </select>
+
+	<select id="listAllAddr" resultMap="com.efs.bus.lib.addr.mapper.LibShelfAddInfoMapper.LibShelfAddInfo">
+		SELECT T.* FROM LIB_SHELF_ADD_INFO T ORDER BY T.SI_CODE
+	</select>
+
+	<update id="updateAddUseStatus" parameterType="map">
+		UPDATE LIB_SHELF_ADD_INFO SET SI_STATUS = #{status} WHERE SI_CODE=#{siCode}
+	</update>
+</mapper>

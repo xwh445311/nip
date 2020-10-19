@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.example.org/model_download" 
+	xmlns:tns="http://www.example.org/model_download"
+	elementFormDefault="qualified">
+	<xs:annotation></xs:annotation>
+	
+	
+  <xs:element name="downloads">
+    <xs:complexType>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="download">
+          <xs:complexType>
+            <xs:all minOccurs="0">
+              <xs:element name="fixDatas" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="fixData" minOccurs="1" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:attribute name="row" type="xs:string" />
+                        <xs:attribute name="column" type="xs:string" />
+                        <xs:attribute name="property" type="xs:string" />
+                        <xs:attribute name="dataType" type="xs:string" />
+                        <xs:attribute name="value" type="xs:string" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="paramType" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="rows">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="field" minOccurs="1" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:attribute name="property" type="xs:string" />
+                        <xs:attribute name="dataType" type="xs:string" />
+                        <xs:attribute name="colspan" type="xs:string" />
+                        <xs:attribute name="fieldHander" type="xs:string" />
+                        <xs:attribute name="border" type="xs:string" default="true"/>
+                        <xs:attribute name="value" type="xs:string" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="dataType" type="xs:string" />
+                  <xs:attribute name="startRow" type="xs:int" default="1"/>
+                  <xs:attribute name="startColumn" type="xs:int" default="1"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:all>
+            <xs:attribute name="id" type="xs:string" />
+            <xs:attribute name="excelType" type="xs:string" />
+            <xs:attribute name="modelName" type="xs:string" />
+            <xs:attribute name="desc" type="xs:string" />
+          </xs:complexType>
+        </xs:element>
+        </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

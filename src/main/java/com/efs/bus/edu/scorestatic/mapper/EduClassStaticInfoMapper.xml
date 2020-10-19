@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.bus.edu.scorestatic.mapper.EduClassStaticInfoMapper">
+	<resultMap type="com.efs.bus.edu.scorestatic.mapper.EduClassStaticInfo" id="EduClassStaticInfo">
+		<id property="csTerm" column="CS_TERM"/>
+		<result property="csTermName" column="CS_TERM_NAME"/>
+		<result property="csMidTerm" column="CS_MID_TERM"/>
+		<result property="csClass" column="CS_CLASS"/>
+		<result property="csClassName" column="CS_CLASS_NAME"/>
+		<result property="csLead" column="CS_LEAD"/>
+		<result property="csLeadName" column="CS_LEAD_NAME"/>
+		<result property="csCourCode" column="CS_COUR_CODE"/>
+		<result property="csCourName" column="CS_COUR_NAME"/>
+		<result property="csCourTeacher" column="CS_COUR_TEACHER"/>
+		<result property="csCourTeacherNm" column="CS_COUR_TEACHER_NM"/>
+		<result property="csCourYkr" column="CS_COUR_YKR"/>
+		<result property="csCourSkr" column="CS_COUR_SKR"/>
+		<result property="csCourCkl" column="CS_COUR_CKL"/>
+		<result property="csCourZf" column="CS_COUR_ZF"/>
+		<result property="csCourJf" column="CS_COUR_JF"/>
+		<result property="csCourJfPm" column="CS_COUR_JF_PM"/>
+		<result property="csCourJfPmbh" column="CS_COUR_JF_PMBH"/>
+		<result property="csCourGfrs" column="CS_COUR_GFRS"/>
+		<result property="csCourGfl" column="CS_COUR_GFL"/>
+		<result property="csCourGflPm" column="CS_COUR_GFL_PM"/>
+		<result property="csCourGflPmbh" column="CS_COUR_GFL_PMBH"/>
+		<result property="csCourYfrs" column="CS_COUR_YFRS"/>
+		<result property="csCourYfl" column="CS_COUR_YFL"/>
+		<result property="csCourYflPm" column="CS_COUR_YFL_PM"/>
+		<result property="csCourYflPmbh" column="CS_COUR_YFL_PMBH"/>
+		<result property="csCourJgrs" column="CS_COUR_JGRS"/>
+		<result property="csCourJgl" column="CS_COUR_JGL"/>
+		<result property="csCourJglPm" column="CS_COUR_JGL_PM"/>
+		<result property="csCourJglPmbh" column="CS_COUR_JGL_PMBH"/>
+		<result property="csCourDfrs" column="CS_COUR_DFRS"/>
+		<result property="csCourDfl" column="CS_COUR_DFL"/>
+		<result property="csCourDflPm" column="CS_COUR_DFL_PM"/>
+		<result property="csCourDflPmbh" column="CS_COUR_DFL_PMBH"/>
+		<result property="csKsrs" column="CS_KSRS"/>
+
+	</resultMap>
+
+	<resultMap type="com.efs.bus.edu.scorestatic.mapper.EduClassStaticResult" id="EduClassStaticResult">
+		<id property="dbId" column="DB_ID"/>
+		<result property="csTerm" column="CS_TERM"/>
+		<result property="csTermName" column="CS_TERM_NAME"/>
+		<result property="csMidTerm" column="CS_MID_TERM"/>
+		<result property="csClass" column="CS_CLASS"/>
+		<result property="csClassName" column="CS_CLASS_NAME"/>
+		<result property="csDesc1" column="CS_DESC1"/>
+		<result property="csDesc2" column="CS_DESC2"/>
+		<result property="yuw" column="YUW"/>
+		<result property="shx" column="SHX"/>
+		<result property="yiw" column="YIW"/>
+		<result property="pis" column="PIS"/>
+		<result property="kex" column="KEX"/>
+	</resultMap>
+	
+	<select id="getEduClassStaticInfo" resultMap="EduClassStaticInfo" parameterType="string">
+		select * from EDU_CLASS_STATIC_INFO where CS_TERM = #{csTerm}
+	</select>
+	
+	<insert id="addEduClassStaticInfo" parameterType="com.efs.bus.edu.scorestatic.mapper.EduClassStaticInfo">
+		insert into EDU_CLASS_STATIC_INFO(
+		
+			CS_TERM
+			,
+		
+		
+			CS_MID_TERM
+			,
+		
+			CS_CLASS
+			,
+		
+		
+			CS_LEAD
+			,
+		
+		
+			CS_COUR_CODE
+			,
+		
+		
+			CS_COUR_TEACHER
+			,
+		
+		
+			CS_COUR_YKR
+			,
+		
+			CS_COUR_SKR
+			,
+		
+			CS_COUR_CKL
+			,
+		
+			CS_COUR_ZF
+			,
+		
+			CS_COUR_JF
+			,
+		
+			CS_COUR_JF_PM
+			,
+		
+			CS_COUR_JF_PMBH
+			,
+		
+			CS_COUR_GFRS
+			,
+		
+			CS_COUR_GFL
+			,
+		
+			CS_COUR_GFL_PM
+			,
+		
+			CS_COUR_GFL_PMBH
+			,
+		
+			CS_COUR_YFRS
+			,
+		
+			CS_COUR_YFL
+			,
+		
+			CS_COUR_YFL_PM
+			,
+		
+			CS_COUR_YFL_PMBH
+			,
+		
+			CS_COUR_JGRS
+			,
+		
+			CS_COUR_JGL
+			,
+		
+			CS_COUR_JGL_PM
+			,
+		
+			CS_COUR_JGL_PMBH
+			,
+		
+			CS_COUR_DFRS
+			,
+		
+			CS_COUR_DFL
+			,
+		
+			CS_COUR_DFL_PM
+			,
+		
+			CS_COUR_DFL_PMBH
+			)
+			values(
+					#{csTerm}
+					,
+					#{csMidTerm}
+					,
+					#{csClass}
+					,
+					#{csLead}
+					,
+					#{csCourCode}
+					,
+					#{csCourTeacher}
+					,
+					#{csCourYkr}
+					,
+					#{csCourSkr}
+					,
+					#{csCourCkl}
+					,
+					#{csCourZf}
+					,
+					#{csCourJf}
+					,
+					#{csCourJfPm}
+					,
+					#{csCourJfPmbh}
+					,
+					#{csCourGfrs}
+					,
+					#{csCourGfl}
+					,
+					#{csCourGflPm}
+					,
+					#{csCourGflPmbh}
+					,
+					#{csCourYfrs}
+					,
+					#{csCourYfl}
+					,
+					#{csCourYflPm}
+					,
+					#{csCourYflPmbh}
+					,
+					#{csCourJgrs}
+					,
+					#{csCourJgl}
+					,
+					#{csCourJglPm}
+					,
+					#{csCourJglPmbh}
+					,
+					#{csCourDfrs}
+					,
+					#{csCourDfl}
+					,
+					#{csCourDflPm}
+					,
+					#{csCourDflPmbh}
+		)
+	</insert>
+	
+	<update id="updateEduClassStaticInfo" parameterType="com.efs.bus.edu.scorestatic.mapper.EduClassStaticInfo">
+		UPDATE EDU_CLASS_STATIC_INFO
+		   SET 
+			   CS_MID_TERM = #{csMidTerm}
+				,
+			   CS_CLASS = #{csClass}
+				,
+			   CS_LEAD = #{csLead}
+				,
+			   CS_COUR_CODE = #{csCourCode}
+				,
+			   CS_COUR_TEACHER = #{csCourTeacher}
+				,
+			   CS_COUR_YKR = #{csCourYkr}
+				,
+			   CS_COUR_SKR = #{csCourSkr}
+				,
+			   CS_COUR_CKL = #{csCourCkl}
+				,
+			   CS_COUR_ZF = #{csCourZf}
+				,
+			   CS_COUR_JF = #{csCourJf}
+				,
+			   CS_COUR_JF_PM = #{csCourJfPm}
+				,
+			   CS_COUR_JF_PMBH = #{csCourJfPmbh}
+				,
+			   CS_COUR_GFRS = #{csCourGfrs}
+				,
+			   CS_COUR_GFL = #{csCourGfl}
+				,
+			   CS_COUR_GFL_PM = #{csCourGflPm}
+				,
+			   CS_COUR_GFL_PMBH = #{csCourGflPmbh}
+				,
+			   CS_COUR_YFRS = #{csCourYfrs}
+				,
+			   CS_COUR_YFL = #{csCourYfl}
+				,
+			   CS_COUR_YFL_PM = #{csCourYflPm}
+				,
+			   CS_COUR_YFL_PMBH = #{csCourYflPmbh}
+				,
+			   CS_COUR_JGRS = #{csCourJgrs}
+				,
+			   CS_COUR_JGL = #{csCourJgl}
+				,
+			   CS_COUR_JGL_PM = #{csCourJglPm}
+				,
+			   CS_COUR_JGL_PMBH = #{csCourJglPmbh}
+				,
+			   CS_COUR_DFRS = #{csCourDfrs}
+				,
+			   CS_COUR_DFL = #{csCourDfl}
+				,
+			   CS_COUR_DFL_PM = #{csCourDflPm}
+				,
+			   CS_COUR_DFL_PMBH = #{csCourDflPmbh}
+		 WHERE CS_TERM = #{csTerm}
+	</update>
+	
+	<delete id="deleteEduClassStaticInfo"  parameterType="string">
+		delete from EDU_CLASS_STATIC_INFO where CS_TERM = #{csTerm}
+	</delete>
+	
+	<select id="listEduClassStaticInfo" resultMap="EduClassStaticInfo" parameterType="com.efs.bus.edu.scorestatic.mapper.EduClassStaticInfo">
+		select T.* from EDU_CLASS_STATIC_INFO T LEFT JOIN
+			TS_PARAM_INFO T2 ON T.CS_COUR_CODE= T2.PA_KEY AND T2.PA_TYPE='BASE_SCORE_INFO'
+
+		where 1=1
+			<if test="csTerm != null and csTerm != ''">
+				and T.CS_TERM = #{csTerm}
+			</if>
+
+			<if test="csTermName != null and csTermName != ''">
+				and T.CS_TERM_NAME = #{csTermName}
+			</if>
+			<if test="csMidTerm != null and csMidTerm != ''">
+				and T.CS_MID_TERM = #{csMidTerm}
+			</if>
+			<if test="csClass != null and csClass != ''">
+				and T.CS_CLASS = #{csClass}
+			</if>
+			<if test="csClassName != null and csClassName != ''">
+				and T.CS_CLASS_NAME = #{csClassName}
+			</if>
+			<if test="csLead != null and csLead != ''">
+				and T.CS_LEAD = #{csLead}
+			</if>
+			<if test="csLeadName != null and csLeadName != ''">
+				and T.CS_LEAD_NAME = #{csLeadName}
+			</if>
+			<if test="csCourCode != null and csCourCode != ''">
+				and T.CS_COUR_CODE = #{csCourCode}
+			</if>
+			<if test="csCourName != null and csCourName != ''">
+				and T.CS_COUR_NAME = #{csCourName}
+			</if>
+			<if test="csCourTeacher != null and csCourTeacher != ''">
+				and T.CS_COUR_TEACHER = #{csCourTeacher}
+			</if>
+			<if test="csCourTeacherNm != null and csCourTeacherNm != ''">
+				and T.CS_COUR_TEACHER_NM = #{csCourTeacherNm}
+			</if>
+			<if test="csCourYkr != null and csCourYkr != ''">
+				and T.CS_COUR_YKR = #{csCourYkr}
+			</if>
+			<if test="csCourSkr != null and csCourSkr != ''">
+				and T.CS_COUR_SKR = #{csCourSkr}
+			</if>
+			<if test="csCourCkl != null and csCourCkl != ''">
+				and T.CS_COUR_CKL = #{csCourCkl}
+			</if>
+			<if test="csCourZf != null and csCourZf != ''">
+				and T.CS_COUR_ZF = #{csCourZf}
+			</if>
+			<if test="csCourJf != null and csCourJf != ''">
+				and T.CS_COUR_JF = #{csCourJf}
+			</if>
+			<if test="csCourJfPm != null and csCourJfPm != ''">
+				and T.CS_COUR_JF_PM = #{csCourJfPm}
+			</if>
+			<if test="csCourJfPmbh != null and csCourJfPmbh != ''">
+				and T.CS_COUR_JF_PMBH = #{csCourJfPmbh}
+			</if>
+			<if test="csCourGfrs != null and csCourGfrs != ''">
+				and T.CS_COUR_GFRS = #{csCourGfrs}
+			</if>
+			<if test="csCourGfl != null and csCourGfl != ''">
+				and T.CS_COUR_GFL = #{csCourGfl}
+			</if>
+			<if test="csCourGflPm != null and csCourGflPm != ''">
+				and T.CS_COUR_GFL_PM = #{csCourGflPm}
+			</if>
+			<if test="csCourGflPmbh != null and csCourGflPmbh != ''">
+				and T.CS_COUR_GFL_PMBH = #{csCourGflPmbh}
+			</if>
+			<if test="csCourYfrs != null and csCourYfrs != ''">
+				and T.CS_COUR_YFRS = #{csCourYfrs}
+			</if>
+			<if test="csCourYfl != null and csCourYfl != ''">
+				and T.CS_COUR_YFL = #{csCourYfl}
+			</if>
+			<if test="csCourYflPm != null and csCourYflPm != ''">
+				and T.CS_COUR_YFL_PM = #{csCourYflPm}
+			</if>
+			<if test="csCourYflPmbh != null and csCourYflPmbh != ''">
+				and T.CS_COUR_YFL_PMBH = #{csCourYflPmbh}
+			</if>
+			<if test="csCourJgrs != null and csCourJgrs != ''">
+				and T.CS_COUR_JGRS = #{csCourJgrs}
+			</if>
+			<if test="csCourJgl != null and csCourJgl != ''">
+				and T.CS_COUR_JGL = #{csCourJgl}
+			</if>
+			<if test="csCourJglPm != null and csCourJglPm != ''">
+				and T.CS_COUR_JGL_PM = #{csCourJglPm}
+			</if>
+			<if test="csCourJglPmbh != null and csCourJglPmbh != ''">
+				and T.CS_COUR_JGL_PMBH = #{csCourJglPmbh}
+			</if>
+			<if test="csCourDfrs != null and csCourDfrs != ''">
+				and T.CS_COUR_DFRS = #{csCourDfrs}
+			</if>
+			<if test="csCourDfl != null and csCourDfl != ''">
+				and T.CS_COUR_DFL = #{csCourDfl}
+			</if>
+			<if test="csCourDflPm != null and csCourDflPm != ''">
+				and T.CS_COUR_DFL_PM = #{csCourDflPm}
+			</if>
+			<if test="csCourDflPmbh != null and csCourDflPmbh != ''">
+				and T.CS_COUR_DFL_PMBH = #{csCourDflPmbh}
+			</if>
+		
+		ORDER BY T2.PA_ORDER
+	</select>
+
+	<select id="getClassStaticResult" resultMap="EduClassStaticResult" parameterType="com.efs.bus.edu.scorestatic.mapper.EduClassStaticResult">
+		WITH TMP AS (
+		SELECT T.CS_TERM,T.CS_TERM_NAME,T.CS_MID_TERM,T.CS_CLASS,T.CS_CLASS_NAME,T.CS_COUR_CODE, T.${staticType} FROM EDU_CLASS_STATIC_INFO T
+		WHERE T.CS_TERM=#{csTerm} AND T.CS_MID_TERM=#{csMidTerm} AND T.CS_CLASS=#{csClass}
+		)
+		SELECT A.*,SUBSTRING('${staticDesc}',1,CHARINDEX(',','${staticDesc}')-1) AS CS_DESC1,
+		SUBSTRING('${staticDesc}',CHARINDEX(',','${staticDesc}')+1,10) AS CS_DESC2
+		 FROM TMP PIVOT(MAX(TMP.${staticType}) FOR TMP.CS_COUR_CODE IN (YUW,SHX,YIW,PIS,KEX)) A
+	</select>
+
+	<select id="listSchoolStatic" resultMap="EduClassStaticInfo" parameterType="com.efs.bus.edu.scorestatic.mapper.EduClassStaticInfo">
+		SELECT T.*, MAX(T.CS_COUR_SKR) OVER(PARTITION BY T.CS_CLASS) AS CS_KSRS
+		  FROM EDU_CLASS_STATIC_INFO T
+		  LEFT JOIN BASE_SCH_CLASS_INFO T1
+			ON T.CS_TERM = T1.SC_TERM
+		   AND T.CS_CLASS = T1.SC_CLASS_CODE
+		  LEFT JOIN TS_PARAM_INFO T2
+			ON T.CS_COUR_CODE = T2.PA_KEY
+		   AND T2.PA_TYPE = 'BASE_SCORE_INFO'
+		 WHERE T.CS_TERM = #{csTerm}
+		   AND T.CS_MID_TERM = #{csMidTerm}
+		 ORDER BY T1.SC_GRADE DESC, T1.SC_CLS, T2.PA_ORDER
+
+	</select>
+</mapper>

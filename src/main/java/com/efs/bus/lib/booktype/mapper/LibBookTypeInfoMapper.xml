@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.bus.lib.booktype.mapper.LibBookTypeInfoMapper">
+	<!--开启本MAPPER的缓存-->
+	<cache/>
+	<resultMap type="com.efs.bus.lib.booktype.mapper.LibBookTypeInfo" id="LibBookTypeInfo">
+		<id property="btId" column="BT_ID"/>
+		<result property="btCode" column="BT_CODE"/>
+		<result property="btName" column="BT_NAME"/>
+		<result property="btParentId" column="BT_PARENT_ID"/>
+		<result property="btOrder" column="BT_ORDER"/>
+		<result property="btKeyword" column="BT_KEYWORD"/>
+		<result property="addDate" column="ADD_DATE"/>
+		<result property="addTime" column="ADD_TIME"/>
+		<result property="addUser" column="ADD_USER"/>
+		<result property="updDate" column="UPD_DATE"/>
+		<result property="updTime" column="UPD_TIME"/>
+		<result property="updUser" column="UPD_USER"/>
+	</resultMap>
+	
+	<select id="getLibBookTypeInfo" resultMap="LibBookTypeInfo" parameterType="string">
+		select * from LIB_BOOK_TYPE_INFO where BT_ID = #{btId}
+	</select>
+	
+	<insert id="addLibBookTypeInfo" parameterType="com.efs.bus.lib.booktype.mapper.LibBookTypeInfo">
+		insert into LIB_BOOK_TYPE_INFO(
+		BT_ID
+		,
+		BT_CODE
+		,
+		BT_NAME
+		,
+		BT_PARENT_ID
+		,
+		BT_ORDER
+		,
+		BT_KEYWORD
+		,
+		ADD_DATE
+		,
+		ADD_TIME
+		,
+		ADD_USER
+		,
+		UPD_DATE
+		,
+		UPD_TIME
+		,
+		UPD_USER
+		)
+		values(
+		#{btId}
+		,
+		#{btCode}
+		,
+		#{btName}
+		,
+		#{btParentId}
+		,
+		dbo.FUN_GET_BOOK_TYPE_ORD(#{btParentId})
+		,
+		#{btKeyword}
+		,
+		#{addDate}
+		,
+		#{addTime}
+		,
+		#{addUser}
+		,
+		#{updDate}
+		,
+		#{updTime}
+		,
+		#{updUser}
+		)
+	</insert>
+	
+	<update id="updateLibBookTypeInfo" parameterType="com.efs.bus.lib.booktype.mapper.LibBookTypeInfo">
+		UPDATE LIB_BOOK_TYPE_INFO
+		   SET
+		   BT_CODE = #{btCode}
+			,
+		   BT_NAME = #{btName}
+			,
+		   BT_PARENT_ID = #{btParentId}
+			,
+		   BT_KEYWORD = #{btKeyword}
+			,
+		   UPD_DATE = #{updDate}
+			,
+		   UPD_TIME = #{updTime}
+			,
+		   UPD_USER = #{updUser}
+		 WHERE BT_ID = #{btId}
+	</update>
+	
+	<delete id="deleteLibBookTypeInfo"  parameterType="string">
+		delete from LIB_BOOK_TYPE_INFO where BT_ID = #{btId}
+	</delete>
+	
+	<select id="listLibBookTypeInfo" resultMap="LibBookTypeInfo" parameterType="com.efs.bus.lib.booktype.mapper.LibBookTypeInfo">
+
+		SELECT T.* FROM LIB_BOOK_TYPE_INFO T WHERE T.BT_PARENT_ID=0
+
+		<if test="btKeyword != null and btKeyword != ''">
+		AND EXISTS (
+		SELECT 1 FROM LIB_BOOK_TYPE_INFO T2 WHERE T2.BT_PARENT_ID=T.BT_ID
+		AND (
+		T2.BT_NAME LIKE '%${btKeyword}%' OR T2.BT_KEYWORD LIKE '%${btKeyword}%'
+		)
+		)
+		</if>
+
+		ORDER BY T.BT_ORDER
+
+	</select>
+
+	<select id="listChildrenBookType" resultMap="LibBookTypeInfo" parameterType="com.efs.bus.lib.booktype.mapper.LibBookTypeInfo">
+		SELECT T.* FROM LIB_BOOK_TYPE_INFO T WHERE T.BT_PARENT_ID=#{btId}
+		<if test="btKeyword != null and btKeyword != ''">
+			AND (
+			T.BT_NAME LIKE '%${btKeyword}%' OR T.BT_KEYWORD LIKE '%${btKeyword}%'
+			)
+		</if>
+
+		ORDER BY T.BT_ORDER
+	</select>
+
+	<select id="getNextDbId" resultType="int">
+		SELECT IIF(TT.MID IS NULL,1,TT.MID+1) AS BT_ID FROM (
+			select 1 AS SIG,MAX(T.BT_ID) AS MID  from LIB_BOOK_TYPE_INFO T  ) TT
+	</select>
+
+	<select id="listAllChildBookType" resultMap="LibBookTypeInfo">
+		SELECT T.* FROM LIB_BOOK_TYPE_INFO T WHERE T.BT_PARENT_ID != 0 ORDER BY T.BT_ID
+	</select>
+</mapper>

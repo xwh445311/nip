@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.bus.base.tsbz.mapper.TbTsbzMapper">
+	<resultMap type="com.efs.bus.base.tsbz.mapper.TbTsbz" id="TbTsbz">
+		<id property="bm" column="BM"/>
+		<result property="mc" column="MC"/>
+		<result property="jssl" column="JSSL"/>
+	</resultMap>
+	
+	<select id="getTbTsbz" resultMap="TbTsbz" parameterType="string">
+		select * from TB_TSBZ where BM = #{bm}
+	</select>
+	
+	<insert id="addTbTsbz" parameterType="com.efs.bus.base.tsbz.mapper.TbTsbz">
+		insert into TB_TSBZ(
+		
+			BM
+			,
+		
+			MC
+			,
+		
+			JSSL
+			)
+			values(
+					#{bm}
+					,
+					#{mc}
+					,
+					#{jssl}
+		)
+	</insert>
+	
+	<update id="updateTbTsbz" parameterType="com.efs.bus.base.tsbz.mapper.TbTsbz">
+		UPDATE TB_TSBZ
+		   SET 
+			   MC = #{mc}
+				,
+			   JSSL = #{jssl}
+		 WHERE BM = #{bm}
+	</update>
+	
+	<delete id="deleteTbTsbz"  parameterType="string">
+		delete from TB_TSBZ where BM = #{bm}
+	</delete>
+	
+	<select id="listTbTsbz" resultMap="TbTsbz" parameterType="com.efs.bus.base.tsbz.mapper.TbTsbz">
+		select T.* from TB_TSBZ T where 1=1
+		
+			<if test="mc != null and mc != ''">
+				and T.MC = #{mc}
+			</if>
+			<if test="jssl != null and jssl != ''">
+				and T.JSSL = #{jssl}
+			</if>
+		
+		ORDER BY BM
+	</select>
+</mapper>

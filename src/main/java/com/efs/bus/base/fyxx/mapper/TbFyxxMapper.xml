@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.bus.base.fyxx.mapper.TbFyxxMapper">
+	<resultMap type="com.efs.bus.base.fyxx.mapper.TbFyxx" id="TbFyxx">
+		<id property="fydm" column="FYDM"/>
+		<result property="fymc" column="FYMC"/>
+		<result property="cbjsbz" column="CBJSBZ"/>
+		<result property="qtjsbz" column="QTJSBZ"/>
+		<result property="zkbz" column="ZKBZ"/>
+		<result property="jmbz" column="JMBZ"/>
+		<result property="lrbz" column="LRBZ"/>
+		<result property="zxzk" column="ZXZK"/>
+		<result property="zdzk" column="ZDZK"/>
+		<result property="sl" column="SL"/>
+		<result property="dddybz" column="DDDYBZ"/>
+		<result property="zzsbz" column="ZZSBZ"/>
+		<result property="delbz" column="DELBZ"/>
+		<result property="csrq" column="CSRQ"/>
+	</resultMap>
+	
+	<select id="getTbFyxx" resultMap="TbFyxx" parameterType="string">
+		select * from TB_FYXX where FYDM = #{fydm}
+	</select>
+	
+	<insert id="addTbFyxx" parameterType="com.efs.bus.base.fyxx.mapper.TbFyxx">
+		insert into TB_FYXX(
+		
+			FYDM
+			,
+		
+			FYMC
+			,
+		
+			CBJSBZ
+			,
+		
+			QTJSBZ
+			,
+		
+			ZKBZ
+			,
+		
+			JMBZ
+			,
+		
+			LRBZ
+			,
+		
+			ZXZK
+			,
+		
+			ZDZK
+			,
+		
+			SL
+			,
+		
+			DDDYBZ
+			,
+		
+			ZZSBZ
+			,
+		
+			DELBZ
+			,
+		
+			CSRQ
+			)
+			values(
+					#{fydm}
+					,
+					#{fymc}
+					,
+					#{cbjsbz}
+					,
+					#{qtjsbz}
+					,
+					#{zkbz}
+					,
+					#{jmbz}
+					,
+					#{lrbz}
+					,
+					#{zxzk}
+					,
+					#{zdzk}
+					,
+					#{sl}
+					,
+					#{dddybz}
+					,
+					#{zzsbz}
+					,
+					#{delbz}
+					,
+					#{csrq}
+		)
+	</insert>
+	
+	<update id="updateTbFyxx" parameterType="com.efs.bus.base.fyxx.mapper.TbFyxx">
+		UPDATE TB_FYXX
+		   SET 
+			   FYMC = #{fymc}
+				,
+			   CBJSBZ = #{cbjsbz}
+				,
+			   QTJSBZ = #{qtjsbz}
+				,
+			   ZKBZ = #{zkbz}
+				,
+			   JMBZ = #{jmbz}
+				,
+			   LRBZ = #{lrbz}
+				,
+			   ZXZK = #{zxzk}
+				,
+			   ZDZK = #{zdzk}
+				,
+			   SL = #{sl}
+				,
+			   DDDYBZ = #{dddybz}
+				,
+			   ZZSBZ = #{zzsbz}
+				,
+			   DELBZ = #{delbz}
+				,
+			   CSRQ = #{csrq}
+		 WHERE FYDM = #{fydm}
+	</update>
+	
+	<delete id="deleteTbFyxx"  parameterType="string">
+		delete from TB_FYXX where FYDM = #{fydm}
+	</delete>
+	
+	<select id="listTbFyxx" resultMap="TbFyxx" parameterType="com.efs.bus.base.fyxx.mapper.TbFyxx">
+		select T.* from TB_FYXX T where 1=1
+		
+			<if test="fymc != null and fymc != ''">
+				and T.FYMC = #{fymc}
+			</if>
+			<if test="cbjsbz != null and cbjsbz != ''">
+				and T.CBJSBZ = #{cbjsbz}
+			</if>
+			<if test="qtjsbz != null and qtjsbz != ''">
+				and T.QTJSBZ = #{qtjsbz}
+			</if>
+			<if test="zkbz != null and zkbz != ''">
+				and T.ZKBZ = #{zkbz}
+			</if>
+			<if test="jmbz != null and jmbz != ''">
+				and T.JMBZ = #{jmbz}
+			</if>
+			<if test="lrbz != null and lrbz != ''">
+				and T.LRBZ = #{lrbz}
+			</if>
+			<if test="zxzk != null and zxzk != ''">
+				and T.ZXZK = #{zxzk}
+			</if>
+			<if test="zdzk != null and zdzk != ''">
+				and T.ZDZK = #{zdzk}
+			</if>
+			<if test="sl != null and sl != ''">
+				and T.SL = #{sl}
+			</if>
+			<if test="dddybz != null and dddybz != ''">
+				and T.DDDYBZ = #{dddybz}
+			</if>
+			<if test="zzsbz != null and zzsbz != ''">
+				and T.ZZSBZ = #{zzsbz}
+			</if>
+			<if test="delbz != null and delbz != ''">
+				and T.DELBZ = #{delbz}
+			</if>
+			<if test="csrq != null and csrq != ''">
+				and T.CSRQ = #{csrq}
+			</if>
+		
+		ORDER BY FYDM
+	</select>
+
+	<select id="listAllFyxx" resultMap="TbFyxx">
+		SELECT * FROM TB_FYXX T WHERE T.DELBZ = '0' ORDER BY T.FYDM
+	</select>
+</mapper>

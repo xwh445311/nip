@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.common.auth.func.mapper.TsFuncIfnoMapper">
+
+	<resultMap type="com.efs.common.auth.func.mapper.TsFuncIfno" id="TsFuncIfno">
+		<id property="muDbId" column="MU_DB_ID"/>
+		<result property="muId" column="MU_ID"/>
+		<result property="muName" column="MU_NAME"/>
+		<result property="muTips" column="MU_TIPS"/>
+		<result property="muUrl" column="MU_URL"/>
+		<result property="muParDbId" column="MU_PAR_DB_ID"/>
+		<result property="muStatus" column="MU_STATUS"/>
+		<result property="muTypes" column="MU_TYPES"/>
+		<result property="muSysType" column="MU_SYS_TYPE"/>
+		<result property="muCss" column="MU_CSS"/>
+		<result property="muOrders" column="MU_ORDERS"/>
+		<result property="muSelected" column="MU_SELECTED"/>
+		<result property="muIsSuper" column="MU_IS_SUPER"/>
+		<result property="muQuickLink" column="MU_QUICK_LINK"/>
+		<result property="muQuickUrl" column="MU_QUICK_URL"/>
+		<result property="muQuickPosId" column="MU_QUICK_POS_ID"/>
+
+
+	</resultMap>
+	
+	<select id="getTsFuncIfno" resultMap="TsFuncIfno" parameterType="string">
+		select * from TS_FUNC_INFO where MU_DB_ID = #{muDbId}
+	</select>
+	
+	<insert id="addTsFuncIfno" parameterType="com.efs.common.auth.func.mapper.TsFuncIfno">
+		insert into TS_FUNC_INFO(
+		MU_DB_ID
+		,
+		MU_ID
+		,
+		MU_NAME
+		,
+		MU_TIPS
+		,
+		MU_URL
+		,
+		MU_PAR_DB_ID
+		,
+		MU_STATUS
+		,
+		MU_TYPES
+		,
+		MU_SYS_TYPE
+		,
+		MU_CSS
+		,
+		MU_ORDERS
+		,
+		MU_IS_SUPER
+		,
+		MU_QUICK_LINK
+		,
+		MU_QUICK_URL
+		,
+		MU_QUICK_POS_ID
+		)
+		values(
+		#{muDbId}
+		,
+		#{muId}
+		,
+		#{muName}
+		,
+		#{muTips}
+		,
+		#{muUrl}
+		,
+		#{muParDbId}
+		,
+		#{muStatus}
+		,
+		#{muTypes}
+		,
+		#{muSysType}
+		,
+		#{muCss}
+		,
+		#{muOrders}
+		,
+		#{muIsSuper}
+		,
+		#{muQuickLink}
+		,
+		#{muQuickUrl}
+		,
+		#{muQuickPosId}
+		)
+	</insert>
+	
+	<update id="updateTsFuncIfno" parameterType="com.efs.common.auth.func.mapper.TsFuncIfno">
+		UPDATE TS_FUNC_INFO
+		   SET 
+		   MU_ID = #{muId}
+			,
+		   MU_NAME = #{muName}
+			,
+		   MU_TIPS = #{muTips}
+			,
+		   MU_URL = #{muUrl}
+			,
+		   MU_PAR_DB_ID = #{muParDbId}
+			,
+		   MU_STATUS = #{muStatus}
+			,
+		   MU_TYPES = #{muTypes}
+			,
+		   MU_SYS_TYPE = #{muSysType}
+			,
+		   MU_CSS = #{muCss}
+		   ,
+		   MU_IS_SUPER = #{muIsSuper}
+		   ,
+		   MU_QUICK_LINK = #{muQuickLink}
+		   ,
+		   MU_QUICK_URL = #{muQuickUrl}
+		   ,
+		   MU_QUICK_POS_ID = #{muQuickPosId}
+		 WHERE MU_DB_ID = #{muDbId}
+	</update>
+	
+	<delete id="deleteTsFuncIfno"  parameterType="string">
+		delete from TS_FUNC_INFO where MU_DB_ID = #{muDbId} OR MU_PAR_DB_ID=#{muDbId}
+	</delete>
+	
+	<select id="listTsFuncIfno" resultMap="TsFuncIfno" parameterType="com.efs.common.auth.func.mapper.TsFuncIfno">
+		select T.* from TS_FUNC_INFO T where 1=1
+		
+			<if test="muId != null and muId != ''">
+				and T.MU_ID = #{muId}
+			</if>
+			<if test="muName != null and muName != ''">
+				and T.MU_NAME = #{muName}
+			</if>
+			<if test="muTips != null and muTips != ''">
+				and T.MU_TIPS = #{muTips}
+			</if>
+			<if test="muUrl != null and muUrl != ''">
+				and T.MU_URL = #{muUrl}
+			</if>
+			<if test="muParDbId != null and muParDbId != ''">
+				and T.MU_PAR_DB_ID = #{muParDbId}
+			</if>
+			<if test="muStatus != null and muStatus != ''">
+				and T.MU_STATUS = #{muStatus}
+			</if>
+			<if test="muTypes != null and muTypes != ''">
+				and T.MU_TYPES = #{muTypes}
+			</if>
+			<if test="muSysType != null and muSysType != ''">
+				and T.MU_SYS_TYPE = #{muSysType}
+			</if>
+			<if test="muCss != null and muCss != ''">
+				and T.MU_CSS = #{muCss}
+			</if>
+			<if test="muOrders != null and muOrders != ''">
+				and T.MU_ORDERS = #{muOrders}
+			</if>
+		
+		ORDER BY MU_DB_ID
+	</select>
+
+	<select id="listFirstLevelFunc" resultMap="TsFuncIfno" parameterType="string">
+		SELECT *
+		  FROM (SELECT f.*,
+					   ROW_NUMBER() OVER(PARTITION BY f.MU_DB_ID ORDER BY f.MU_DB_ID) RN
+				  FROM TS_FUNC_INFO f, TS_ROLE_FUNC_INFO r1, TS_USER_ROLE_INFO r2
+				 WHERE f.MU_DB_ID = r1.RF_FUNC_ID
+				   AND R1.RF_ROLE_ID = R2.UR_ROLE_ID
+				   AND f.MU_PAR_DB_ID = '0'
+				   AND f.MU_TYPES = 'M' AND f.MU_STATUS ='1'
+				   AND R2.UR_USER_ID = #{userId}) TT
+		 WHERE TT.RN = 1
+		 order by TT.MU_ORDERS
+
+	</select>
+
+	<select id="listChilddFunc" resultMap="TsFuncIfno" parameterType="map">
+		SELECT *
+		  FROM (SELECT f.*,
+					   ROW_NUMBER() OVER(PARTITION BY f.MU_DB_ID ORDER BY f.MU_DB_ID) RN
+				  FROM TS_FUNC_INFO f, TS_ROLE_FUNC_INFO r1, TS_USER_ROLE_INFO r2
+				 WHERE f.MU_DB_ID = r1.RF_FUNC_ID
+				   AND R1.RF_ROLE_ID = R2.UR_ROLE_ID
+				   AND f.MU_PAR_DB_ID = #{funcId}
+				   AND f.MU_TYPES = 'M' AND f.MU_STATUS ='1'
+				   AND R2.UR_USER_ID = #{userId}) TT
+		 WHERE TT.RN = 1
+		 order by TT.MU_ORDERS
+	</select>
+
+	<select id="listUserFuncIds" resultType="string" parameterType="string">
+		SELECT DISTINCT F.MU_ID
+		  FROM TS_USER_ROLE_INFO T1, TS_ROLE_FUNC_INFO T2, TS_FUNC_INFO F
+		 WHERE T1.UR_ROLE_ID = T2.RF_ROLE_ID
+		   AND T2.RF_FUNC_ID = F.MU_DB_ID
+		   AND F.MU_STATUS ='1'
+		   AND T1.UR_USER_ID = #{userId}
+	</select>
+
+	<select id="listAllFirstLevelFunc" resultMap="TsFuncIfno" parameterType="map">
+		SELECT * FROM TS_FUNC_INFO T WHERE T.MU_PAR_DB_ID='0'
+		<if test="isSuperUser neq 'Y'.toString()">
+			AND ( T.MU_IS_SUPER &lt;&gt; '1' OR T.MU_IS_SUPER IS NULL )
+		</if>
+		ORDER BY T.MU_ORDERS
+	</select>
+
+	<select id="listAllSecondLevelFunc" resultMap="TsFuncIfno" parameterType="map">
+		SELECT * FROM TS_FUNC_INFO T WHERE T.MU_PAR_DB_ID=#{muParDbId}
+		<if test="isSuperUser neq 'Y'.toString()">
+			AND ( T.MU_IS_SUPER &lt;&gt; '1' OR T.MU_IS_SUPER IS NULL )
+		</if>
+		ORDER BY T.MU_ORDERS
+	</select>
+
+	<select id="getMaxFuncMenuOrder" resultType="int" parameterType="string">
+		select MAX(T.MU_ORDERS) from TS_FUNC_INFO T WHERE T.MU_PAR_DB_ID=#{muParDbId}
+	</select>
+
+	<delete id="deleteRoleFunc" parameterType="string">
+		DELETE FROM TS_ROLE_FUNC_INFO WHERE EXISTS(
+		SELECT 1 FROM TS_FUNC_INFO T WHERE T.MU_DB_ID=RF_FUNC_ID
+		AND (T.MU_DB_ID = #{muDbId}  OR T.MU_PAR_DB_ID = #{muDbId})
+		)
+	</delete>
+
+	<select id="getFuncMuIdExists" resultType="int" parameterType="string">
+		SELECT COUNT(1) FROM TS_FUNC_INFO T WHERE T.MU_ID = #{muId}
+	</select>
+
+	<update id="updateSysFuncParentId" parameterType="map">
+		UPDATE TS_FUNC_INFO SET MU_PAR_DB_ID=#{muParDbId} WHERE MU_DB_ID=#{muDbId}
+	</update>
+
+	<update id="updateSysFuncOrder" parameterType="java.util.List">
+		<foreach collection="list" item="it" separator=";" close=";">
+			update TS_FUNC_INFO set MU_ORDERS = #{it.muOrders} where MU_DB_ID = #{it.muDbId}
+		</foreach>
+	</update>
+
+	<select id="listRoleFuncList" resultType="string" parameterType="string">
+		SELECT DISTINCT  RF_FUNC_ID FROM TS_ROLE_FUNC_INFO WHERE RF_ROLE_ID = #{roleId}
+	</select>
+
+	<select id="listQuickLinkList" resultType="string" parameterType="string">
+		SELECT T.QI_FUNC_ID FROM TS_QUICK_LINK_INFO T WHERE T.QI_USER_ID=#{userId}
+	</select>
+
+	<select id="listQuickFirstLevelFunc" resultMap="TsFuncIfno" parameterType="string">
+		SELECT *
+		FROM (SELECT f.*,
+		ROW_NUMBER() OVER(PARTITION BY f.MU_DB_ID ORDER BY f.MU_DB_ID) RN
+		FROM TS_FUNC_INFO f, TS_ROLE_FUNC_INFO r1, TS_USER_ROLE_INFO r2
+		WHERE f.MU_DB_ID = r1.RF_FUNC_ID
+		AND R1.RF_ROLE_ID = R2.UR_ROLE_ID
+		AND f.MU_PAR_DB_ID = '0'
+		AND (f.MU_TYPES = 'M' OR f.MU_QUICK_LINK='1' ) AND f.MU_STATUS ='1'
+		AND R2.UR_USER_ID = #{userId}) TT
+		WHERE TT.RN = 1
+		order by TT.MU_ORDERS
+
+	</select>
+
+	<select id="listQuickChilddFunc" resultMap="TsFuncIfno" parameterType="map">
+		SELECT *
+		FROM (SELECT f.*,
+		ROW_NUMBER() OVER(PARTITION BY f.MU_DB_ID ORDER BY f.MU_DB_ID) RN
+		FROM TS_FUNC_INFO f, TS_ROLE_FUNC_INFO r1, TS_USER_ROLE_INFO r2
+		WHERE f.MU_DB_ID = r1.RF_FUNC_ID
+		AND R1.RF_ROLE_ID = R2.UR_ROLE_ID
+		AND f.MU_PAR_DB_ID = #{funcId}
+		AND ( f.MU_TYPES = 'M' OR f.MU_QUICK_LINK='1' ) AND f.MU_STATUS ='1'
+		AND R2.UR_USER_ID = #{userId}) TT
+		WHERE TT.RN = 1
+		order by TT.MU_ORDERS
+	</select>
+
+	<insert id="addQuickLinkFunc" parameterType="map">
+		INSERT INTO TS_QUICK_LINK_INFO
+		(QI_FUNC_ID
+		,QI_USER_ID)
+		VALUES
+		(#{funcId}
+		,#{userId})
+	</insert>
+
+	<delete id="delQuickLinkFunc" parameterType="map">
+		DELETE FROM TS_QUICK_LINK_INFO WHERE QI_FUNC_ID = #{funcId} AND QI_USER_ID=#{userId}
+	</delete>
+
+	<select id="listQucikFunc" resultMap="TsFuncIfno" parameterType="string">
+		SELECT TT.* FROM (
+		SELECT T.*
+		FROM TS_FUNC_INFO T
+		JOIN TS_QUICK_LINK_INFO T2
+		ON T.MU_DB_ID = T2.QI_FUNC_ID
+		WHERE T2.QI_USER_ID = #{USERID} ) TT WHERE ROWNUM &lt; 7
+
+	</select>
+
+	<select id="getFuncFromId" resultMap="TsFuncIfno" parameterType="string">
+		SELECT * FROM TS_FUNC_INFO T WHERE T.MU_ID = #{muId}
+	</select>
+
+</mapper>

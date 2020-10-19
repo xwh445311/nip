@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<downloads xmlns="http://www.example.org/model_download"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.example.org/model_download exceldown-config.xsd">
+	<!-- <download id="下載ID，須唯一(必須指定)" excelType="導出EXCEL類型（2003/2007）(默認2007)" modelName="模板名稱(必須指定)" desc="註釋描述">
+		零散數據配置
+		<fixDatas paramType="參數BEAN全類名（如果是MAP，則不用配置此屬性）">
+			<fixData row="單元格所在行（從1開始）" column="單元格所在列（從1開始）(必須指定)"  property="BEAN的屬性名或者MAP的KEY值(必須指定)" dataType="number(數字),string(字符),date(日期)" value="固定值" />
+		</fixDatas>
+		
+		<rows dataType="list元素的全類名，如果是MAP，則不需要配置該選項" startRow="開始行" startColumn="開始列">
+			<field property="BEAN的屬性名或者MAP的KEY值(必須指定)" dataType="number(數字),string(字符),date(日期)必須指定" colspan="跨幾列（如果沒有無需指定）" fieldHander="字段特殊處理器全類名(如果沒有則無需指定)"  value="固定值"
+		</rows>
+	</download> -->
+	
+	<download id="classRecord" excelType="2007" modelName="ExpClassModel.xlsx" desc="班级成绩统计报表下载">
+		<fixDatas paramType="com.efs.bus.edu.scorerecord.mapper.EduRecordInfo">
+			<fixData row="1" column="1"  property="riTermName" dataType="string" />
+			<fixData row="2" column="1"  property="riClassName" dataType="string" />
+		</fixDatas>
+		
+		<rows dataType="com.efs.bus.edu.scorerecord.mapper.EduRecordInfo" startRow="4" startColumn="1">
+			<field property="riStuId" dataType="string" />
+			<field property="riTestId" dataType="string" />
+			<field property="riStuName" dataType="string" />
+			<field property="riYw" dataType="number" />
+			<field property="riSx" dataType="number" />
+			<field property="riEng" dataType="number" />
+			<field property="riPs" dataType="number" />
+			<field property="riKx" dataType="number" />
+			<field property="riTot" dataType="number" />
+			<field property="riClassRan" dataType="number" />
+		</rows>
+	</download>
+</downloads>

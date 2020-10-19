@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.common.noteinfo.mapper.TsNoteInfoMapper">
+	<resultMap type="com.efs.common.noteinfo.mapper.TsNoteInfo" id="TsNoteInfo">
+		<id property="ntId" column="NT_ID"/>
+		<result property="ntHead" column="NT_HEAD"/>
+		<result property="ntContent" column="NT_CONTENT"/>
+		<result property="ntSendUser" column="NT_SEND_USER"/>
+		<result property="ntSendDate" column="NT_SEND_DATE"/>
+		<result property="ntSendTime" column="NT_SEND_TIME"/>
+		<result property="ntStatus" column="NT_STATUS"/>
+		<result property="readDiffDay" column="READ_DIFF_DAY"/>
+		<result property="readDiffH" column="READ_DIFF_H"/>
+		<result property="readDiffM" column="READ_DIFF_M"/>
+	</resultMap>
+	
+	<select id="getTsNoteInfo" resultMap="TsNoteInfo" parameterType="string">
+		select * from TS_NOTE_INFO where NT_ID = #{ntId}
+	</select>
+	
+	<insert id="addTsNoteInfo" parameterType="com.efs.common.noteinfo.mapper.TsNoteInfo">
+		insert into TS_NOTE_INFO(
+		NT_ID
+		,
+		NT_HEAD
+		,
+		NT_CONTENT
+		,
+		NT_SEND_USER
+		,
+		NT_SEND_DATE
+		,
+		NT_SEND_TIME
+		,
+		NT_STATUS
+		)
+		values(
+		#{ntId}
+		,
+		#{ntHead}
+		,
+		#{ntContent}
+		,
+		#{ntSendUser}
+		,
+		#{ntSendDate}
+		,
+		#{ntSendTime}
+		,
+		#{ntStatus}
+		)
+	</insert>
+	
+	<update id="updateTsNoteInfo" parameterType="com.efs.common.noteinfo.mapper.TsNoteInfo">
+		UPDATE TS_NOTE_INFO
+		   SET 
+		   NT_HEAD = #{ntHead}
+			,
+		   NT_CONTENT = #{ntContent}
+			,
+		   NT_SEND_USER = #{ntSendUser}
+			,
+		   NT_SEND_DATE = #{ntSendDate}
+			,
+		   NT_SEND_TIME = #{ntSendTime}
+			,
+		   NT_STATUS = #{ntStatus}
+		 WHERE NT_ID = #{ntId}
+	</update>
+	
+	<delete id="deleteTsNoteInfo"  parameterType="string">
+		delete from TS_NOTE_INFO where NT_ID = #{ntId}
+	</delete>
+	
+	<select id="listTsNoteInfo" resultMap="TsNoteInfo" parameterType="com.efs.common.noteinfo.mapper.TsNoteInfo">
+
+		SELECT *
+			FROM (SELECT NT_ID,
+			NT_HEAD,
+			NT_CONTENT,
+			NT_SEND_USER,
+			NT_SEND_DATE,
+			NT_SEND_TIME,
+			ISNULL(T2.NR_USER_ID, '0') AS NT_STATUS
+			FROM TS_NOTE_INFO T
+			LEFT JOIN TS_NOTE_READ_INFO T2
+			ON T.NT_ID = T2.NR_NOTE_ID
+			AND T2.NR_USER_ID = #{ntReadUser}) TT
+		WHERE 1=1
+
+		<if test="ntHead != null and ntHead != ''">
+			and TT.NT_HEAD LIKE  '%${ntHead}%'
+		</if>
+
+			ORDER BY TT.NT_STATUS, TT.NT_ID DESC
+
+	</select>
+
+	<select id="getUnReadInfoCount" resultType="int" parameterType="string">
+		SELECT COUNT(1) AS NO_CNT FROM TS_NOTE_INFO T WHERE NOT EXISTS (
+		SELECT 1 FROM TS_NOTE_READ_INFO T2 WHERE T2.NR_NOTE_ID=T.NT_ID
+		AND T2.NR_USER_ID = #{userId}
+		)
+	</select>
+
+	<select id="listUserUnReadNotes" resultMap="TsNoteInfo" parameterType="string">
+		SELECT T.*,
+		(TO_DATE((T.NT_SEND_DATE || ' ' || T.NT_SEND_TIME),
+		'YYYY-MM-DD HH24:MI:SS') - SYSDATE) AS READ_DIFF_DAY,
+		(TO_DATE((T.NT_SEND_DATE || ' ' || T.NT_SEND_TIME),
+		'YYYY-MM-DD HH24:MI:SS') - SYSDATE) * 24 AS READ_DIFF_H,
+		(TO_DATE((T.NT_SEND_DATE || ' ' || T.NT_SEND_TIME),
+		'YYYY-MM-DD HH24:MI:SS') - SYSDATE) * 24 * 60 AS READ_DIFF_M
+		FROM TS_NOTE_INFO T
+		WHERE NOT EXISTS (SELECT 1
+		FROM TS_NOTE_READ_INFO T2
+		WHERE T2.NR_NOTE_ID = T.NT_ID
+		AND T2.NR_USER_ID = #{userId})
+		AND ROWNUM &lt; 11
+		ORDER BY T.NT_ID DESC
+	</select>
+
+	<update id="readNoteInfo" parameterType="map">
+		MERGE INTO TS_NOTE_READ_INFO AS T
+		USING (SELECT #{ntId} AS NR_NOTE_ID, #{ntReadUser} AS NR_USER_ID) AS S
+		ON (T.NR_NOTE_ID = S.NR_NOTE_ID AND T.NR_USER_ID = S.NR_USER_ID)
+		WHEN MATCHED THEN
+		UPDATE
+		SET T.NR_DATE = CONVERT(varchar(100), GETDATE(), 23),
+		T.NR_TIME = CONVERT(varchar(100), GETDATE(), 24)
+		WHEN NOT MATCHED THEN
+		INSERT
+		VALUES
+		(#{ntId},
+		#{ntReadUser},
+		CONVERT(varchar(100), GETDATE(), 23),
+		CONVERT(varchar(100), GETDATE(), 24));
+	</update>
+
+	<delete id="deleteNoteReadInfo" parameterType="string">
+		DELETE FROM TS_NOTE_READ_INFO WHERE NR_NOTE_ID  = #{ntId}
+	</delete>
+</mapper>

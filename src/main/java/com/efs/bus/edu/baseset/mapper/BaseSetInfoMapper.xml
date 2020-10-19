@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.bus.edu.baseset.mapper.BaseSetInfoMapper">
+	<cache/>
+	<resultMap type="com.efs.bus.edu.baseset.mapper.BaseSetInfo" id="BaseSetInfo">
+		<id property="bsTerm" column="BS_TERM"/>
+		<result property="bsUser" column="BS_USER"/>
+		<result property="bsUserNm" column="BS_USER_NM"/>
+		<result property="bsDate" column="BS_DATE"/>
+		<result property="bsTime" column="BS_TIME"/>
+	</resultMap>
+
+	<parameterMap id="paramMap" type="java.util.HashMap">
+		<parameter property="bsTerm" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
+		<parameter property="bsUser" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
+		<parameter property="res" jdbcType="VARCHAR" javaType="java.lang.String" mode="OUT"/>
+	</parameterMap>
+	
+	<select id="getBaseSetInfo" resultMap="BaseSetInfo" parameterType="string">
+		select * from BASE_SET_INFO where BS_TERM = #{bsTerm}
+	</select>
+	
+	<insert id="addBaseSetInfo" parameterType="com.efs.bus.edu.baseset.mapper.BaseSetInfo">
+		insert into BASE_SET_INFO(
+		
+			BS_TERM
+			,
+		
+			BS_USER
+			,
+		
+			BS_DATE
+			,
+		
+			BS_TIME
+			)
+			values(
+					#{bsTerm}
+					,
+					#{bsUser}
+					,
+					#{bsDate}
+					,
+					#{bsTime}
+		)
+	</insert>
+	
+	<select id="updateBaseSetInfo" parameterMap="paramMap" statementType="CALLABLE" resultType="java.lang.String">
+		{call dbo.PROC_INIT_BASE_DATA(?,?,?)}
+	</select>
+	
+	<delete id="deleteBaseSetInfo"  parameterType="string">
+		delete from BASE_SET_INFO where BS_TERM = #{bsTerm}
+	</delete>
+	
+	<select id="listBaseSetInfo" resultMap="BaseSetInfo" parameterType="com.efs.bus.edu.baseset.mapper.BaseSetInfo">
+		select T.* from BASE_SET_INFO T where 1=1
+		
+			<if test="bsUser != null and bsUser != ''">
+				and T.BS_USER = #{bsUser}
+			</if>
+			<if test="bsUserNm != null and bsUserNm != ''">
+				and T.BS_USER_NM = #{bsUserNm}
+			</if>
+			<if test="bsDate != null and bsDate != ''">
+				and T.BS_DATE = #{bsDate}
+			</if>
+			<if test="bsTime != null and bsTime != ''">
+				and T.BS_TIME = #{bsTime}
+			</if>
+		
+		ORDER BY BS_TERM DESC
+	</select>
+
+	<select id="checkHasBaseSet" parameterType="string" resultType="int">
+		SELECT COUNT(1) AS CNT FROM BASE_SET_INFO WHERE BS_TERM=#{bsTerm}
+	</select>
+</mapper>

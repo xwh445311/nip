@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.common.auth.org.mapper.TsOrgInfoMapper">
+	<resultMap type="com.efs.common.auth.org.mapper.TsOrgInfo" id="TsOrgInfo">
+		<id property="oiCode" column="OI_CODE"/>
+		<result property="oiName" column="OI_NAME"/>
+		<result property="oiSfdz" column="OI_SFDZ"/>
+		<result property="oiKhyh" column="OI_KHYH"/>
+		<result property="oiYhzh" column="OI_YHZH"/>
+		<result property="oiZzsh" column="OI_ZZSH"/>
+		<result property="oiLxdh" column="OI_LXDH"/>
+		<result property="oiLxr" column="OI_LXR"/>
+		<result property="oiDwfzr" column="OI_DWFZR"/>
+		<result property="oiYwfzr" column="OI_YWFZR"/>
+		<result property="oiStatus" column="OI_STATUS"/>
+		<result property="oiPartCode" column="OI_PART_CODE"/>
+		<result property="oiType" column="OI_TYPE"/>
+		<result property="oiOrder" column="OI_ORDER"/>
+		<result property="addDate" column="ADD_DATE"/>
+		<result property="addTime" column="ADD_TIME"/>
+		<result property="addUser" column="ADD_USER"/>
+		<result property="updDate" column="UPD_DATE"/>
+		<result property="updTime" column="UPD_TIME"/>
+		<result property="updUser" column="UPD_USER"/>
+	</resultMap>
+	
+	<select id="getTsOrgInfo" resultMap="TsOrgInfo" parameterType="string">
+		select * from TS_ORG_INFO where OI_CODE = #{oiCode}
+	</select>
+	
+	<insert id="addTsOrgInfo" parameterType="com.efs.common.auth.org.mapper.TsOrgInfo">
+		insert into TS_ORG_INFO(
+		OI_CODE
+		,
+		OI_NAME
+		,
+		OI_SFDZ
+		,
+		OI_KHYH
+		,
+		OI_YHZH
+		,
+		OI_ZZSH
+		,
+		OI_LXDH
+		,
+		OI_LXR
+		,
+		OI_DWFZR
+		,
+		OI_YWFZR
+		,
+		OI_STATUS
+		,
+		OI_PART_CODE
+		,
+		OI_TYPE
+		,
+		OI_ORDER
+		,
+		ADD_DATE
+		,
+		ADD_TIME
+		,
+		ADD_USER
+		,
+		UPD_DATE
+		,
+		UPD_TIME
+		,
+		UPD_USER
+		)
+		values(
+		#{oiCode}
+		,
+		#{oiName}
+		,
+		#{oiSfdz}
+		,
+		#{oiKhyh}
+		,
+		#{oiYhzh}
+		,
+		#{oiZzsh}
+		,
+		#{oiLxdh}
+		,
+		#{oiLxr}
+		,
+		#{oiDwfzr}
+		,
+		#{oiYwfzr}
+		,
+		#{oiStatus}
+		,
+		#{oiPartCode}
+		,
+		#{oiType}
+		,
+		#{oiOrder}
+		,
+		#{addDate}
+		,
+		#{addTime}
+		,
+		#{addUser}
+		,
+		#{updDate}
+		,
+		#{updTime}
+		,
+		#{updUser}
+		)
+	</insert>
+	
+	<update id="updateTsOrgInfo" parameterType="com.efs.common.auth.org.mapper.TsOrgInfo">
+
+		 UPDATE TS_ORG_INFO
+		   SET
+		   OI_NAME = #{oiName}
+			,
+		   OI_SFDZ = #{oiSfdz}
+			,
+		   OI_KHYH = #{oiKhyh}
+			,
+		   OI_YHZH = #{oiYhzh}
+			,
+		   OI_ZZSH = #{oiZzsh}
+			,
+		   OI_LXDH = #{oiLxdh}
+			,
+		   OI_LXR = #{oiLxr}
+			,
+		   OI_DWFZR = #{oiDwfzr}
+			,
+		   OI_YWFZR = #{oiYwfzr}
+			,
+		   OI_STATUS = #{oiStatus}
+			,
+		   OI_PART_CODE = #{oiPartCode}
+			,
+		   OI_TYPE = #{oiType}
+			,
+		   OI_ORDER = #{oiOrder}
+			,
+		   ADD_DATE = #{addDate}
+			,
+		   ADD_TIME = #{addTime}
+			,
+		   ADD_USER = #{addUser}
+			,
+		   UPD_DATE = #{updDate}
+			,
+		   UPD_TIME = #{updTime}
+			,
+		   UPD_USER = #{updUser}
+		 WHERE OI_CODE = #{oiCode}
+	</update>
+	
+	<delete id="deleteTsOrgInfo"  parameterType="string">
+		delete from TS_ORG_INFO where OI_CODE = #{oiCode}
+	</delete>
+	
+	<select id="listTsOrgInfo" resultMap="TsOrgInfo" parameterType="com.efs.common.auth.org.mapper.TsOrgInfo">
+		select T.* from TS_ORG_INFO T where 1=1
+		
+			<if test="oiName != null and oiName != ''">
+				and T.OI_NAME = #{oiName}
+			</if>
+			<if test="oiStatus != null and oiStatus != ''">
+				and T.OI_STATUS = #{oiStatus}
+			</if>
+			<if test="addDate != null and addDate != ''">
+				and T.ADD_DATE = #{addDate}
+			</if>
+			<if test="addTime != null and addTime != ''">
+				and T.ADD_TIME = #{addTime}
+			</if>
+			<if test="addUser != null and addUser != ''">
+				and T.ADD_USER = #{addUser}
+			</if>
+			<if test="updDate != null and updDate != ''">
+				and T.UPD_DATE = #{updDate}
+			</if>
+			<if test="updTime != null and updTime != ''">
+				and T.UPD_TIME = #{updTime}
+			</if>
+			<if test="updUser != null and updUser != ''">
+				and T.UPD_USER = #{updUser}
+			</if>
+		
+		ORDER BY OI_CODE
+	</select>
+
+	<select id="listActiveOrgInfo" resultMap="TsOrgInfo">
+		SELECT T.* FROM TS_ORG_INFO T WHERE T.OI_STATUS='1' ORDER BY T.OI_CODE
+	</select>
+
+	<select id="getUserOrgCount" parameterType="string" resultType="int">
+		SELECT COUNT(1) AS RES FROM TS_USER_ORG_INFO T WHERE T.ORG_CODE=#{oiCode}
+	</select>
+
+	<select id="listBranchOrg" resultMap="TsOrgInfo">
+		select * from TS_ORG_INFO t WHERE T.OI_TYPE='01' AND T.OI_STATUS='1' ORDER BY T.OI_CODE
+	</select>
+</mapper>

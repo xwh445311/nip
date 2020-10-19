@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.bus.base.qylsl.mapper.TbSbqylMapper">
+	<resultMap type="com.efs.bus.base.qylsl.mapper.TbSbqyl" id="TbSbqyl">
+		<id property="dbId" column="DB_ID"/>
+		<result property="xzdm" column="XZDM"/>
+		<result property="sbkj" column="SBKJ"/>
+		<result property="qyl" column="QYL"/>
+		<result property="xzmc" column="XZMC"/>
+	</resultMap>
+	
+	<select id="getTbSbqyl" resultMap="TbSbqyl" parameterType="string">
+		select * from TB_SBQYL where DB_ID = #{dbId}
+	</select>
+	
+	<insert id="addTbSbqyl" parameterType="com.efs.bus.base.qylsl.mapper.TbSbqyl">
+		insert into TB_SBQYL(
+		
+			DB_ID
+			,
+		
+			XZDM
+			,
+		
+			SBKJ
+			,
+		
+			QYL
+			)
+			values(
+					#{dbId}
+					,
+					#{xzdm}
+					,
+					#{sbkj}
+					,
+					#{qyl}
+		)
+	</insert>
+	
+	<update id="updateTbSbqyl" parameterType="com.efs.bus.base.qylsl.mapper.TbSbqyl">
+		UPDATE TB_SBQYL
+		   SET
+			   QYL = #{qyl}
+		 WHERE DB_ID = #{dbId}
+	</update>
+	
+	<delete id="deleteTbSbqyl"  parameterType="string">
+		delete from TB_SBQYL where DB_ID = #{dbId}
+	</delete>
+	
+	<select id="listTbSbqyl" resultMap="TbSbqyl" parameterType="com.efs.bus.base.qylsl.mapper.TbSbqyl">
+		select T.*,S.XZMC from TB_SBQYL T LEFT JOIN TB_YSXZ_INFO S ON T.XZDM = S.XZDM where 1=1
+		
+			<if test="xzdm != null and xzdm != ''">
+				and T.XZDM = #{xzdm}
+			</if>
+			<if test="sbkj != null and sbkj != ''">
+				and T.SBKJ = #{sbkj}
+			</if>
+			<if test="qyl != null and qyl != ''">
+				and T.QYL = #{qyl}
+			</if>
+		
+		ORDER BY DB_ID
+	</select>
+</mapper>

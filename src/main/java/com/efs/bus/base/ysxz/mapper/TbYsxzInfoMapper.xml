@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.bus.base.ysxz.mapper.TbYsxzInfoMapper">
+	<resultMap type="com.efs.bus.base.ysxz.mapper.TbYsxzInfo" id="TbYsxzInfo">
+		<id property="xzdm" column="XZDM"/>
+		<result property="xzmc" column="XZMC"/>
+		<result property="zzsbz" column="ZZSBZ"/>
+		<result property="znjjsl" column="ZNJJSL"/>
+		<result property="delbz" column="DELBZ"/>
+		<result property="csrq" column="CSRQ"/>
+	</resultMap>
+	
+	<select id="getTbYsxzInfo" resultMap="TbYsxzInfo" parameterType="string">
+		select * from TB_YSXZ_INFO where XZDM = #{xzdm}
+	</select>
+	
+	<insert id="addTbYsxzInfo" parameterType="com.efs.bus.base.ysxz.mapper.TbYsxzInfo">
+		insert into TB_YSXZ_INFO(
+		
+			XZDM
+			,
+		
+			XZMC
+			,
+		
+			ZZSBZ
+			,
+		
+			ZNJJSL
+			,
+		
+			DELBZ
+			,
+		
+			CSRQ
+			)
+			values(
+					#{xzdm}
+					,
+					#{xzmc}
+					,
+					#{zzsbz}
+					,
+					#{znjjsl}
+					,
+					'0'
+					,
+					#{csrq}
+		)
+	</insert>
+	
+	<update id="updateTbYsxzInfo" parameterType="com.efs.bus.base.ysxz.mapper.TbYsxzInfo">
+		UPDATE TB_YSXZ_INFO
+		   SET 
+			   XZMC = #{xzmc}
+				,
+			   ZZSBZ = #{zzsbz}
+				,
+			   ZNJJSL = #{znjjsl}
+				,
+			   DELBZ = #{delbz}
+				,
+			   CSRQ = #{csrq}
+		 WHERE XZDM = #{xzdm}
+	</update>
+	
+	<delete id="deleteTbYsxzInfo"  parameterType="string">
+		delete from TB_YSXZ_INFO where XZDM = #{xzdm}
+	</delete>
+	
+	<select id="listTbYsxzInfo" resultMap="TbYsxzInfo" parameterType="com.efs.bus.base.ysxz.mapper.TbYsxzInfo">
+		select T.* from TB_YSXZ_INFO T where 1=1
+		
+			<if test="xzmc != null and xzmc != ''">
+				and T.XZMC LIKE '%${xzmc}%'
+			</if>
+			<if test="zzsbz != null and zzsbz != ''">
+				and T.ZZSBZ = #{zzsbz}
+			</if>
+			<if test="znjjsl != null and znjjsl != ''">
+				and T.ZNJJSL = #{znjjsl}
+			</if>
+			<if test="delbz != null and delbz != ''">
+				and T.DELBZ = #{delbz}
+			</if>
+			<if test="csrq != null and csrq != ''">
+				and T.CSRQ = #{csrq}
+			</if>
+		
+		ORDER BY XZDM
+	</select>
+
+	<select id="listAllValidYsxz" resultMap="TbYsxzInfo">
+		select * from TB_YSXZ_INFO t where t.delbz = '0' order by t.xzdm
+	</select>
+</mapper>

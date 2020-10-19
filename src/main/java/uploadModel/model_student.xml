@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+desc:描述信息，可以为空
+bean:解析的对应的JAVA BEAN的完整类名，必须
+startrow:数据解析起始行号，从1开始,如果为空表示从第1行开始解析
+endrow:数据的结束的行号。如果为空在解析时遇到第一个空行就为结束行
+startcol:数据解析开始的列号，索引从1开始，如果为空表示从第一列开始解析
+endcol:数据结束列的行号，必输
+skipcol：解析时遇到配置的列就跳过不解析，多列用 ,逗号隔开
+
+字段解析校验
+inputtype:单元格中的数据类型，如果指定，则单元格中的数据必须为此类型.不输入的话则由系统自动解析。sring：字符串类型,number:数字类型, date日期类型
+targettype:字段转换的目标类型，string:字符串类型,int:整数类型,double:小数类型，date:日期类型.必输，且为三者之一。但如果转换失败，则表示解析失败。
+format:向目标类型转换时，配合将字段进行格式化：支持 数 字 转换为 字符串，日期转换为字符串，字符串转换为日期的匹配格式。
+		格式规则分别与对应JAVA类中进行转换匹配的格式要求一致。
+maxlength:最大长度。如果为空表示不限制长度
+required:是否必输。true:表示是,false或不填表示否.默认为true
+regular:输入的内容须要满足的格式
+convertHandler:自定义属性转换器，即能输入的属性进行转换
+ -->
+<config xmlns="http://www.example.org/model_salary"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.example.org/model_salary excel_upload.xsd"
+		>
+	<desc>学生信息上传</desc>
+	<bean>com.efs.common.auth.user.mapper.TsUserInfo</bean>
+	<startrow>4</startrow>
+	<startcol>1</startcol>
+	<endcol>13</endcol>
+	
+	<fields>
+		<field inputtype="string" desc="学号" >uiId</field>
+		<field inputtype="string" desc="姓名" >uiName</field>
+		<field inputtype="string" desc="性别"  convertHandler="com.efs.bus.upload.UploadSexConvertHandler">uiSex</field>
+		<field inputtype="string" desc="出生日期"  regular="[0-9]{4}-[0-9]{2}-[0-9]{2}" >uiBirthday</field>
+		<field inputtype="string" desc="入学日期" required="false" regular="[0-9]{4}-[0-9]{2}-[0-9]{2}">usEntryDate</field>
+		<field inputtype="string" desc="学籍状态"  convertHandler="com.efs.bus.upload.UploadSchStatusConvertHandller" >usSchStatus</field>
+		<field inputtype="string" desc="第一联系人手机号"  >usFirstPhone</field>
+		<field inputtype="string" desc="第一联系人姓名"  >usFirstName</field>
+		<field inputtype="string" desc="第一联系人与学生关系"  >usFirstShip</field>
+		<field inputtype="string" desc="第二联系人手机号" required="false" >usSecPhon</field>
+		<field inputtype="string" desc="第二联系人姓名" required="false" >usSecName</field>
+		<field inputtype="string" desc="第二联系人与学生关系" required="false" >usSecShip</field>
+		<field inputtype="string" desc="地址" required="false" >usAddr</field>
+	</fields>
+</config>

@@ -1,0 +1,657 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.common.auth.user.mapper.TsUserInfoMapper">
+	<resultMap type="com.efs.common.auth.user.mapper.TsUserInfo" id="TsUserInfo">
+		<id property="uiId" column="UI_ID"/>
+		<result property="uiName" column="UI_NAME"/>
+		<result property="uiPassword" column="UI_PASSWORD"/>
+		<result property="uiStatus" column="UI_STATUS"/>
+		<result property="uiEmail" column="UI_EMAIL"/>
+		<result property="uiMobile" column="UI_MOBILE"/>
+		<result property="uiBusType" column="UI_BUS_TYPE"/>
+		<result property="uiIsSup" column="UI_IS_SUP"/>
+
+		<result property="uiShortName" column="UI_SHORT_NAME"/>
+		<result property="uiSex" column="UI_SEX"/>
+		<result property="uiBirthday" column="UI_BIRTHDAY"/>
+		<result property="uiAge" column="UI_AGE"/>
+		<result property="uiChangePass" column="UI_CHANGE_PASS"/>
+		<result property="uiBookCount" column="UI_BOOK_COUNT"/>
+		<result property="uiMobile" column="UI_MOBILE"/>
+		<result property="uiEmail" column="UI_EMAIL"/>
+		<result property="utWorkStatus" column="UT_WORK_STATUS"/>
+		<result property="utEntryDate" column="UT_ENTRY_DATE"/>
+		<result property="utLeaveDate" column="UT_LEAVE_DATE"/>
+		<result property="utLevel" column="UT_LEVEL"/>
+		<result property="utLevelVal" column="UT_LEVEL_VAL"/>
+		<result property="utDuty" column="UT_DUTY"/>
+		<result property="utDutyVal" column="UT_DUTY_VAL"/>
+		<result property="utOrg" column="UT_ORG"/>
+
+		<result property="usFirstPhone" column="US_FIRST_PHONE"/>
+		<result property="usFirstName" column="US_FIRST_NAME"/>
+		<result property="usFirstShip" column="US_FIRST_SHIP"/>
+		<result property="usSecPhon" column="US_SEC_PHON"/>
+		<result property="usSecName" column="US_SEC_NAME"/>
+		<result property="usSecShip" column="US_SEC_SHIP"/>
+		<result property="usClass" column="US_CLASS"/>
+		<result property="usClassName" column="US_CLASS_NAME"/>
+		<result property="usEntryDate" column="US_ENTRY_DATE"/>
+		<result property="usSchStatus" column="US_SCH_STATUS"/>
+		<result property="usAddr" column="US_ADDR"/>
+
+		<result property="uiLastIp" column="UI_LAST_IP"/>
+		<result property="uiLastTime" column="UI_LAST_TIME"/>
+		<result property="uiThisIp" column="UI_THIS_IP"/>
+		<result property="uiThisTime" column="UI_THIS_TIME"/>
+		<result property="uiAddDate" column="UI_ADD_DATE"/>
+		<result property="uiAddTime" column="UI_ADD_TIME"/>
+		<result property="uiAddUser" column="UI_ADD_USER"/>
+		<result property="uiUpdDate" column="UI_UPD_DATE"/>
+		<result property="uiUpdTime" column="UI_UPD_TIME"/>
+		<result property="uiUpdUser" column="UI_UPD_USER"/>
+
+		<collection property="uiRoles" ofType="com.efs.common.auth.role.mapper.TsRoleInfo" resultMap="com.efs.common.auth.role.mapper.TsRoleInfoMapper.TsRoleInfo" />
+
+		<collection property="userOrgList" ofType="com.efs.common.auth.org.mapper.TsOrgInfo" resultMap="com.efs.common.auth.org.mapper.TsOrgInfoMapper.TsOrgInfo" />
+
+	</resultMap>
+	
+	<select id="getTsUserInfo" resultMap="TsUserInfo" parameterType="string">
+		SELECT U.*, R.*,o.*,'' as UI_AGE
+		  FROM TS_USER_INFO u
+		  LEFT JOIN TS_USER_ROLE_INFO t
+			ON u.UI_ID = t.UR_USER_ID
+		  LEFT JOIN TS_ROLE_INFO R
+			ON R.RI_ID = T.UR_ROLE_ID
+		  LEFT JOIN TS_USER_ORG_INFO s
+		  	ON u.UI_ID = s.USER_ID
+		  LEFT JOIN TS_ORG_INFO o
+		  	ON s.ORG_CODE = o.OI_CODE
+		 WHERE UI_ID = #{uiId}
+
+	</select>
+	
+	<insert id="addTsUserInfo" parameterType="com.efs.common.auth.user.mapper.TsUserInfo">
+		insert into TS_USER_INFO(
+		UI_ID
+		,
+		UI_NAME
+		,
+		UI_PASSWORD
+		,
+		UI_STATUS
+		,
+		UI_IS_SUP
+		,
+		UI_BUS_TYPE
+		,
+		UI_SHORT_NAME
+		,
+		UI_SEX
+		,
+		UI_BIRTHDAY
+		,
+		UI_CHANGE_PASS
+		,
+		UI_BOOK_COUNT
+		,
+		UI_MOBILE
+		,
+		UI_EMAIL
+		,
+		UT_WORK_STATUS
+		,
+		UT_ENTRY_DATE
+		,
+		UT_LEAVE_DATE
+		,
+		UT_LEVEL
+		,
+		UT_DUTY
+		,
+		US_FIRST_PHONE
+		,
+		US_FIRST_NAME
+		,
+		US_FIRST_SHIP
+		,
+		US_SEC_PHON
+		,
+		US_SEC_NAME
+		,
+		US_SEC_SHIP
+		,
+		US_CLASS
+		,
+		US_ENTRY_DATE
+		,
+		US_SCH_STATUS
+		,
+		US_ADDR
+		,
+		UI_LAST_IP
+		,
+		UI_LAST_TIME
+		,
+		UI_THIS_IP
+		,
+		UI_THIS_TIME
+		,
+		UI_ADD_DATE
+		,
+		UI_ADD_TIME
+		,
+		UI_ADD_USER
+		,
+		UI_UPD_DATE
+		,
+		UI_UPD_TIME
+		,
+		UI_UPD_USER
+		)
+		values(
+		#{uiId}
+		,
+		#{uiName}
+		,
+		#{uiPassword}
+		,
+		#{uiStatus}
+		,
+		#{uiIsSup}
+		,
+		#{uiBusType}
+		,
+		#{uiShortName}
+		,
+		#{uiSex}
+		,
+		#{uiBirthday}
+		,
+		#{uiChangePass}
+		,
+		#{uiBookCount}
+		,
+		#{uiMobile}
+		,
+		#{uiEmail}
+		,
+		#{utWorkStatus}
+		,
+		#{utEntryDate}
+		,
+		#{utLeaveDate}
+		,
+		#{utLevel}
+		,
+		#{utDuty}
+		,
+		#{usFirstPhone}
+		,
+		#{usFirstName}
+		,
+		#{usFirstShip}
+		,
+		#{usSecPhon}
+		,
+		#{usSecName}
+		,
+		#{usSecShip}
+		,
+		#{usClass}
+		,
+		#{usEntryDate}
+		,
+		#{usSchStatus}
+		,
+		#{usAddr}
+		,
+		#{uiLastIp}
+		,
+		#{uiLastTime}
+		,
+		#{uiThisIp}
+		,
+		#{uiThisTime}
+		,
+		TO_CHAR(SYSDATE,'YYYY-MM-DD')
+		,
+		TO_CHAR(SYSDATE,'HH24:MI:SS')
+		,
+		#{uiAddUser}
+		,
+		TO_CHAR(SYSDATE,'YYYY-MM-DD')
+		,
+		TO_CHAR(SYSDATE,'HH24:MI:SS')
+		,
+		#{uiUpdUser}
+		)
+	</insert>
+	
+	<update id="updateTsUserInfo" parameterType="com.efs.common.auth.user.mapper.TsUserInfo">
+		UPDATE TS_USER_INFO
+		   SET
+		   UI_NAME = #{uiName}
+			,
+		   UI_STATUS = #{uiStatus}
+			,
+		   UI_EMAIL = #{uiEmail}
+			,
+		   UI_MOBILE = #{uiMobile}
+		   ,
+		   UI_BUS_TYPE = #{uiBusType}
+		   ,
+		   UI_LAST_IP = #{uiLastIp}
+			,
+		   UI_LAST_TIME = #{uiLastTime}
+			,
+		   UI_THIS_IP = #{uiThisIp}
+			,
+		   UI_THIS_TIME = #{uiThisTime}
+			,
+		   UI_UPD_DATE = TO_CHAR(SYSDATE,'YYYY-MM-DD')
+			,
+		   UI_UPD_TIME = TO_CHAR(SYSDATE,'HH24:MI:SS')
+			,
+		   UI_UPD_USER = #{uiUpdUser}
+		   ,
+		   UI_IS_SUP = #{uiIsSup}
+		   ,
+		   UI_SHORT_NAME= #{uiShortName}
+			,
+			UI_SEX= #{uiSex}
+			,
+			UI_BIRTHDAY= #{uiBirthday}
+			,
+			UI_BOOK_COUNT= #{uiBookCount}
+
+		 WHERE UI_ID = #{uiId}
+	</update>
+	
+	<delete id="deleteTsUserInfo"  parameterType="string">
+		delete from TS_USER_INFO where UI_ID = #{uiId}
+	</delete>
+	
+	<select id="listTsUserInfo" resultMap="TsUserInfo" parameterType="com.efs.common.auth.user.mapper.TsUserInfo">
+		select T.*,FUNC_GET_AGE(T.UI_BIRTHDAY) as UI_AGE from TS_USER_INFO T where 1=1
+		
+			<if test="uiName != null and uiName != ''">
+				and T.UI_NAME LIKE  '%${uiName}%'
+			</if>
+			<if test="uiPassword != null and uiPassword != ''">
+				and T.UI_PASSWORD = #{uiPassword}
+			</if>
+			<if test="uiStatus != null and uiStatus != ''">
+				and T.UI_STATUS = #{uiStatus}
+			</if>
+			<if test="uiEmail != null and uiEmail != ''">
+				and T.UI_EMAIL = #{uiEmail}
+			</if>
+			<if test="uiMobile != null and uiMobile != ''">
+				and T.UI_MOBILE = #{uiMobile}
+			</if>
+
+			<if test="uiBusType != null and uiBusType != ''">
+				and T.UI_BUS_TYPE = #{uiBusType}
+			</if>
+
+			<if test="isSuperUser neq 'Y'.toString()">
+				AND ( T.UI_IS_SUP &lt;&gt; '1' OR T.UI_IS_SUP IS NULL )
+			</if>
+		
+		ORDER BY T.UI_STATUS DESC, UI_ID DESC
+	</select>
+
+	<update id="updateUserLoginInfo" parameterType="com.efs.common.auth.user.mapper.TsUserInfo">
+		update TS_USER_INFO set UI_LAST_TIME = #{uiLastTime},
+								UI_THIS_TIME=#{uiThisTime},
+								UI_LAST_IP=#{uiLastIp},
+								UI_THIS_IP=#{uiThisIp}
+		where UI_ID=#{uiId}
+	</update>
+
+	<delete id="deleteUserRole" parameterType="string">
+		DELETE FROM TS_USER_ROLE_INFO WHERE UR_USER_ID=#{userId}
+	</delete>
+
+	<insert id="addUserRole" parameterType="map">
+		insert into TS_USER_ROLE_INFO (UR_ROLE_ID,UR_USER_ID)
+		<foreach collection="roleList" item="it" separator="UNION ALL" >
+			SELECT #{it.riId},#{userId} FROM DUAL
+		</foreach>
+	</insert>
+
+	<delete id="deleteUserOrgs" parameterType="string">
+		DELETE FROM TS_USER_ORG_INFO WHERE USER_ID=#{userId}
+	</delete>
+
+
+	<insert id="addUserOrgs" parameterType="map">
+		insert into TS_USER_ORG_INFO (ORG_CODE,USER_ID)
+		<foreach collection="orgList" item="it" separator="UNION ALL" >
+			SELECT #{it.oiCode},#{userId} FROM DUAL
+		</foreach>
+	</insert>
+
+	<select id="listStudentInfo" resultMap="TsUserInfo" parameterType="com.efs.common.auth.user.mapper.TsUserInfo">
+			SELECT UI_ID
+			  ,UI_NAME
+			  ,UI_STATUS
+			  ,UI_SEX
+			  ,UI_BIRTHDAY
+			  ,UI_BOOK_COUNT
+			  ,UI_MOBILE
+			  ,US_FIRST_PHONE
+			  ,US_FIRST_NAME
+			  ,US_FIRST_SHIP
+			  ,US_SEC_PHON
+			  ,US_SEC_NAME
+			  ,US_SEC_SHIP
+			  ,US_CLASS
+			  ,US_CLASS_NAME
+			  ,US_ENTRY_DATE
+			  ,US_SCH_STATUS
+			  ,US_ADDR
+			  ,UI_UPD_DATE
+			  ,UI_UPD_TIME
+			  ,UI_UPD_USER
+		  FROM TS_USER_INFO T
+		  WHERE 1=1
+			and T.UI_BUS_TYPE ='03'
+			<if test="uiId != null and uiId != ''">
+				and T.UI_ID = #{uiId}
+			</if>
+			<if test="uiName != null and uiName != ''">
+				and T.UI_NAME LIKE '%${uiName}%'
+			</if>
+			<if test="uiStatus != null and uiStatus != ''">
+				and T.UI_STATUS = #{uiStatus}
+			</if>
+			<if test="uiSex != null and uiSex != ''">
+				and T.UI_SEX = #{uiSex}
+			</if>
+			<if test="uiMobile != null and uiMobile != ''">
+				and T.UI_MOBILE = #{uiMobile}
+			</if>
+			<if test="usFirstPhone != null and usFirstPhone != ''">
+				and T.US_FIRST_PHONE = #{usFirstPhone}
+			</if>
+			<if test="usFirstName != null and usFirstName != ''">
+				and T.US_FIRST_NAME LIKE '%${usFirstName}%'
+			</if>
+			<if test="usFirstShip != null and usFirstShip != ''">
+				and T.US_FIRST_SHIP = #{usFirstShip}
+			</if>
+			<if test="usSecPhon != null and usSecPhon != ''">
+				and T.US_SEC_PHON = #{usSecPhon}
+			</if>
+			<if test="usSecName != null and usSecName != ''">
+				and T.US_SEC_NAME LIKE '%${usSecName}%'
+			</if>
+			<if test="usSecShip != null and usSecShip != ''">
+				and T.US_SEC_SHIP = #{usSecShip}
+			</if>
+			<if test="usClass != null and usClass != ''">
+				and T.US_CLASS = #{usClass}
+			</if>
+			<if test="usEntryDate != null and usEntryDate != ''">
+				and T.US_ENTRY_DATE = #{usEntryDate}
+			</if>
+			<if test="usSchStatus != null and usSchStatus != ''">
+				and T.US_SCH_STATUS = #{usSchStatus}
+			</if>
+			<if test="usAddr != null and usAddr != ''">
+				and T.US_ADDR = LIKE '%${usAddr}%'
+			</if>
+			<if test="uiUpdDate != null and uiUpdDate != ''">
+				and T.UI_UPD_DATE = #{uiUpdDate}
+			</if>
+			<if test="uiUpdTime != null and uiUpdTime != ''">
+				and T.UI_UPD_TIME = #{uiUpdTime}
+			</if>
+			<if test="uiUpdUser != null and uiUpdUser != ''">
+				and T.UI_UPD_USER = #{uiUpdUser}
+			</if>
+
+		ORDER BY US_CLASS, UI_ID
+	</select>
+
+	<select id="listTeacherInfoNoPage" resultMap="TsUserInfo" parameterType="com.efs.common.auth.user.mapper.TsUserInfo">
+		SELECT UI_ID
+				,UI_NAME
+				,UI_STATUS
+				,UI_BUS_TYPE
+				,UI_SHORT_NAME
+				,UI_SEX
+				,UI_BIRTHDAY
+				,UI_MOBILE
+				,UI_EMAIL
+				,UT_WORK_STATUS
+				,UT_ENTRY_DATE
+				,UT_LEAVE_DATE
+				,UT_LEVEL
+				,dbo.FUN_GET_DB_PARAMVAL('BASE_TEACHER_LEVEL',UT_LEVEL) AS UT_LEVEL_VAL
+				,UT_DUTY
+				,dbo.FUN_GET_DB_PARAMVAL('BASE_DUTY',UT_DUTY) AS UT_DUTY_VAL
+				,US_ADDR
+				,UI_ADD_DATE
+				,UI_ADD_TIME
+				,UI_ADD_USER
+				,UI_UPD_DATE
+				,UI_UPD_TIME
+				,UI_UPD_USER
+
+		FROM dbo.TS_USER_INFO  T where 1=1
+
+		and T.UI_BUS_TYPE IN ('01','02')
+
+		<if test="uiId != null and uiId != ''">
+			and T.UI_ID = #{uiId}
+		</if>
+
+		<if test="uiName != null and uiName != ''">
+			and T.UI_NAME LIKE '%${uiName}%'
+		</if>
+
+		<if test="uiStatus != null and uiStatus != ''">
+			and T.UI_STATUS = #{uiStatus}
+		</if>
+
+		<if test="utWorkStatus != null and utWorkStatus != ''">
+			and T.UT_WORK_STATUS = #{utWorkStatus}
+		</if>
+		<if test="utEntryDate != null and utEntryDate != ''">
+			and T.UT_ENTRY_DATE = #{utEntryDate}
+		</if>
+		<if test="utLeaveDate != null and utLeaveDate != ''">
+			and T.UT_LEAVE_DATE = #{utLeaveDate}
+		</if>
+		<if test="utLevel != null and utLevel != ''">
+			and T.UT_LEVEL = #{utLevel}
+		</if>
+		<if test="utDuty != null and utDuty != ''">
+			and T.UT_DUTY = #{utDuty}
+		</if>
+		<if test="uiBusType != null and uiBusType != ''">
+			and T.UI_BUS_TYPE = #{uiBusType}
+		</if>
+
+		<if test="canHasScore == 'Y'.toString()">
+			and NOT EXISTS(
+			SELECT 1 FROM (
+			SELECT COUNT(1) AS CNT FROM BASE_SCH_SCORE_INFO T1 WHERE  T1.SS_TEACHER = T.UI_ID
+			<if test="scTerm != null and scTerm != ''">
+			AND T1.SS_TERM =#{scTerm}
+			</if>
+
+			<if test="scTerm == null or scTerm ==''">
+			AND T1.SS_TERM =dbo.FUN_GET_TERMCODE(NULL)
+			</if>
+
+			) TT WHERE TT.CNT >2
+			)
+		</if>
+
+		<if test="hasClassLeader == 'Y'.toString()">
+			AND EXISTS
+			(
+			SELECT 1 FROM BASE_SCH_CLASS_INFO T1 WHERE T1.SC_LEADER = T.UI_ID
+			<if test="scTerm != null and scTerm != ''">
+				AND T1.SC_TERM =#{scTerm}
+			</if>
+
+			<if test="scTerm == null or scTerm ==''">
+				AND T1.SC_TERM =dbo.FUN_GET_TERMCODE(NULL)
+			</if>
+			)
+		</if>
+
+		<if test="usClass != null and usClass != ''">
+			AND EXISTS
+			(
+			SELECT 1 FROM BASE_SCH_SCORE_INFO T1 WHERE T1.SS_TEACHER = T.UI_ID
+			AND T1.SS_CLASS=#{usClass}
+			<if test="scTerm != null and scTerm != ''">
+				AND T1.SS_TERM =#{scTerm}
+			</if>
+
+			<if test="scTerm == null or scTerm ==''">
+				AND T1.SS_TERM =dbo.FUN_GET_TERMCODE(NULL)
+			</if>
+			)
+		</if>
+
+
+		ORDER BY T.UI_BUS_TYPE, T.UI_NAME
+	</select>
+
+	<update id="updateStudentInfo" parameterType="com.efs.common.auth.user.mapper.TsUserInfo">
+		UPDATE TS_USER_INFO
+		   SET
+		   UI_NAME = #{uiName}
+			,
+		   UI_SEX = #{uiSex}
+			,
+		   UI_BIRTHDAY = #{uiBirthday}
+			,
+		   US_FIRST_PHONE = #{usFirstPhone}
+			,
+		   US_FIRST_NAME = #{usFirstName}
+			,
+		   US_FIRST_SHIP = #{usFirstShip}
+			,
+		   US_SEC_PHON = #{usSecPhon}
+			,
+		   US_SEC_NAME = #{usSecName}
+			,
+		   US_SEC_SHIP = #{usSecShip}
+			,
+		   US_CLASS = #{usClass}
+			,
+		   US_ENTRY_DATE = #{usEntryDate}
+			,
+		   US_SCH_STATUS = #{usSchStatus}
+			,
+		   US_ADDR = #{usAddr}
+			,
+		   UI_UPD_DATE = TO_CHAR(SYSDATE,'YYYY-MM-DD')
+			,
+		   UI_UPD_TIME = TO_CHAR(SYSDATE,'HH24:MI:SS')
+			,
+		   UI_UPD_USER = #{uiUpdUser}
+		 WHERE UI_ID = #{uiId}
+	</update>
+
+	<select id="checkShortNameExist" resultType="int" parameterType="map">
+		SELECT COUNT(1) AS CNT FROM TS_USER_INFO T WHERE T.UI_SHORT_NAME=#{uiShortName}
+
+		<if test="userId != null and userId != ''">
+			and T.UI_ID != #{userId}
+		</if>
+
+	</select>
+
+	<update id="updateTeacherInfo" parameterType="com.efs.common.auth.user.mapper.TsUserInfo">
+		UPDATE TS_USER_INFO SET
+		   UI_NAME = #{uiName}
+			,
+		   UI_SHORT_NAME = #{uiShortName}
+			,
+		   UI_SEX = #{uiSex}
+			,
+		   UI_BIRTHDAY = #{uiBirthday}
+			,
+		   UI_MOBILE = #{uiMobile}
+			,
+		   UI_EMAIL = #{uiEmail}
+			,
+		   UT_WORK_STATUS = #{utWorkStatus}
+			,
+		   UT_ENTRY_DATE = #{utEntryDate}
+			,
+		   UT_LEAVE_DATE = #{utLeaveDate}
+			,
+		   UT_LEVEL = #{utLevel}
+			,
+		   UT_DUTY = #{utDuty}
+			,
+		   US_ADDR = #{usAddr}
+			,
+		   UI_UPD_DATE = TO_CHAR(SYSDATE,'YYYY-MM-DD')
+			,
+		   UI_UPD_TIME = TO_CHAR(SYSDATE,'HH24:MI:SS')
+			,
+		   UI_UPD_USER = #{uiUpdUser}
+		 WHERE UI_ID = #{uiId}
+	</update>
+
+	<update id="updateUserStatus" parameterType="com.efs.common.auth.user.mapper.TsUserInfo">
+		<foreach collection="list" item="it" separator=";" close=";">
+			UPDATE TS_USER_INFO SET UI_STATUS=#{it.uiStatus},
+									UI_UPD_DATE = TO_CHAR(SYSDATE,'YYYY-MM-DD'),
+									UI_UPD_TIME = TO_CHAR(SYSDATE,'HH24:MI:SS'),
+									UI_UPD_USER = #{it.uiUpdUser}
+			WHERE UI_ID=#{it.uiId}
+		</foreach>
+	</update>
+
+	<update id="updateUserPassword" parameterType="map">
+		UPDATE TS_USER_INFO SET UI_PASSWORD=#{password}
+
+		<if test="uiChangePass != null and uiChangePass != ''">
+			, UI_CHANGE_PASS=#{uiChangePass}
+		</if>
+
+		WHERE UI_ID=#{uiId}
+	</update>
+
+	<select id="listAddressBook" resultMap="TsUserInfo" parameterType="map">
+		SELECT CASE
+				 WHEN T.US_FIRST_NAME IS NOT NULL THEN
+				  T.US_FIRST_NAME + '(' + T.UI_NAME + '的' +
+				  dbo.FUN_GET_DB_PARAMVAL('BASE_MEMBER_SHIP', T.US_FIRST_SHIP) + ')'
+				 ELSE
+				  T.UI_NAME
+			   END AS UI_NAME,
+			   T.UI_MOBILE,
+			   ISNULL(dbo.FUN_GET_DB_PARAMVAL('BASE_DUTY',T.UT_DUTY),'') AS UT_DUTY,
+			   T.US_CLASS_NAME,
+			   T.US_ADDR,
+			   T.UI_ID,
+			   '官店民族小学' AS UT_ORG
+		  FROM TS_USER_INFO T
+		 WHERE T.UI_ID = #{keyWork}
+			OR T.UI_NAME LIKE '%${keyWork}%'
+			OR T.US_FIRST_NAME LIKE '%${keyWork}%'
+			OR T.US_CLASS_NAME=#{keyWork}
+	</select>
+
+	<select id="listUserInOrg" resultMap="TsUserInfo" parameterType="string">
+		SELECT T.* FROM TS_USER_INFO T WHERE EXISTS(
+			SELECT 1 FROM TS_USER_ORG_INFO S WHERE S.USER_ID = T.UI_ID AND S.ORG_CODE = #{userOrg}
+		) ORDER BY T.UI_NAME
+	</select>
+</mapper>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.common.loginhis.mapper.TsUserLoginInfoMapper">
+	<resultMap type="com.efs.common.loginhis.mapper.TsUserLoginInfo" id="TsUserLoginInfo">
+		<id property="ulDbId" column="UL_DB_ID"/>
+		<result property="ulUserId" column="UL_USER_ID"/>
+		<result property="ulLoginIp" column="UL_LOGIN_IP"/>
+		<result property="ulLoginDate" column="UL_LOGIN_DATE"/>
+		<result property="ulLoginTime" column="UL_LOGIN_TIME"/>
+		<result property="ulExploreVersion" column="UL_EXPLORE_VERSION"/>
+	</resultMap>
+	
+	<select id="getTsUserLoginInfo" resultMap="TsUserLoginInfo" parameterType="string">
+		select * from TS_USER_LOGIN_INFO where UL_DB_ID = #{ulDbId}
+	</select>
+	
+	<insert id="addTsUserLoginInfo" parameterType="com.efs.common.loginhis.mapper.TsUserLoginInfo">
+		insert into TS_USER_LOGIN_INFO(
+		UL_USER_ID
+		,
+		UL_LOGIN_IP
+		,
+		UL_LOGIN_TIME
+		,
+		UL_EXPLORE_VERSION
+		,
+		UL_LOGIN_DATE
+		)
+		values(
+		#{ulUserId}
+		,
+		#{ulLoginIp}
+		,
+		#{ulLoginTime}
+		,
+		#{ulExploreVersion}
+		,
+		#{ulLoginDate}
+		)
+	</insert>
+	
+	<update id="updateTsUserLoginInfo" parameterType="com.efs.common.loginhis.mapper.TsUserLoginInfo">
+		UPDATE TS_USER_LOGIN_INFO
+		   SET 
+			,
+		   UL_USER_ID = #{ulUserId}
+			,
+		   UL_LOGIN_IP = #{ulLoginIp}
+			,
+		   UL_LOGIN_TIME = #{ulLoginTime}
+		 WHERE UL_DB_ID = #{ulDbId}
+	</update>
+	
+	<delete id="deleteTsUserLoginInfo"  parameterType="string">
+		delete from TS_USER_LOGIN_INFO where UL_DB_ID = #{ulDbId}
+	</delete>
+	
+	<select id="listTsUserLoginInfo" resultMap="TsUserLoginInfo" parameterType="com.efs.common.loginhis.mapper.TsUserLoginInfo">
+		select T.* from TS_USER_LOGIN_INFO T where 1=1
+		
+			<if test="ulUserId != null and ulUserId != ''">
+				and T.UL_USER_ID = #{ulUserId}
+			</if>
+			<if test="ulLoginIp != null and ulLoginIp != ''">
+				and T.UL_LOGIN_IP = #{ulLoginIp}
+			</if>
+			<if test="ulLoginTime != null and ulLoginTime != ''">
+				and T.UL_LOGIN_TIME = #{ulLoginTime}
+			</if>
+		
+		ORDER BY UL_DB_ID
+	</select>
+
+	<select id="getUserLoginStatics" resultType="java.util.HashMap">
+	WITH DATE_DAT AS
+	 (SELECT TO_CHAR(SYSDATE + T.DATE_DIFF, 'YYYY-MM-DD') AS DATA_DATE
+		FROM TS_DATE_DIFF T)
+	SELECT SUBSTR(T1.DATA_DATE, 6, 5) AS UL_LOGIN_DATE,
+		   COUNT(t2.UL_DB_ID) AS LOGIN_TIMES
+	  FROM DATE_DAT T1
+	  LEFT JOIN TS_USER_LOGIN_INFO T2
+		ON T1.DATA_DATE = T2.UL_LOGIN_DATE
+	 GROUP BY T1.DATA_DATE
+	 ORDER BY T1.DATA_DATE
+	</select>
+
+	<select id="getCurrUserLoginStatics" resultType="java.util.HashMap" parameterType="string">
+		WITH DATE_DAT AS
+		 (SELECT TO_CHAR(SYSDATE + T.DATE_DIFF, 'YYYY-MM-DD') AS DATA_DATE
+			FROM TS_DATE_DIFF T)
+		SELECT SUBSTR(T1.DATA_DATE, 6, 5) AS UL_LOGIN_DATE,
+			   COUNT(t2.UL_DB_ID) AS LOGIN_TIMES
+		  FROM DATE_DAT T1
+		  LEFT JOIN TS_USER_LOGIN_INFO T2
+			ON T1.DATA_DATE = T2.UL_LOGIN_DATE
+		   AND T2.UL_USER_ID = #{userId}
+		 GROUP BY T1.DATA_DATE
+		 ORDER BY T1.DATA_DATE
+	</select>
+</mapper>

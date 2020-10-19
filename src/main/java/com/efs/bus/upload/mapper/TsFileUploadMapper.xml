@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.bus.upload.mapper.TsFileUploadMapper">
+	<resultMap type="com.efs.bus.upload.mapper.TsFileUpload" id="TsFileUpload">
+		<id property="fpId" column="FP_ID"/>
+		<result property="fpName" column="FP_NAME"/>
+		<result property="fpLocName" column="FP_LOC_NAME"/>
+		<result property="fpAddUser" column="FP_ADD_USER"/>
+		<result property="fpAddDate" column="FP_ADD_DATE"/>
+		<result property="fpAddTime" column="FP_ADD_TIME"/>
+	</resultMap>
+	
+	<select id="getTsFileUpload" resultMap="TsFileUpload" parameterType="string">
+		select * from TS_FILE_UPLOAD where FP_ID = #{fpId}
+	</select>
+	
+	<insert id="addTsFileUpload" parameterType="com.efs.bus.upload.mapper.TsFileUpload">
+		insert into TS_FILE_UPLOAD(
+		
+			FP_ID
+			,
+		
+			FP_NAME
+			,
+		
+			FP_LOC_NAME
+			,
+		
+			FP_ADD_USER
+			,
+		
+			FP_ADD_DATE
+			,
+		
+			FP_ADD_TIME
+			)
+			values(
+					#{fpId}
+					,
+					#{fpName}
+					,
+					#{fpLocName}
+					,
+					#{fpAddUser}
+					,
+					#{fpAddDate}
+					,
+					#{fpAddTime}
+		)
+	</insert>
+	
+	<update id="updateTsFileUpload" parameterType="com.efs.bus.upload.mapper.TsFileUpload">
+		UPDATE TS_FILE_UPLOAD
+		   SET 
+			   FP_NAME = #{fpName}
+				,
+			   FP_LOC_NAME = #{fpLocName}
+				,
+			   FP_ADD_USER = #{fpAddUser}
+				,
+			   FP_ADD_DATE = #{fpAddDate}
+				,
+			   FP_ADD_TIME = #{fpAddTime}
+		 WHERE FP_ID = #{fpId}
+	</update>
+	
+	<delete id="deleteTsFileUpload"  parameterType="string">
+		delete from TS_FILE_UPLOAD where FP_ID = #{fpId}
+	</delete>
+	
+	<select id="listTsFileUpload" resultMap="TsFileUpload" parameterType="com.efs.bus.upload.mapper.TsFileUpload">
+		select T.* from TS_FILE_UPLOAD T where 1=1
+		
+			<if test="fpName != null and fpName != ''">
+				and T.FP_NAME = #{fpName}
+			</if>
+			<if test="fpLocName != null and fpLocName != ''">
+				and T.FP_LOC_NAME = #{fpLocName}
+			</if>
+			<if test="fpAddUser != null and fpAddUser != ''">
+				and T.FP_ADD_USER = #{fpAddUser}
+			</if>
+			<if test="fpAddDate != null and fpAddDate != ''">
+				and T.FP_ADD_DATE = #{fpAddDate}
+			</if>
+			<if test="fpAddTime != null and fpAddTime != ''">
+				and T.FP_ADD_TIME = #{fpAddTime}
+			</if>
+
+		<if test="fpIds != null and fpIds.size() > 0">
+			and T.FP_ID IN
+			<foreach item="item" index="index" collection="fpIds" open="(" separator="," close=")">
+					#{item}
+			</foreach>
+		</if>
+		
+		ORDER BY FP_ID
+	</select>
+</mapper>

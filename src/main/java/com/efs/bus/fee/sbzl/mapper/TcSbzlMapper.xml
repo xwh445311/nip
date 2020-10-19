@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.bus.fee.sbzl.mapper.TcSbzlMapper">
+	<resultMap type="com.efs.bus.fee.sbzl.mapper.TcSbzl" id="TcSbzl">
+		<id property="sbxh" column="SBXH"/>
+		<result property="yhbh" column="YHBH"/>
+		<result property="sbbh" column="SBBH"/>
+		<result property="sbkj" column="SBKJ"/>
+		<result property="sbmp" column="SBMP"/>
+		<result property="sbdd" column="SBDD"/>
+		<result property="sbzd" column="SBZD"/>
+		<result property="sbwz" column="SBWZ"/>
+		<result property="sbazrq" column="SBAZRQ"/>
+		<result property="jyjs" column="JYJS"/>
+		<result property="ysxz" column="YSXZ"/>
+		<result property="gsrk" column="GSRK"/>
+		<result property="gwjd" column="GWJD"/>
+		<result property="tsbz" column="TSBZ"/>
+		<result property="sbzt" column="SBZT"/>
+		<result property="bcbz" column="BCBZ"/>
+		<result property="zzsbz" column="ZZSBZ"/>
+		<result property="sfyf" column="SFYF"/>
+		<result property="jtjs" column="JTJS"/>
+		<result property="hbsl" column="HBSL"/>
+		<result property="zhhbrq" column="ZHHBRQ"/>
+		<result property="cbbh" column="CBBH"/>
+		<result property="cbxh1" column="CBXH1"/>
+		<result property="cbxh2" column="CBXH2"/>
+		<result property="ch" column="CH"/>
+		<result property="qh" column="QH"/>
+		<result property="bysf" column="BYSF"/>
+		<result property="xzrq" column="XZRQ"/>
+		<result property="czy" column="CZY"/>
+		<result property="khbh" column="KHBH"/>
+		<result property="zhzjrq" column="ZHZJRQ"/>
+		<result property="xName" column="X_NAME"/>
+		<result property="ghsj" column="GHSJ"/>
+		<result property="pzr1" column="PZR1"/>
+		<result property="pzr2" column="PZR2"/>
+		<result property="pzyy" column="PZYY"/>
+		<result property="ghczy" column="GHCZY"/>
+		<result property="cby" column="CBY"/>
+		<result property="oyhmc" column="OYHMC"/>
+		<result property="sblx" column="SBLX"/>
+		<result property="partenttableid" column="PARTENTTABLEID"/>
+		<result property="tbbh" column="TBBH"/>
+		<result property="yshs" column="YSHS"/>
+		<result property="qyl" column="QYL"/>
+		<result property="sbzlOldbh" column="SBZL_OLDBH"/>
+	</resultMap>
+	
+	<select id="getTcSbzl" resultMap="TcSbzl" parameterType="string">
+		select * from TC_SBZL where SBXH = #{sbxh}
+	</select>
+	
+	<insert id="addTcSbzl" parameterType="com.efs.bus.fee.sbzl.mapper.TcSbzl">
+		insert into TC_SBZL(
+		
+			YHBH
+			,
+		
+			SBXH
+			,
+		
+			SBBH
+			,
+		
+			SBKJ
+			,
+		
+			SBMP
+			,
+		
+			SBDD
+			,
+		
+			SBZD
+			,
+		
+			SBWZ
+			,
+		
+			SBAZRQ
+			,
+		
+			JYJS
+			,
+		
+			YSXZ
+			,
+		
+			GSRK
+			,
+		
+			GWJD
+			,
+		
+			TSBZ
+			,
+		
+			SBZT
+			,
+		
+			BCBZ
+			,
+		
+			ZZSBZ
+			,
+		
+			SFYF
+			,
+		
+			JTJS
+			,
+		
+			HBSL
+			,
+		
+			ZHHBRQ
+			,
+		
+			CBBH
+			,
+		
+			CBXH1
+			,
+		
+			CBXH2
+			,
+		
+			CH
+			,
+		
+			QH
+			,
+		
+			BYSF
+			,
+		
+			XZRQ
+			,
+		
+			CZY
+			,
+		
+			KHBH
+			,
+		
+			ZHZJRQ
+			,
+		
+			X_NAME
+			,
+		
+			GHSJ
+			,
+		
+			PZR1
+			,
+		
+			PZR2
+			,
+		
+			PZYY
+			,
+		
+			GHCZY
+			,
+		
+			CBY
+			,
+		
+			OYHMC
+			,
+		
+			SBLX
+			,
+		
+			PARTENTTABLEID
+			,
+		
+			TBBH
+			,
+		
+			YSHS
+			,
+		
+			QYL
+			,
+		
+			SBZL_OLDBH
+			)
+			values(
+					#{yhbh}
+					,
+					#{sbxh}
+					,
+					#{sbbh}
+					,
+					#{sbkj}
+					,
+					#{sbmp}
+					,
+					#{sbdd}
+					,
+					#{sbzd}
+					,
+					#{sbwz}
+					,
+					#{sbazrq}
+					,
+					#{jyjs}
+					,
+					#{ysxz}
+					,
+					#{gsrk}
+					,
+					#{gwjd}
+					,
+					#{tsbz}
+					,
+					#{sbzt}
+					,
+					#{bcbz}
+					,
+					#{zzsbz}
+					,
+					#{sfyf}
+					,
+					#{jtjs}
+					,
+					#{hbsl}
+					,
+					#{zhhbrq}
+					,
+					#{cbbh}
+					,
+					#{cbxh1}
+					,
+					#{cbxh2}
+					,
+					#{ch}
+					,
+					#{qh}
+					,
+					#{bysf}
+					,
+					#{xzrq}
+					,
+					#{czy}
+					,
+					#{khbh}
+					,
+					#{zhzjrq}
+					,
+					#{xName}
+					,
+					#{ghsj}
+					,
+					#{pzr1}
+					,
+					#{pzr2}
+					,
+					#{pzyy}
+					,
+					#{ghczy}
+					,
+					#{cby}
+					,
+					#{oyhmc}
+					,
+					#{sblx}
+					,
+					#{partenttableid}
+					,
+					#{tbbh}
+					,
+					#{yshs}
+					,
+					#{qyl}
+					,
+					#{sbzlOldbh}
+		)
+	</insert>
+	
+	<update id="updateTcSbzl" parameterType="com.efs.bus.fee.sbzl.mapper.TcSbzl">
+		UPDATE TC_SBZL
+		   SET 
+			   YHBH = #{yhbh}
+				,
+			   SBBH = #{sbbh}
+				,
+			   SBKJ = #{sbkj}
+				,
+			   SBMP = #{sbmp}
+				,
+			   SBDD = #{sbdd}
+				,
+			   SBZD = #{sbzd}
+				,
+			   SBWZ = #{sbwz}
+				,
+			   SBAZRQ = #{sbazrq}
+				,
+			   JYJS = #{jyjs}
+				,
+			   YSXZ = #{ysxz}
+				,
+			   GSRK = #{gsrk}
+				,
+			   GWJD = #{gwjd}
+				,
+			   TSBZ = #{tsbz}
+				,
+			   SBZT = #{sbzt}
+				,
+			   BCBZ = #{bcbz}
+				,
+			   ZZSBZ = #{zzsbz}
+				,
+			   SFYF = #{sfyf}
+				,
+			   JTJS = #{jtjs}
+				,
+			   HBSL = #{hbsl}
+				,
+			   ZHHBRQ = #{zhhbrq}
+				,
+			   CBBH = #{cbbh}
+				,
+			   CBXH1 = #{cbxh1}
+				,
+			   CBXH2 = #{cbxh2}
+				,
+			   CH = #{ch}
+				,
+			   QH = #{qh}
+				,
+			   BYSF = #{bysf}
+				,
+			   XZRQ = #{xzrq}
+				,
+			   CZY = #{czy}
+				,
+			   KHBH = #{khbh}
+				,
+			   ZHZJRQ = #{zhzjrq}
+				,
+			   X_NAME = #{xName}
+				,
+			   GHSJ = #{ghsj}
+				,
+			   PZR1 = #{pzr1}
+				,
+			   PZR2 = #{pzr2}
+				,
+			   PZYY = #{pzyy}
+				,
+			   GHCZY = #{ghczy}
+				,
+			   CBY = #{cby}
+				,
+			   OYHMC = #{oyhmc}
+				,
+			   SBLX = #{sblx}
+				,
+			   PARTENTTABLEID = #{partenttableid}
+				,
+			   TBBH = #{tbbh}
+				,
+			   YSHS = #{yshs}
+				,
+			   QYL = #{qyl}
+				,
+			   SBZL_OLDBH = #{sbzlOldbh}
+		 WHERE SBXH = #{sbxh}
+	</update>
+	
+	<delete id="deleteTcSbzl"  parameterType="string">
+		delete from TC_SBZL where SBXH = #{sbxh}
+	</delete>
+	
+	<select id="listTcSbzl" resultMap="TcSbzl" parameterType="com.efs.bus.fee.sbzl.mapper.TcSbzl">
+		select T.* from TC_SBZL T where 1=1
+		
+			<if test="yhbh != null and yhbh != ''">
+				and T.YHBH = #{yhbh}
+			</if>
+			<if test="sbbh != null and sbbh != ''">
+				and T.SBBH = #{sbbh}
+			</if>
+			<if test="sbkj != null and sbkj != ''">
+				and T.SBKJ = #{sbkj}
+			</if>
+			<if test="sbmp != null and sbmp != ''">
+				and T.SBMP = #{sbmp}
+			</if>
+			<if test="sbdd != null and sbdd != ''">
+				and T.SBDD = #{sbdd}
+			</if>
+			<if test="sbzd != null and sbzd != ''">
+				and T.SBZD = #{sbzd}
+			</if>
+			<if test="sbwz != null and sbwz != ''">
+				and T.SBWZ = #{sbwz}
+			</if>
+			<if test="sbazrq != null and sbazrq != ''">
+				and T.SBAZRQ = #{sbazrq}
+			</if>
+			<if test="jyjs != null and jyjs != ''">
+				and T.JYJS = #{jyjs}
+			</if>
+			<if test="ysxz != null and ysxz != ''">
+				and T.YSXZ = #{ysxz}
+			</if>
+			<if test="gsrk != null and gsrk != ''">
+				and T.GSRK = #{gsrk}
+			</if>
+			<if test="gwjd != null and gwjd != ''">
+				and T.GWJD = #{gwjd}
+			</if>
+			<if test="tsbz != null and tsbz != ''">
+				and T.TSBZ = #{tsbz}
+			</if>
+			<if test="sbzt != null and sbzt != ''">
+				and T.SBZT = #{sbzt}
+			</if>
+			<if test="bcbz != null and bcbz != ''">
+				and T.BCBZ = #{bcbz}
+			</if>
+			<if test="zzsbz != null and zzsbz != ''">
+				and T.ZZSBZ = #{zzsbz}
+			</if>
+			<if test="sfyf != null and sfyf != ''">
+				and T.SFYF = #{sfyf}
+			</if>
+			<if test="jtjs != null and jtjs != ''">
+				and T.JTJS = #{jtjs}
+			</if>
+			<if test="hbsl != null and hbsl != ''">
+				and T.HBSL = #{hbsl}
+			</if>
+			<if test="zhhbrq != null and zhhbrq != ''">
+				and T.ZHHBRQ = #{zhhbrq}
+			</if>
+			<if test="cbbh != null and cbbh != ''">
+				and T.CBBH = #{cbbh}
+			</if>
+			<if test="cbxh1 != null and cbxh1 != ''">
+				and T.CBXH1 = #{cbxh1}
+			</if>
+			<if test="cbxh2 != null and cbxh2 != ''">
+				and T.CBXH2 = #{cbxh2}
+			</if>
+			<if test="ch != null and ch != ''">
+				and T.CH = #{ch}
+			</if>
+			<if test="qh != null and qh != ''">
+				and T.QH = #{qh}
+			</if>
+			<if test="bysf != null and bysf != ''">
+				and T.BYSF = #{bysf}
+			</if>
+			<if test="xzrq != null and xzrq != ''">
+				and T.XZRQ = #{xzrq}
+			</if>
+			<if test="czy != null and czy != ''">
+				and T.CZY = #{czy}
+			</if>
+			<if test="khbh != null and khbh != ''">
+				and T.KHBH = #{khbh}
+			</if>
+			<if test="zhzjrq != null and zhzjrq != ''">
+				and T.ZHZJRQ = #{zhzjrq}
+			</if>
+			<if test="xName != null and xName != ''">
+				and T.X_NAME = #{xName}
+			</if>
+			<if test="ghsj != null and ghsj != ''">
+				and T.GHSJ = #{ghsj}
+			</if>
+			<if test="pzr1 != null and pzr1 != ''">
+				and T.PZR1 = #{pzr1}
+			</if>
+			<if test="pzr2 != null and pzr2 != ''">
+				and T.PZR2 = #{pzr2}
+			</if>
+			<if test="pzyy != null and pzyy != ''">
+				and T.PZYY = #{pzyy}
+			</if>
+			<if test="ghczy != null and ghczy != ''">
+				and T.GHCZY = #{ghczy}
+			</if>
+			<if test="cby != null and cby != ''">
+				and T.CBY = #{cby}
+			</if>
+			<if test="oyhmc != null and oyhmc != ''">
+				and T.OYHMC = #{oyhmc}
+			</if>
+			<if test="sblx != null and sblx != ''">
+				and T.SBLX = #{sblx}
+			</if>
+			<if test="partenttableid != null and partenttableid != ''">
+				and T.PARTENTTABLEID = #{partenttableid}
+			</if>
+			<if test="tbbh != null and tbbh != ''">
+				and T.TBBH = #{tbbh}
+			</if>
+			<if test="yshs != null and yshs != ''">
+				and T.YSHS = #{yshs}
+			</if>
+			<if test="qyl != null and qyl != ''">
+				and T.QYL = #{qyl}
+			</if>
+			<if test="sbzlOldbh != null and sbzlOldbh != ''">
+				and T.SBZL_OLDBH = #{sbzlOldbh}
+			</if>
+		
+		ORDER BY SBXH
+	</select>
+</mapper>

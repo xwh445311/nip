@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.bus.edu.teaplan.mapper.EduTeaplanInfoMapper">
+	<resultMap type="com.efs.bus.edu.teaplan.mapper.EduTeaplanInfo" id="EduTeaplanInfo">
+		<id property="tiDbId" column="TI_DB_ID"/>
+		<result property="tiBatchId" column="TI_BATCH_ID"/>
+		<result property="tiCheckedUser" column="TI_CHECKED_USER"/>
+		<result property="tiCheckedUserNm" column="TI_CHECKED_USER_NM"/>
+		<result property="tiTerm" column="TI_TERM"/>
+		<result property="tiTermNm" column="TI_TERM_NM"/>
+		<result property="tiClass" column="TI_CLASS"/>
+		<result property="tiClassNm" column="TI_CLASS_NM"/>
+		<result property="tiCourCode" column="TI_COUR_CODE"/>
+		<result property="tiCourName" column="TI_COUR_NAME"/>
+		<result property="tiFileId" column="TI_FILE_ID"/>
+		<result property="tiEndDate" column="TI_END_DATE"/>
+		<result property="tiStatus" column="TI_STATUS"/>
+		<result property="tiEvalLvl" column="TI_EVAL_LVL"/>
+		<result property="tiEvalLvlNm" column="TI_EVAL_LVL_NM"/>
+		<result property="tiEvalScore" column="TI_EVAL_SCORE"/>
+		<result property="tiEvalComm" column="TI_EVAL_COMM"/>
+		<result property="tiIssueDate" column="TI_ISSUE_DATE"/>
+		<result property="tiIssueTime" column="TI_ISSUE_TIME"/>
+		<result property="tiIssueUser" column="TI_ISSUE_USER"/>
+		<result property="tiIssueUserNm" column="TI_ISSUE_USER_NM"/>
+		<result property="tiIssueCommon" column="TI_ISSUE_COMMON"/>
+		<result property="tiSaveDate" column="TI_SAVE_DATE"/>
+		<result property="tiSaveTime" column="TI_SAVE_TIME"/>
+		<result property="tiSaveUser" column="TI_SAVE_USER"/>
+		<result property="tiSaveUserNm" column="TI_SAVE_USER_NM"/>
+		<result property="tiSubDate" column="TI_SUB_DATE"/>
+		<result property="tiSubTime" column="TI_SUB_TIME"/>
+		<result property="tiSubUser" column="TI_SUB_USER"/>
+		<result property="tiSubUserNm" column="TI_SUB_USER_NM"/>
+		<result property="tiEvalDate" column="TI_EVAL_DATE"/>
+		<result property="tiEvalTime" column="TI_EVAL_TIME"/>
+		<result property="tiEvalUser" column="TI_EVAL_USER"/>
+		<result property="tiEvalUserNm" column="TI_EVAL_USER_NM"/>
+		<result property="totCnt" column="TOT_CNT"/>
+		<result property="submitCnt" column="SUBMIT_CNT"/>
+		<result property="evalCnt" column="EVAL_CNT"/>
+	</resultMap>
+	
+	<select id="getEduTeaplanInfo" resultMap="EduTeaplanInfo" parameterType="string">
+		select * from EDU_TEAPLAN_INFO where TI_DB_ID = #{tiDbId}
+	</select>
+	
+	<insert id="addEduTeaplanInfo" parameterType="com.efs.bus.edu.teaplan.mapper.EduTeaplanInfo">
+		<foreach collection="list" item="it" separator=";" close=";">
+		insert into EDU_TEAPLAN_INFO(
+			TI_BATCH_ID
+			,
+		
+			TI_CHECKED_USER
+			,
+		
+
+			TI_TERM
+
+			,
+		
+			TI_CLASS
+
+			,
+		
+			TI_COUR_CODE
+			,
+
+			TI_END_DATE
+			,
+		
+			TI_STATUS
+			,
+
+			TI_ISSUE_DATE
+			,
+		
+			TI_ISSUE_TIME
+			,
+		
+			TI_ISSUE_USER
+			,
+			TI_ISSUE_COMMON
+			)
+			values(
+					#{it.tiBatchId}
+					,
+					#{it.tiCheckedUser}
+					,
+					#{it.tiTerm}
+					,
+					#{it.tiClass}
+					,
+					#{it.tiCourCode}
+					,
+					#{it.tiEndDate}
+					,
+					#{it.tiStatus}
+					,
+					#{it.tiIssueDate}
+					,
+					#{it.tiIssueTime}
+					,
+					#{it.tiIssueUser}
+					,
+					#{it.tiIssueCommon}
+		)
+
+		</foreach>
+	</insert>
+	
+	<update id="updateEduTeaplanInfo" parameterType="com.efs.bus.edu.teaplan.mapper.EduTeaplanInfo">
+		UPDATE EDU_TEAPLAN_INFO
+		   SET 
+			   TI_BATCH_ID = #{tiBatchId}
+				,
+			   TI_CHECKED_USER = #{tiCheckedUser}
+				,
+			   TI_CHECKED_USER_NM = #{tiCheckedUserNm}
+				,
+			   TI_TERM = #{tiTerm}
+				,
+			   TI_TERM_NM = #{tiTermNm}
+				,
+			   TI_CLASS = #{tiClass}
+				,
+			   TI_CLASS_NM = #{tiClassNm}
+				,
+			   TI_COUR_CODE = #{tiCourCode}
+				,
+			   TI_COUR_NAME = #{tiCourName}
+				,
+			   TI_FILE_ID = #{tiFileId}
+				,
+			   TI_END_DATE = #{tiEndDate}
+				,
+			   TI_STATUS = #{tiStatus}
+				,
+			   TI_EVAL_LVL = #{tiEvalLvl}
+				,
+			   TI_EVAL_SCORE = #{tiEvalScore}
+				,
+			   TI_EVAL_COMM = #{tiEvalComm}
+				,
+			   TI_ISSUE_DATE = #{tiIssueDate}
+				,
+			   TI_ISSUE_TIME = #{tiIssueTime}
+				,
+			   TI_ISSUE_USER = #{tiIssueUser}
+				,
+			   TI_ISSUE_USER_NM = #{tiIssueUserNm}
+				,
+			   TI_SAVE_DATE = #{tiSaveDate}
+				,
+			   TI_SAVE_TIME = #{tiSaveTime}
+				,
+			   TI_SAVE_USER = #{tiSaveUser}
+				,
+			   TI_SAVE_USER_NM = #{tiSaveUserNm}
+				,
+			   TI_SUB_DATE = #{tiSubDate}
+				,
+			   TI_SUB_TIME = #{tiSubTime}
+				,
+			   TI_SUB_USER = #{tiSubUser}
+				,
+			   TI_SUB_USER_NM = #{tiSubUserNm}
+				,
+			   TI_EVAL_DATE = #{tiEvalDate}
+				,
+			   TI_EVAL_TIME = #{tiEvalTime}
+				,
+			   TI_EVAL_USER = #{tiEvalUser}
+				,
+			   TI_EVAL_USER_NM = #{tiEvalUserNm}
+		 WHERE TI_DB_ID = #{tiDbId}
+	</update>
+	
+	<delete id="deleteEduTeaplanInfo"  parameterType="string">
+		delete from EDU_TEAPLAN_INFO where TI_DB_ID = #{tiDbId}
+	</delete>
+	
+	<select id="listEduTeaplanInfo" resultMap="EduTeaplanInfo" parameterType="com.efs.bus.edu.teaplan.mapper.EduTeaplanInfo">
+		select T.* from EDU_TEAPLAN_INFO T where 1=1
+		
+			<if test="tiBatchId != null and tiBatchId != ''">
+				and T.TI_BATCH_ID = #{tiBatchId}
+			</if>
+			<if test="tiCheckedUser != null and tiCheckedUser != ''">
+				and T.TI_CHECKED_USER = #{tiCheckedUser}
+			</if>
+			<if test="tiCheckedUserNm != null and tiCheckedUserNm != ''">
+				and T.TI_CHECKED_USER_NM = #{tiCheckedUserNm}
+			</if>
+			<if test="tiTerm != null and tiTerm != ''">
+				and T.TI_TERM = #{tiTerm}
+			</if>
+			<if test="tiTermNm != null and tiTermNm != ''">
+				and T.TI_TERM_NM = #{tiTermNm}
+			</if>
+			<if test="tiClass != null and tiClass != ''">
+				and T.TI_CLASS = #{tiClass}
+			</if>
+			<if test="tiClassNm != null and tiClassNm != ''">
+				and T.TI_CLASS_NM = #{tiClassNm}
+			</if>
+			<if test="tiCourCode != null and tiCourCode != ''">
+				and T.TI_COUR_CODE = #{tiCourCode}
+			</if>
+			<if test="tiCourName != null and tiCourName != ''">
+				and T.TI_COUR_NAME = #{tiCourName}
+			</if>
+			<if test="tiFileId != null and tiFileId != ''">
+				and T.TI_FILE_ID = #{tiFileId}
+			</if>
+			<if test="tiEndDate != null and tiEndDate != ''">
+				and T.TI_END_DATE = #{tiEndDate}
+			</if>
+			<if test="tiStatus != null and tiStatus != ''">
+				and T.TI_STATUS = #{tiStatus}
+			</if>
+			<if test="tiEvalLvl != null and tiEvalLvl != ''">
+				and T.TI_EVAL_LVL = #{tiEvalLvl}
+			</if>
+			<if test="tiEvalScore != null and tiEvalScore != ''">
+				and T.TI_EVAL_SCORE = #{tiEvalScore}
+			</if>
+			<if test="tiEvalComm != null and tiEvalComm != ''">
+				and T.TI_EVAL_COMM = #{tiEvalComm}
+			</if>
+			<if test="tiIssueDate != null and tiIssueDate != ''">
+				and T.TI_ISSUE_DATE = #{tiIssueDate}
+			</if>
+			<if test="tiIssueTime != null and tiIssueTime != ''">
+				and T.TI_ISSUE_TIME = #{tiIssueTime}
+			</if>
+			<if test="tiIssueUser != null and tiIssueUser != ''">
+				and T.TI_ISSUE_USER = #{tiIssueUser}
+			</if>
+			<if test="tiIssueUserNm != null and tiIssueUserNm != ''">
+				and T.TI_ISSUE_USER_NM = #{tiIssueUserNm}
+			</if>
+			<if test="tiSaveDate != null and tiSaveDate != ''">
+				and T.TI_SAVE_DATE = #{tiSaveDate}
+			</if>
+			<if test="tiSaveTime != null and tiSaveTime != ''">
+				and T.TI_SAVE_TIME = #{tiSaveTime}
+			</if>
+			<if test="tiSaveUser != null and tiSaveUser != ''">
+				and T.TI_SAVE_USER = #{tiSaveUser}
+			</if>
+			<if test="tiSaveUserNm != null and tiSaveUserNm != ''">
+				and T.TI_SAVE_USER_NM = #{tiSaveUserNm}
+			</if>
+			<if test="tiSubDate != null and tiSubDate != ''">
+				and T.TI_SUB_DATE = #{tiSubDate}
+			</if>
+			<if test="tiSubTime != null and tiSubTime != ''">
+				and T.TI_SUB_TIME = #{tiSubTime}
+			</if>
+			<if test="tiSubUser != null and tiSubUser != ''">
+				and T.TI_SUB_USER = #{tiSubUser}
+			</if>
+			<if test="tiSubUserNm != null and tiSubUserNm != ''">
+				and T.TI_SUB_USER_NM = #{tiSubUserNm}
+			</if>
+			<if test="tiEvalDate != null and tiEvalDate != ''">
+				and T.TI_EVAL_DATE = #{tiEvalDate}
+			</if>
+			<if test="tiEvalTime != null and tiEvalTime != ''">
+				and T.TI_EVAL_TIME = #{tiEvalTime}
+			</if>
+			<if test="tiEvalUser != null and tiEvalUser != ''">
+				and T.TI_EVAL_USER = #{tiEvalUser}
+			</if>
+			<if test="tiEvalUserNm != null and tiEvalUserNm != ''">
+				and T.TI_EVAL_USER_NM = #{tiEvalUserNm}
+			</if>
+
+			<if test="checkFlag == 'Y'.toString()">
+				and T.TI_STATUS &lt;&gt; '0'
+			</if>
+		
+		ORDER BY TI_STATUS, TI_DB_ID DESC,TI_CLASS
+	</select>
+
+	<select id="listIssueInfo" resultMap="EduTeaplanInfo" parameterType="com.efs.bus.edu.teaplan.mapper.EduTeaplanInfo">
+		SELECT T.TI_BATCH_ID,T.TI_TERM_NM,TI_COUR_NAME,T.TI_END_DATE,T.TI_ISSUE_DATE,T.TI_ISSUE_USER_NM,
+		COUNT(1) AS TOT_CNT,
+		SUM(CASE WHEN T.TI_STATUS = '0' THEN 1 ELSE 0 END) AS SUBMIT_CNT,
+		SUM(CASE WHEN T.TI_STATUS = '2' THEN 1 ELSE 0 END) AS EVAL_CNT
+		 FROM EDU_TEAPLAN_INFO T WHERE 1=1
+
+		<if test="tiTerm != null and tiTerm != ''">
+			and T.TI_TERM = #{tiTerm}
+		</if>
+
+		<if test="tiCourCode != null and tiCourCode != ''">
+			and T.TI_COUR_CODE = #{tiCourCode}
+		</if>
+
+		GROUP BY T.TI_BATCH_ID,T.TI_TERM_NM,TI_COUR_NAME,T.TI_END_DATE,T.TI_ISSUE_DATE,T.TI_ISSUE_USER_NM
+		ORDER BY T.TI_BATCH_ID DESC
+	</select>
+
+	<select id="getMaxBatchId" resultType="string">
+		SELECT MAX(T.TI_BATCH_ID) AS TI_BATCH_ID FROM EDU_TEAPLAN_INFO T WHERE T.TI_BATCH_ID LIKE (DBO.FUN_GET_TERMCODE(NULL) + '%')
+	</select>
+
+	<delete id="deleteBatchTeaplan" parameterType="string">
+		DELETE FROM EDU_TEAPLAN_INFO WHERE TI_BATCH_ID = #{tiBatchId}
+	</delete>
+
+	<update id="addSubmitTeaplan" parameterType="com.efs.bus.edu.teaplan.mapper.EduTeaplanInfo">
+		UPDATE EDU_TEAPLAN_INFO
+		   SET
+			   TI_FILE_ID = #{tiFileId}
+				,
+			   TI_STATUS = '2'
+				,
+			   TI_SUB_DATE = #{tiSubDate}
+				,
+			   TI_SUB_TIME = #{tiSubTime}
+				,
+			   TI_SUB_USER = #{tiSubUser}
+		 WHERE TI_DB_ID = #{tiDbId}
+	</update>
+
+	<update id="addEvalTeaplan" parameterType="com.efs.bus.edu.teaplan.mapper.EduTeaplanInfo">
+		UPDATE EDU_TEAPLAN_INFO
+		   SET
+			   TI_STATUS = '3'
+				,
+			   TI_EVAL_LVL = #{tiEvalLvl}
+				,
+			   TI_EVAL_SCORE = #{tiEvalScore}
+				,
+			   TI_EVAL_COMM = #{tiEvalComm}
+				,
+			   TI_EVAL_DATE = #{tiEvalDate}
+				,
+			   TI_EVAL_TIME = #{tiEvalTime}
+				,
+			   TI_EVAL_USER = #{tiEvalUser}
+
+		 WHERE TI_DB_ID = #{tiDbId}
+	</update>
+
+	<select id="listStatusTeacher" resultMap="EduTeaplanInfo" parameterType="map">
+		SELECT T.TI_CLASS_NM,T.TI_CHECKED_USER_NM FROM EDU_TEAPLAN_INFO T
+		WHERE T.TI_BATCH_ID=#{tiBatchId}
+
+		<if test="tiStatus != '9'.toString()">
+			AND T.TI_STATUS = #{tiStatus}
+		</if>
+
+		ORDER BY T.TI_CLASS
+	</select>
+
+	<select id="listBatchids" resultType="string">
+		SELECT DISTINCT T.TI_BATCH_ID FROM EDU_TEAPLAN_INFO T ORDER BY T.TI_BATCH_ID DESC
+	</select>
+</mapper>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.bus.edu.semcal.mapper.BaseSemesterCalMapper">
+	<cache/>
+	<resultMap type="com.efs.bus.edu.semcal.mapper.BaseSemesterCal" id="BaseSemesterCal">
+		<id property="scTerm" column="SC_TERM"/>
+		<result property="scTermDesc" column="SC_TERM_DESC"/>
+		<result property="scStartDate" column="SC_START_DATE"/>
+		<result property="scEndDate" column="SC_END_DATE"/>
+		<result property="addDate" column="ADD_DATE"/>
+		<result property="addTime" column="ADD_TIME"/>
+		<result property="addUser" column="ADD_USER"/>
+		<result property="updDate" column="UPD_DATE"/>
+		<result property="updTime" column="UPD_TIME"/>
+		<result property="updUser" column="UPD_USER"/>
+	</resultMap>
+	
+	<select id="getBaseSemesterCal" resultMap="BaseSemesterCal" parameterType="string">
+		select * from BASE_SEMESTER_CAL where SC_TERM = #{scTerm}
+	</select>
+	
+	<insert id="addBaseSemesterCal" parameterType="com.efs.bus.edu.semcal.mapper.BaseSemesterCal">
+		insert into BASE_SEMESTER_CAL(
+		SC_TERM
+		,
+		SC_START_DATE
+		,
+		SC_END_DATE
+		,
+		ADD_DATE
+		,
+		ADD_TIME
+		,
+		ADD_USER
+		,
+		UPD_DATE
+		,
+		UPD_TIME
+		,
+		UPD_USER
+		)
+		values(
+		#{scTerm}
+		,
+		#{scStartDate}
+		,
+		#{scEndDate}
+		,
+		#{addDate}
+		,
+		#{addTime}
+		,
+		#{addUser}
+		,
+		#{updDate}
+		,
+		#{updTime}
+		,
+		#{updUser}
+		)
+	</insert>
+	
+	<update id="updateBaseSemesterCal" parameterType="com.efs.bus.edu.semcal.mapper.BaseSemesterCal">
+		UPDATE BASE_SEMESTER_CAL
+		   SET 
+		   SC_START_DATE = #{scStartDate}
+			,
+		   SC_END_DATE = #{scEndDate}
+			,
+		   ADD_DATE = #{addDate}
+			,
+		   ADD_TIME = #{addTime}
+			,
+		   ADD_USER = #{addUser}
+			,
+		   UPD_DATE = #{updDate}
+			,
+		   UPD_TIME = #{updTime}
+			,
+		   UPD_USER = #{updUser}
+		 WHERE SC_TERM = #{scTerm}
+	</update>
+	
+	<delete id="deleteBaseSemesterCal"  parameterType="string">
+		delete from BASE_SEMESTER_CAL where SC_TERM = #{scTerm}
+	</delete>
+	
+	<select id="listBaseSemesterCal" resultMap="BaseSemesterCal" parameterType="com.efs.bus.edu.semcal.mapper.BaseSemesterCal">
+		select T.* from BASE_SEMESTER_CAL T where 1=1
+		
+			<if test="scTermDesc != null and scTermDesc != ''">
+				and T.SC_TERM_DESC = #{scTermDesc}
+			</if>
+			<if test="scStartDate != null and scStartDate != ''">
+				and T.SC_START_DATE = #{scStartDate}
+			</if>
+			<if test="scEndDate != null and scEndDate != ''">
+				and T.SC_END_DATE = #{scEndDate}
+			</if>
+			<if test="addDate != null and addDate != ''">
+				and T.ADD_DATE = #{addDate}
+			</if>
+			<if test="addTime != null and addTime != ''">
+				and T.ADD_TIME = #{addTime}
+			</if>
+			<if test="addUser != null and addUser != ''">
+				and T.ADD_USER = #{addUser}
+			</if>
+			<if test="updDate != null and updDate != ''">
+				and T.UPD_DATE = #{updDate}
+			</if>
+			<if test="updTime != null and updTime != ''">
+				and T.UPD_TIME = #{updTime}
+			</if>
+			<if test="updUser != null and updUser != ''">
+				and T.UPD_USER = #{updUser}
+			</if>
+
+			<if test="hasClass == 'Y'.toString()">
+				AND EXISTS(
+				SELECT 1 FROM BASE_SCH_CLASS_INFO T2 WHERE T2.SC_TERM = T.SC_TERM
+				)
+			</if>
+
+			<if test="hasClass == 'N'.toString()">
+				AND NOT EXISTS(
+				SELECT 1 FROM BASE_SCH_CLASS_INFO T2 WHERE T2.SC_TERM = T.SC_TERM
+				)
+			</if>
+		
+		ORDER BY SC_TERM DESC
+	</select>
+
+	<select id="getCurrentSemester" resultMap="BaseSemesterCal">
+		SELECT T.* FROM BASE_SEMESTER_CAL T WHERE T.SC_TERM= dbo.FUN_GET_TERMCODE(NULL)
+	</select>
+
+</mapper>

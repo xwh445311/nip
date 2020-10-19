@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.bus.base.fqxx.mapper.TbFqxxInfoMapper">
+	<resultMap type="com.efs.bus.base.fqxx.mapper.TbFqxxInfo" id="TbFqxxInfo">
+		<id property="qyId" column="QY_ID"/>
+		<result property="qyOrgId" column="QY_ORG_ID"/>
+		<result property="qyName" column="QY_NAME"/>
+		<result property="qyStatus" column="QY_STATUS"/>
+		<result property="qyOrgName" column="OI_NAME"/>
+
+	</resultMap>
+	
+	<select id="getTbFqxxInfo" resultMap="TbFqxxInfo" parameterType="string">
+		select * from TB_FQXX_INFO where QY_ID = #{qyId}
+	</select>
+	
+	<insert id="addTbFqxxInfo" parameterType="com.efs.bus.base.fqxx.mapper.TbFqxxInfo">
+		insert into TB_FQXX_INFO(
+		
+			QY_ID
+			,
+		
+			QY_ORG_ID
+			,
+		
+			QY_NAME
+			,
+		
+			QY_STATUS
+			)
+			values(
+					#{qyId}
+					,
+					#{qyOrgId}
+					,
+					#{qyName}
+					,
+					#{qyStatus}
+		)
+	</insert>
+	
+	<update id="updateTbFqxxInfo" parameterType="com.efs.bus.base.fqxx.mapper.TbFqxxInfo">
+		UPDATE TB_FQXX_INFO
+		   SET 
+			   QY_ORG_ID = #{qyOrgId}
+				,
+			   QY_NAME = #{qyName}
+				,
+			   QY_STATUS = #{qyStatus}
+		 WHERE QY_ID = #{qyId}
+	</update>
+	
+	<delete id="deleteTbFqxxInfo"  parameterType="string">
+		delete from TB_FQXX_INFO where QY_ID = #{qyId}
+	</delete>
+	
+	<select id="listTbFqxxInfo" resultMap="TbFqxxInfo" parameterType="com.efs.bus.base.fqxx.mapper.TbFqxxInfo">
+
+		SELECT T.QY_ID, T.QY_ORG_ID, T.QY_NAME, T.QY_STATUS, S.OI_NAME
+		FROM TB_FQXX_INFO T
+		LEFT JOIN TS_ORG_INFO S
+		ON T.QY_ORG_ID = S.OI_CODE
+
+		WHERE 1=1
+		<if test="qyOrgId != null and qyOrgId != ''">
+			and T.QY_ORG_ID = #{qyOrgId}
+		</if>
+		<if test="qyName != null and qyName != ''">
+			and T.QY_NAME = #{qyName}
+		</if>
+		<if test="qyStatus != null and qyStatus != ''">
+			and T.QY_STATUS = #{qyStatus}
+		</if>
+
+		ORDER BY T.QY_ORG_ID, T.QY_ID
+	</select>
+</mapper>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.common.auth.role.mapper.TsRoleInfoMapper">
+
+	<resultMap type="com.efs.common.auth.role.mapper.TsRoleInfo" id="TsRoleInfo">
+		<id property="riId" column="RI_ID"/>
+		<result property="riName" column="RI_NAME"/>
+		<result property="riStatus" column="RI_STATUS"/>
+		<result property="riAddDate" column="RI_ADD_DATE"/>
+		<result property="riAddTime" column="RI_ADD_TIME"/>
+		<result property="riAddUser" column="RI_ADD_USER"/>
+		<result property="riIsSuper" column="RI_IS_SUPER"/>
+	</resultMap>
+	
+	<select id="getTsRoleInfo" resultMap="TsRoleInfo" parameterType="string">
+		select * from TS_ROLE_INFO where RI_ID = #{riId}
+	</select>
+	
+	<insert id="addTsRoleInfo" parameterType="com.efs.common.auth.role.mapper.TsRoleInfo">
+		insert into TS_ROLE_INFO(
+		RI_ID
+		,
+		RI_NAME
+		,
+		RI_STATUS
+		,
+		RI_ADD_DATE
+		,
+		RI_ADD_TIME
+		,
+		RI_ADD_USER
+		,
+		RI_IS_SUPER
+		)
+		values(
+		#{riId}
+		,
+		#{riName}
+		,
+		#{riStatus}
+		,
+		#{riAddDate}
+		,
+		#{riAddTime}
+		,
+		#{riAddUser}
+		,
+		#{riIsSuper}
+		)
+	</insert>
+	
+	<update id="updateTsRoleInfo" parameterType="com.efs.common.auth.role.mapper.TsRoleInfo">
+		UPDATE TS_ROLE_INFO
+		   SET
+		   RI_NAME = #{riName}
+			,
+		   RI_STATUS = #{riStatus}
+			,
+		   RI_ADD_DATE = #{riAddDate}
+			,
+		   RI_ADD_TIME = #{riAddTime}
+			,
+		   RI_ADD_USER = #{riAddUser}
+		   ,
+		   RI_IS_SUPER = #{riIsSuper}
+		 WHERE RI_ID = #{riId}
+	</update>
+	
+	<delete id="deleteTsRoleInfo"  parameterType="string">
+		delete from TS_ROLE_INFO where RI_ID = #{riId}
+	</delete>
+	
+	<select id="listTsRoleInfo" resultMap="TsRoleInfo" parameterType="com.efs.common.auth.role.mapper.TsRoleInfo">
+		select T.* from TS_ROLE_INFO T where 1=1
+		
+			<if test="riName != null and riName != ''">
+				and T.RI_NAME LIKE '%${riName}%'
+			</if>
+			<if test="riStatus != null and riStatus != ''">
+				and T.RI_STATUS = #{riStatus}
+			</if>
+			<if test="riAddDate != null and riAddDate != ''">
+				and T.RI_ADD_DATE = #{riAddDate}
+			</if>
+			<if test="riAddTime != null and riAddTime != ''">
+				and T.RI_ADD_TIME = #{riAddTime}
+			</if>
+			<if test="riAddUser != null and riAddUser != ''">
+				and T.RI_ADD_USER = #{riAddUser}
+			</if>
+
+			<if test="isSuperUser neq 'Y'.toString()">
+				AND ( T.RI_IS_SUPER &lt;&gt; '1' OR T.RI_IS_SUPER IS NULL )
+			</if>
+		
+		ORDER BY RI_ID
+	</select>
+
+	<insert id="addSysRoleFunc" parameterType="map">
+		insert into TS_ROLE_FUNC_INFO (RF_ROLE_ID,RF_FUNC_ID)
+		<foreach collection="funcList" item="it" separator="UNION ALL" >
+			SELECT #{roleId},#{it} FROM DUAL
+		</foreach>
+	</insert>
+
+	<delete id="delSysRoleFunc" parameterType="string">
+		delete from TS_ROLE_FUNC_INFO where RF_ROLE_ID = #{roleId}
+	</delete>
+
+	<delete id="delSysRoleUser" parameterType="string">
+		delete from TS_USER_ROLE_INFO where UR_ROLE_ID =#{roleId}
+	</delete>
+
+	<select id="getRoleUserCount" resultType="int" parameterType="string">
+		SELECT COUNT(1) FROM TS_USER_ROLE_INFO where UR_ROLE_ID =#{roleId}
+	</select>
+
+
+	<select id="listAllEnableRole" resultMap="TsRoleInfo" parameterType="map">
+		SELECT * FROM TS_ROLE_INFO T WHERE T.RI_STATUS ='1'
+		<if test="isSuperUser neq 'Y'.toString()">
+			AND ( T.RI_IS_SUPER &lt;&gt; '1' OR T.RI_IS_SUPER IS NULL )
+		</if>
+
+	</select>
+
+	<select id="listUserRole" resultMap="TsRoleInfo" parameterType="string">
+		SELECT T1.* FROM TS_ROLE_INFO T1 LEFT JOIN TS_USER_ROLE_INFO T2 ON T1.RI_ID = T2.UR_ROLE_ID WHERE T2.UR_USER_ID=#{userId}
+		ORDER BY T1.RI_ID
+	</select>
+</mapper>

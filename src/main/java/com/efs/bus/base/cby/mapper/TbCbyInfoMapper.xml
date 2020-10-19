@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.bus.base.cby.mapper.TbCbyInfoMapper">
+	<resultMap type="com.efs.bus.base.cby.mapper.TbCbyInfo" id="TbCbyInfo">
+		<id property="dbId" column="DB_ID"/>
+		<result property="cbyId" column="CBY_ID"/>
+		<result property="cbyName" column="CBY_NAME"/>
+		<result property="gsNo" column="GS_NO"/>
+		<result property="gsName" column="GS_NAME"/>
+		<result property="status" column="STATUS"/>
+	</resultMap>
+
+	<select id="getTbCbyInfo" resultMap="TbCbyInfo" parameterType="string">
+		select * from TB_CBY_INFO where DB_ID = #{dbId}
+	</select>
+
+	<insert id="addTbCbyInfo" parameterType="com.efs.bus.base.cby.mapper.TbCbyInfo">
+		insert into TB_CBY_INFO(
+
+			DB_ID
+			,
+
+			GS_NO
+			,
+
+			CBY_ID
+			,
+
+			STATUS
+			)
+			values(
+					#{dbId}
+					,
+					#{gsNo}
+					,
+					#{cbyId}
+					,
+					#{status}
+		)
+	</insert>
+
+	<update id="updateTbCbyInfo" parameterType="com.efs.bus.base.cby.mapper.TbCbyInfo">
+		UPDATE TB_CBY_INFO
+		   SET
+			   GS_NO = #{gsNo}
+				,
+			   CBY_ID = #{cbyId}
+				,
+			   STATUS = #{status}
+		 WHERE DB_ID = #{dbId}
+	</update>
+
+	<delete id="deleteTbCbyInfo"  parameterType="string">
+		delete from TB_CBY_INFO where DB_ID = #{dbId}
+	</delete>
+
+	<select id="listTbCbyInfo" resultMap="TbCbyInfo" parameterType="com.efs.bus.base.cby.mapper.TbCbyInfo">
+		select T.*, O.OI_NAME AS GS_NAME, U.UI_NAME AS CBY_NAME
+		from TB_CBY_INFO T
+		LEFT JOIN TS_ORG_INFO O
+		ON T.GS_NO = O.OI_CODE
+		LEFT JOIN TS_USER_INFO U
+		ON T.CBY_ID = U.UI_ID where 1=1
+		<if test="gsNo != null and gsNo != ''">
+			and T.GS_NO = #{gsNo}
+		</if>
+		<if test="cbyId != null and cbyId != ''">
+			and T.CBY_ID = #{cbyId}
+		</if>
+		<if test="status != null and status != ''">
+			and T.STATUS = #{status}
+		</if>
+
+		ORDER BY DB_ID
+	</select>
+</mapper>

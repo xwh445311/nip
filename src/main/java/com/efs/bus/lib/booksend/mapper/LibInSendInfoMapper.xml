@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.bus.lib.booksend.mapper.LibInSendInfoMapper">
+	<resultMap type="com.efs.bus.lib.booksend.mapper.LibInSendInfo" id="LibInSendInfo">
+		<id property="isId" column="IS_ID"/>
+		<result property="isUserId" column="IS_USER_ID"/>
+		<result property="isBookCode" column="IS_BOOK_CODE"/>
+		<result property="isSendHandler" column="IS_SEND_HANDLER"/>
+		<result property="isStartDate" column="IS_START_DATE"/>
+		<result property="isStartTime" column="IS_START_TIME"/>
+		<result property="isPlanBackDate" column="IS_PLAN_BACK_DATE"/>
+		<result property="isOverdueLong" column="IS_OVERDUE_LONG"/>
+        <result property="isOverStatus" column="IS_OVER_STATUS"/>
+
+		<result property="isUserName" column="IS_USER_NAME"/>
+		<result property="isUserType" column="IS_USER_TYPE"/>
+		<result property="isSendStatus" column="IS_SEND_STATUS"/>
+		<result property="isMaxCont" column="IS_MAX_CONT"/>
+		<result property="isHasCont" column="IS_HAS_CONT"/>
+		<result property="isCanCont" column="IS_CAN_CONT"/>
+
+        <result property="biName" column="BI_NAME"/>
+        <result property="biAuth" column="BI_AUTH"/>
+        <result property="biPress" column="BI_PRESS"/>
+		<result property="biPrice" column="BI_PRICE"/>
+		<result property="biLocSmImg" column="BI_LOC_SM_IMG"/>
+		<result property="biLocLgImg" column="BI_LOC_LG_IMG"/>
+
+		<result property="isBackHandler" column="IS_BACK_HANDLER"/>
+		<result property="isBackDate" column="IS_BACK_DATE"/>
+		<result property="isBackTime" column="IS_BACK_TIME"/>
+
+		<result property="blRegUser" column="BL_REG_USER"/>
+		<result property="blRegDate" column="BL_REG_DATE"/>
+		<result property="biRegTime" column="BI_REG_TIME"/>
+		<result property="biRegCommon" column="BI_REG_COMMON"/>
+
+		<result property="biPlanCompAmt" column="BI_PLAN_COMP_AMT"/>
+		<result property="biCompType" column="BI_COMP_TYPE"/>
+		<result property="blCompBookCode" column="BL_COMP_BOOK_CODE"/>
+		<result property="blCompHandler" column="BL_COMP_HANDLER"/>
+		<result property="blCompDate" column="BL_COMP_DATE"/>
+		<result property="blCompTime" column="BL_COMP_TIME"/>
+		<result property="blCompAmt" column="BL_COMP_AMT"/>
+		<result property="blCommon" column="BL_COMMON"/>
+
+	</resultMap>
+	
+	<select id="getLibInSendInfo" resultMap="LibInSendInfo" parameterType="string">
+		SELECT T.*,
+            T1.BI_NAME,
+            T1.BI_AUTH,
+            T1.BI_PRESS,
+            T1.BI_LOC_SM_IMG,
+            T1.BI_LOC_LG_IMG,
+            ISNULL(T1.BI_PRICE,0) AS BI_PRICE,
+            DBO.FUN_USER_SEND_BOOK_DATE(T.IS_USER_ID, T.IS_START_DATE, '3',T.IS_SEND_STATUS,T.IS_BACK_DATE) AS IS_OVER_STATUS,
+            DBO.FUN_USER_SEND_BOOK_DATE(T.IS_USER_ID, T.IS_START_DATE, '4',T.IS_SEND_STATUS,T.IS_BACK_DATE) AS IS_OVERDUE_LONG
+        FROM LIB_IN_SEND_INFO T
+        LEFT JOIN LIB_BOOKS_INFO T1
+        ON T.IS_BOOK_CODE = T1.BI_CODE
+        WHERE T.IS_ID=#{isId}
+	</select>
+	
+	<insert id="addLibInSendInfo" parameterType="com.efs.bus.lib.booksend.mapper.LibInSendInfo">
+
+		insert into LIB_IN_SEND_INFO(
+
+		IS_USER_ID
+		,
+		IS_BOOK_CODE
+		,
+		IS_SEND_STATUS
+		,
+		IS_SEND_HANDLER
+		,
+		IS_START_DATE
+		,
+		IS_START_TIME
+		,
+		IS_PLAN_BACK_DATE
+		)
+		values(
+
+		#{isUserId}
+		,
+		#{isBookCode}
+		,
+		'01'
+		,
+		#{isSendHandler}
+		,
+		#{isStartDate}
+		,
+		#{isStartTime}
+		,
+		DBO.FUN_USER_SEND_BOOK_DATE(#{isUserId},#{isStartDate},'2',NULL,NULL)
+		)
+	</insert>
+	
+	<update id="updateLibInSendInfo" parameterType="com.efs.bus.lib.booksend.mapper.LibInSendInfo">
+		UPDATE LIB_IN_SEND_INFO
+		   SET 
+		   IS_USER_ID = #{isUserId}
+			,
+		   IS_BOOK_CODE = #{isBookCode}
+			,
+		   IS_SEND_HANDLER = #{isSendHandler}
+			,
+		   IS_START_DATE = #{isStartDate}
+			,
+		   IS_START_TIME = #{isStartTime}
+			,
+		   IS_PLAN_BACK_DATE = #{isPlanBackDate}
+			,
+		   IS_OVERDUE_LONG = #{isOverdueLong}
+		 WHERE IS_ID = #{isId}
+	</update>
+	
+	<delete id="deleteLibInSendInfo"  parameterType="string">
+		delete from LIB_IN_SEND_INFO where IS_ID = #{isId}
+	</delete>
+	
+	<select id="listUserInSendInfo" resultMap="LibInSendInfo" parameterType="string">
+        SELECT T.*,
+            T1.BI_NAME,
+            T1.BI_AUTH,
+            T1.BI_PRESS,
+            ISNULL(T1.BI_PRICE,0) AS BI_PRICE,
+            DBO.FUN_USER_SEND_BOOK_DATE(T.IS_USER_ID, T.IS_START_DATE, '3',T.IS_SEND_STATUS,T.IS_BACK_DATE) AS IS_OVER_STATUS,
+            DBO.FUN_USER_SEND_BOOK_DATE(T.IS_USER_ID, T.IS_START_DATE, '4',T.IS_SEND_STATUS,T.IS_BACK_DATE) AS IS_OVERDUE_LONG
+        FROM LIB_IN_SEND_INFO T
+        LEFT JOIN LIB_BOOKS_INFO T1
+        ON T.IS_BOOK_CODE = T1.BI_CODE
+        WHERE T.IS_USER_ID=#{userId} AND T.IS_SEND_STATUS IN ('01','02')
+
+        ORDER BY T.IS_SEND_STATUS, T.IS_ID DESC
+
+	</select>
+
+	<select id="checkUserSendBook" parameterType="map" statementType="CALLABLE">
+		{
+		#{res,mode=OUT,jdbcType=VARCHAR}= CALL FUN_CHECK_USER_SEND_BOOK(#{userId,mode=IN,jdbcType=VARCHAR},#{bookCode,mode=IN,jdbcType=VARCHAR})
+		}
+	</select>
+
+	<select id="getSendUserInfo" resultMap="LibInSendInfo" parameterType="string">
+		SELECT T.UI_ID AS IS_USER_ID,
+			   T.UI_NAME AS IS_USER_NAME,
+			   T1.PA_VALUE AS IS_USER_TYPE,
+			   DBO.FUN_CHECK_USER_SEND_BOOK(T.UI_ID, NULL) AS IS_SEND_STATUS,
+			   DBO.FUN_USER_SEND_BOOK_COUNT(T.UI_ID,'M') AS IS_MAX_CONT,
+			   DBO.FUN_USER_SEND_BOOK_COUNT(T.UI_ID,'H') AS IS_HAS_CONT,
+			   DBO.FUN_USER_SEND_BOOK_COUNT(T.UI_ID,'C') AS IS_CAN_CONT
+		  FROM TS_USER_INFO T
+		  LEFT JOIN TS_PARAM_INFO T1
+			ON T.UI_BUS_TYPE = T1.PA_KEY
+		   AND T1.PA_TYPE = 'TS_USER_TYPE'
+		 WHERE T.UI_ID = #{userId}
+	</select>
+
+	<select id="checkUserBackBook" parameterType="map" statementType="CALLABLE">
+		{
+		#{res,mode=OUT,jdbcType=VARCHAR}= CALL FUN_CHECK_USER_BACK_BOOK(#{userId,mode=IN,jdbcType=VARCHAR},#{bookCode,mode=IN,jdbcType=VARCHAR})
+		}
+	</select>
+
+	<update id="doBacckBook" parameterType="com.efs.bus.lib.booksend.mapper.LibInSendInfo">
+		UPDATE LIB_IN_SEND_INFO
+		   SET IS_SEND_STATUS = '00'
+			  ,IS_BACK_HANDLER = #{isBackHandler}
+			  ,IS_BACK_DATE = #{isBackDate}
+			  ,IS_BACK_TIME = #{isBackTime}
+		 WHERE IS_USER_ID=#{isUserId} AND IS_BOOK_CODE=#{isBookCode} AND IS_SEND_STATUS='01'
+	</update>
+
+	<update id="doRegLosBook" parameterType="com.efs.bus.lib.booksend.mapper.LibInSendInfo">
+		UPDATE LIB_IN_SEND_INFO
+		   SET IS_SEND_STATUS = '02'
+			  ,BL_REG_USER = #{blRegUser}
+			  ,BL_REG_DATE = #{blRegDate}
+			  ,BI_REG_TIME = #{biRegTime}
+			  ,BI_PLAN_COMP_AMT = #{biPlanCompAmt}
+			  ,BI_REG_COMMON=#{biRegCommon}
+		 WHERE IS_USER_ID=#{isUserId} AND IS_BOOK_CODE=#{isBookCode} AND IS_SEND_STATUS='01'
+	</update>
+
+	<select id="doCompBook" parameterType="map" statementType="CALLABLE">
+		{
+			CALL PROC_DO_BOOK_COMP(#{biCompType,mode=IN,jdbcType=VARCHAR},
+								   #{isUserId,mode=IN,jdbcType=VARCHAR},
+								   #{isBookCode,mode=IN,jdbcType=VARCHAR},
+								   #{blCompHandler,mode=IN,jdbcType=VARCHAR},
+								   #{blCompBookCode,mode=IN,jdbcType=VARCHAR},
+								   #{blCompAmt,mode=IN,jdbcType=VARCHAR},
+								   #{blCommon,mode=IN,jdbcType=VARCHAR})
+		}
+	</select>
+
+	<select id="checkUserCompBook" parameterType="map" statementType="CALLABLE">
+			{
+			#{res,mode=OUT,jdbcType=VARCHAR}= CALL FUN_CHECK_USER_COMP_BOOK(#{userId,mode=IN,jdbcType=VARCHAR},#{bookCode,mode=IN,jdbcType=VARCHAR})
+			}
+	</select>
+
+    <select id="listUserAllSendInfo" resultMap="LibInSendInfo" parameterType="com.efs.bus.lib.booksend.mapper.LibInSendInfo">
+      SELECT T.*,
+               T1.BI_NAME,
+               T1.BI_AUTH,
+               T1.BI_PRESS,
+               ISNULL(T1.BI_PRICE, 0) AS BI_PRICE,
+               DBO.FUN_USER_SEND_BOOK_DATE(T.IS_USER_ID, T.IS_START_DATE, '3',T.IS_SEND_STATUS,T.IS_BACK_DATE) AS IS_OVER_STATUS,
+               DBO.FUN_USER_SEND_BOOK_DATE(T.IS_USER_ID, T.IS_START_DATE, '4',T.IS_SEND_STATUS,T.IS_BACK_DATE) AS IS_OVERDUE_LONG
+          FROM LIB_IN_SEND_INFO T
+          LEFT JOIN LIB_BOOKS_INFO T1
+            ON T.IS_BOOK_CODE = T1.BI_CODE
+         WHERE T.IS_USER_ID = #{isUserId}
+
+        <if test="isOverStatus != null and isOverStatus != ''">
+            and DBO.FUN_USER_SEND_BOOK_DATE(T.IS_USER_ID, T.IS_START_DATE, '3',T.IS_SEND_STATUS,T.IS_BACK_DATE) = #{isOverStatus}
+        </if>
+
+        <if test="isSendStatus != null and isSendStatus != ''">
+            and T.IS_SEND_STATUS = #{isSendStatus}
+        </if>
+
+        <if test="biName != null and biName != ''">
+            and T1.BI_NAME LIKE '%${biName}%'
+        </if>
+
+        <if test="isBookCode != null and isBookCode != ''">
+            and T.IS_BOOK_CODE = #{isBookCode}
+        </if>
+
+         ORDER BY
+          CASE T.IS_SEND_STATUS WHEN '01' THEN 1
+                                WHEN '02' THEN 2
+                                WHEN '00' THEN 3
+                                WHEN '03' THEN 4 END,
+          T.IS_ID DESC
+    </select>
+
+</mapper>

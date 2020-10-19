@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.common.sysparam.mapper.TsParamInfoMapper">
+	<resultMap type="com.efs.common.sysparam.mapper.TsParamInfo" id="TsParamInfo">
+		<id property="dbId" column="DB_ID"/>
+		<result property="paType" column="PA_TYPE"/>
+		<result property="paKey" column="PA_KEY"/>
+		<result property="paValue" column="PA_VALUE"/>
+		<result property="paSesc" column="PA_SESC"/>
+		<result property="paOrder" column="PA_ORDER"/>
+		<result property="paStatus" column="PA_STATUS"/>
+	</resultMap>
+	
+	<select id="getTsParamInfo" resultMap="TsParamInfo" parameterType="string">
+		select * from TS_PARAM_INFO where DB_ID = #{dbId}
+	</select>
+	
+	<insert id="addTsParamInfo" parameterType="com.efs.common.sysparam.mapper.TsParamInfo">
+		insert into TS_PARAM_INFO(
+		
+			PA_TYPE
+			,
+		
+			PA_KEY
+			,
+		
+			PA_VALUE
+			,
+		
+			PA_SESC
+			,
+		
+			PA_ORDER
+			,
+		
+			PA_STATUS
+			)
+			values(
+					#{paType}
+					,
+					#{paKey}
+					,
+					#{paValue}
+					,
+					#{paSesc}
+					,
+					#{paOrder}
+					,
+					#{paStatus}
+		)
+	</insert>
+	
+	<update id="updateTsParamInfo" parameterType="com.efs.common.sysparam.mapper.TsParamInfo">
+		UPDATE TS_PARAM_INFO
+		   SET 
+			   PA_TYPE = #{paType}
+			   PA_KEY = #{paKey}
+				,
+			   PA_VALUE = #{paValue}
+				,
+			   PA_SESC = #{paSesc}
+				,
+			   PA_ORDER = #{paOrder}
+				,
+			   PA_STATUS = #{paStatus}
+		 WHERE DB_ID = #{dbId}
+	</update>
+	
+	<delete id="deleteTsParamInfo"  parameterType="string">
+		delete from TS_PARAM_INFO where DB_ID = #{dbId}
+	</delete>
+	
+	<select id="listTsParamInfo" resultMap="TsParamInfo" parameterType="com.efs.common.sysparam.mapper.TsParamInfo">
+		select T.* from TS_PARAM_INFO T where 1=1
+		
+			<if test="paType != null and paType != ''">
+				and T.PA_TYPE = #{paType}
+			</if>
+			<if test="paKey != null and paKey != ''">
+				and T.PA_KEY = #{paKey}
+			</if>
+			<if test="paValue != null and paValue != ''">
+				and T.PA_VALUE = #{paValue}
+			</if>
+			<if test="paSesc != null and paSesc != ''">
+				and T.PA_SESC = #{paSesc}
+			</if>
+			<if test="paOrder != null and paOrder != ''">
+				and T.PA_ORDER = #{paOrder}
+			</if>
+			<if test="paStatus != null and paStatus != ''">
+				and T.PA_STATUS = #{paStatus}
+			</if>
+		
+		ORDER BY DB_ID
+	</select>
+
+	<select id="listTsParamByType" resultMap="TsParamInfo" parameterType="string">
+		SELECT * FROM TS_PARAM_INFO T WHERE T.PA_TYPE = #{paType} AND T.PA_STATUS = '1' ORDER BY T.PA_ORDER
+	</select>
+
+	<select id="getTsParamValue" resultType="string" parameterType="com.efs.common.sysparam.mapper.TsParamInfo">
+		SELECT T.PA_VALUE FROM TS_PARAM_INFO T WHERE T.PA_TYPE = #{paType} AND T.PA_KEY = #{paKey}
+	</select>
+</mapper>

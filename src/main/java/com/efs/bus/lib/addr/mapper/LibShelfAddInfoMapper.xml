@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.bus.lib.addr.mapper.LibShelfAddInfoMapper">
+	<resultMap type="com.efs.bus.lib.addr.mapper.LibShelfAddInfo" id="LibShelfAddInfo">
+		<id property="siCode" column="SI_CODE"/>
+		<result property="siShelfNo" column="SI_SHELF_NO"/>
+		<result property="siRow" column="SI_ROW"/>
+		<result property="siCol" column="SI_COL"/>
+		<result property="siStatus" column="SI_STATUS"/>
+		<result property="addDate" column="ADD_DATE"/>
+		<result property="addTime" column="ADD_TIME"/>
+		<result property="addUser" column="ADD_USER"/>
+	</resultMap>
+	
+	<select id="getLibShelfAddInfo" resultMap="LibShelfAddInfo" parameterType="string">
+		select * from LIB_SHELF_ADD_INFO where SI_CODE = #{siCode}
+	</select>
+	
+	<insert id="addLibShelfAddInfo" parameterType="list">
+
+		<foreach collection="list" item="it" separator=";" close=";">
+		insert into LIB_SHELF_ADD_INFO(
+		SI_CODE
+		,
+		SI_STATUS
+		,
+		ADD_DATE
+		,
+		ADD_TIME
+		,
+		ADD_USER
+		)
+		values(
+		#{it.siCode}
+		,
+		'0'
+		,
+		#{it.addDate}
+		,
+		#{it.addTime}
+		,
+		#{it.addUser}
+		)
+		</foreach>
+	</insert>
+	
+	<update id="updateLibShelfAddInfo" parameterType="com.efs.bus.lib.addr.mapper.LibShelfAddInfo">
+		UPDATE LIB_SHELF_ADD_INFO
+		   SET 
+		   SI_STATUS = #{siStatus}
+			,
+		   ADD_DATE = #{addDate}
+			,
+		   ADD_TIME = #{addTime}
+			,
+		   ADD_USER = #{addUser}
+		 WHERE SI_CODE = #{siCode}
+	</update>
+	
+	<delete id="deleteLibShelfAddInfo"  parameterType="string">
+		delete from LIB_SHELF_ADD_INFO where SI_CODE = #{siCode}
+	</delete>
+	
+	<select id="listLibShelfAddInfo" resultMap="LibShelfAddInfo" parameterType="com.efs.bus.lib.addr.mapper.LibShelfAddInfo">
+		select T.* from LIB_SHELF_ADD_INFO T where 1=1
+		
+			<if test="siShelfNo != null and siShelfNo != ''">
+				and T.SI_SHELF_NO = #{siShelfNo}
+			</if>
+			<if test="siRow != null and siRow != ''">
+				and T.SI_ROW = #{siRow}
+			</if>
+			<if test="siCol != null and siCol != ''">
+				and T.SI_COL = #{siCol}
+			</if>
+			<if test="siStatus != null and siStatus != ''">
+				and T.SI_STATUS = #{siStatus}
+			</if>
+
+		ORDER BY SI_CODE
+	</select>
+
+	<delete id="deleteLibAddrWithShelf" parameterType="int">
+		DELETE FROM LIB_SHELF_ADD_INFO WHERE SI_SHELF_NO = #{siShelfNo}
+	</delete>
+</mapper>

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.bus.edu.classes.mapper.BaseSchClassInfoMapper">
+	<cache/>
+	<resultMap type="com.efs.bus.edu.classes.mapper.BaseSchClassInfo" id="BaseSchClassInfo">
+		<id property="scId" column="SC_ID"/>
+		<result property="scTerm" column="SC_TERM"/>
+		<result property="scTermDesc" column="SC_TERM_DESC"/>
+		<result property="scClassCode" column="SC_CLASS_CODE"/>
+		<result property="scClassName" column="SC_CLASS_NAME"/>
+		<result property="scGrade" column="SC_GRADE"/>
+		<result property="scCls" column="SC_CLS"/>
+		<result property="scLeader" column="SC_LEADER"/>
+		<result property="scLeaderName" column="SC_LEADER_NAME"/>
+		<result property="ssChkStatus" column="SS_CHK_STATUS"/>
+		<result property="addDate" column="ADD_DATE"/>
+		<result property="addTime" column="ADD_TIME"/>
+		<result property="addUser" column="ADD_USER"/>
+		<result property="addUserName" column="ADD_USER_NAME"/>
+		<result property="updDate" column="UPD_DATE"/>
+		<result property="updTime" column="UPD_TIME"/>
+		<result property="updUser" column="UPD_USER"/>
+		<result property="updUserName" column="UPD_USER_NAME"/>
+		<result property="chkUser" column="CHK_USER"/>
+		<result property="chkUserName" column="CHK_USER_NAME"/>
+		<result property="chkDate" column="CHK_DATE"/>
+		<result property="chkTime" column="CHK_TIME"/>
+		<result property="clsCnt" column="CLS_CNT"/>
+	</resultMap>
+	
+	<select id="getBaseSchClassInfo" resultMap="BaseSchClassInfo" parameterType="string">
+		select T.*,dbo.FUN_GET_TERMNAME(SC_TERM) as SC_TERM_DESC from BASE_SCH_CLASS_INFO T where SC_ID = #{scId}
+	</select>
+	
+	<insert id="addBaseSchClassInfo" parameterType="com.efs.bus.edu.classes.mapper.BaseSchClassInfo">
+		insert into BASE_SCH_CLASS_INFO(
+		SC_TERM
+		,
+		SC_CLASS_CODE
+		,
+		SC_CLASS_NAME
+		,
+		SC_GRADE
+		,
+		SC_CLS
+		,
+		SC_LEADER
+		,
+		SS_CHK_STATUS
+		,
+		ADD_DATE
+		,
+		ADD_TIME
+		,
+		ADD_USER
+		,
+		ADD_USER_NAME
+		,
+		UPD_DATE
+		,
+		UPD_TIME
+		,
+		UPD_USER
+		)
+		values(
+		#{scTerm}
+		,
+		#{scClassCode}
+		,
+		#{scClassName}
+		,
+		#{scGrade}
+		,
+		#{scCls}
+		,
+		#{scLeader}
+		,
+		#{ssChkStatus}
+		,
+		#{addDate}
+		,
+		#{addTime}
+		,
+		#{addUser}
+		,
+		#{addUserName}
+		,
+		#{updDate}
+		,
+		#{updTime}
+		,
+		#{updUser}
+		)
+	</insert>
+	
+	<update id="updateBaseSchClassInfo" parameterType="com.efs.bus.edu.classes.mapper.BaseSchClassInfo">
+		UPDATE BASE_SCH_CLASS_INFO
+		   SET 
+		   SC_LEADER = #{scLeader}
+			,
+		   UPD_DATE = #{updDate}
+			,
+		   UPD_TIME = #{updTime}
+			,
+		   UPD_USER = #{updUser}
+
+		 WHERE SC_ID = #{scId}
+	</update>
+	
+	<delete id="deleteBaseSchClassInfo"  parameterType="string">
+		delete from BASE_SCH_CLASS_INFO where SC_ID = #{scId}
+	</delete>
+	
+	<select id="listBaseSchClassInfo" resultMap="BaseSchClassInfo" parameterType="com.efs.bus.edu.classes.mapper.BaseSchClassInfo">
+		select T.*,dbo.FUN_GET_TERMNAME(SC_TERM) as SC_TERM_DESC from BASE_SCH_CLASS_INFO T where 1=1
+		
+			<if test="scTerm != null and scTerm != ''">
+				and T.SC_TERM = #{scTerm}
+			</if>
+			<if test="scClassCode != null and scClassCode != ''">
+				and T.SC_CLASS_CODE = #{scClassCode}
+			</if>
+			<if test="scClassName != null and scClassName != ''">
+				and T.SC_CLASS_NAME = #{scClassName}
+			</if>
+			<if test="scGrade != null and scGrade != ''">
+				and T.SC_GRADE = #{scGrade}
+			</if>
+			<if test="scCls != null and scCls != ''">
+				and T.SC_CLS = #{scCls}
+			</if>
+			<if test="scLeader != null and scLeader != ''">
+				and T.SC_LEADER = #{scLeader}
+			</if>
+			<if test="scLeaderName != null and scLeaderName != ''">
+				and T.SC_LEADER_NAME = #{scLeaderName}
+			</if>
+			<if test="ssChkStatus != null and ssChkStatus != ''">
+				and T.SS_CHK_STATUS = #{ssChkStatus}
+			</if>
+			<if test="addDate != null and addDate != ''">
+				and T.ADD_DATE = #{addDate}
+			</if>
+			<if test="addTime != null and addTime != ''">
+				and T.ADD_TIME = #{addTime}
+			</if>
+			<if test="addUser != null and addUser != ''">
+				and T.ADD_USER = #{addUser}
+			</if>
+			<if test="addUserName != null and addUserName != ''">
+				and T.ADD_USER_NAME = #{addUserName}
+			</if>
+			<if test="updDate != null and updDate != ''">
+				and T.UPD_DATE = #{updDate}
+			</if>
+			<if test="updTime != null and updTime != ''">
+				and T.UPD_TIME = #{updTime}
+			</if>
+			<if test="updUser != null and updUser != ''">
+				and T.UPD_USER = #{updUser}
+			</if>
+			<if test="updUserName != null and updUserName != ''">
+				and T.UPD_USER_NAME = #{updUserName}
+			</if>
+			<if test="chkUser != null and chkUser != ''">
+				and T.CHK_USER = #{chkUser}
+			</if>
+			<if test="chkUserName != null and chkUserName != ''">
+				and T.CHK_USER_NAME = #{chkUserName}
+			</if>
+			<if test="chkDate != null and chkDate != ''">
+				and T.CHK_DATE = #{chkDate}
+			</if>
+			<if test="chkTime != null and chkTime != ''">
+				and T.CHK_TIME = #{chkTime}
+			</if>
+		
+		ORDER BY SC_TERM desc,SC_CLASS_CODE
+	</select>
+
+	<select id="batchAddClasses" parameterType="map" statementType="CALLABLE">
+		{
+			CALL PROC_GEN_CLASSES( #{gradeCnt,mode=IN,jdbcType=INTEGER},
+								   #{clsCnt,mode=IN,jdbcType=INTEGER},
+								   #{scTerm,mode=IN,jdbcType=VARCHAR},
+								   #{userId,mode=IN,jdbcType=VARCHAR})
+		}
+	</select>
+
+	<select id="checkClassLeaderExist" resultType="int" parameterType="com.efs.bus.edu.classes.mapper.BaseSchClassInfo">
+		SELECT COUNT(1) AS CNT FROM BASE_SCH_CLASS_INFO T WHERE T.SC_TERM=#{scTerm} AND T.SC_CLASS_CODE !=#{scClassCode} AND T.SC_LEADER=#{scLeader}
+	</select>
+
+	<select id="getLastTerm" resultType="string">
+		SELECT MAX(T.SC_TERM) AS TERM FROM BASE_SCH_CLASS_INFO T
+	</select>
+
+	<select id="getClassFromLeader" resultMap="BaseSchClassInfo" parameterType="map">
+		SELECT * FROM BASE_SCH_CLASS_INFO T WHERE T.SC_TERM=#{scTerm} AND T.SC_LEADER=#{leaderId}
+	</select>
+
+	<select id="checkUserIsClassLeader" resultType="int" parameterType="map">
+		SELECT COUNT(1) AS CNT FROM BASE_SCH_CLASS_INFO T WHERE T.SC_CLASS_CODE=#{scClass} AND T.SC_TERM=#{scTerm} AND T.SC_LEADER=#{leaderId}
+	</select>
+
+	<select id="listGradeClsCnt" resultMap="BaseSchClassInfo" parameterType="map">
+		SELECT T.SC_GRADE, COUNT(T.SC_CLS) CLS_CNT
+		  FROM BASE_SCH_CLASS_INFO T
+		 WHERE T.SC_TERM = #{scTerm}
+
+		<if test="type == '1'.toString()">
+			AND EXISTS (SELECT 1
+			FROM EDU_CLASS_STATIC_INFO T1
+			WHERE T1.CS_CLASS = T.SC_CLASS_CODE
+			AND T1.CS_TERM = #{scTerm}
+			AND T1.CS_MID_TERM = '01')
+		</if>
+
+		 GROUP BY T.SC_GRADE
+		 ORDER BY T.SC_GRADE DESC
+	</select>
+</mapper>

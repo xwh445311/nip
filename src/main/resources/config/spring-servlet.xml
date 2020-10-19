@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	
+	<!-- <mvc:annotation-driven>
+		<mvc:message-converters register-defaults="true">
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes" value="text/plain;charset=UTF-8"/>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven> -->
+	
+	
+	
+	<!-- 启用Spring MVC注解功能 -->
+	<mvc:annotation-driven>
+		<mvc:message-converters register-defaults="true">
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="defaultCharset" value="UTF-8"/>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+	
+	<!-- 启动Srping组件自动扫描机制,Spring会自动扫描base-package包及其子包下面的类 -->
+	<context:component-scan base-package="com.efs">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />
+	</context:component-scan>
+
+	<!-- 添加对注解校验的支持-->
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="providerClass"  value="org.hibernate.validator.HibernateValidator"/>
+		<!--不设置则默认为classpath下的 ValidationMessages.properties -->
+		<property name="validationMessageSource" ref="validatemessageSource"/>
+	</bean>
+	<bean id="conversion-service" class="org.springframework.format.support.FormattingConversionServiceFactoryBean" />
+	<bean id="validatemessageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:message"/>
+		<property name="fileEncodings" value="utf-8"/>
+		<property name="cacheSeconds" value="120"/>
+	</bean>
+
+	<!-- 启动对JSON的支持 -->
+	<bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="supportedMediaTypes">
+            <list>
+                <value>text/html;charset=UTF-8</value>
+            </list>
+        </property>
+	</bean>
+	
+	<!-- 设置视图解析类，使用默认的JSTL解析器 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp"/>
+		<property name="suffix" value=".jsp"/>
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+	</bean>
+	
+	<!-- SPRING MVC拦截器 -->
+	<mvc:interceptors>
+		
+		<!-- 訪問日誌記錄拦截器 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="com.efs.common.interceptor.LogInterceptor"/>
+		</mvc:interceptor>
+		
+		<!-- 权限控制 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="com.efs.common.interceptor.AuthrotyInterceptor"/>
+		</mvc:interceptor>
+		
+		<!-- 平台业务拦截器 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="com.efs.common.controller.BusinessInteceptor"/>
+		</mvc:interceptor>
+
+		<!--菜单处理拦截器 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<mvc:exclude-mapping path="/login/gotoLogin.do"/>
+			<mvc:exclude-mapping path="/login/logout.do"/>
+			<bean class="com.efs.common.interceptor.FuncInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	<!-- 全局异常处理 -->
+	<bean id="exceptionResolver" class="com.efs.common.error.controller.MySpringMVCExceptionResolver">
+		<property name="defaultErrorView">     
+            <value>/error/error</value>   
+        </property>   
+        <property name="warnLogCategory" value="ERROR"></property>
+	</bean>
+	
+	<!-- 配置文件上傳 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+        <property name="defaultEncoding" value="utf-8" />  
+        <property name="maxUploadSize" value="10240000" />  
+        <property name="maxInMemorySize" value="40960" />  
+    </bean> 
+</beans>

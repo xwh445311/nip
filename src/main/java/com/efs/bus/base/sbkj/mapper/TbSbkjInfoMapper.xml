@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.bus.base.sbkj.mapper.TbSbkjInfoMapper">
+	<resultMap type="com.efs.bus.base.sbkj.mapper.TbSbkjInfo" id="TbSbkjInfo">
+		<id property="sbkj" column="SBKJ"/>
+		<result property="zxyl" column="ZXYL"/>
+		<result property="gcyl" column="GCYL"/>
+		<result property="zdyl" column="ZDYL"/>
+		<result property="rjyl" column="RJYL"/>
+		<result property="bjsl" column="BJSL"/>
+	</resultMap>
+	
+	<select id="getTbSbkjInfo" resultMap="TbSbkjInfo" parameterType="string">
+		select * from TB_SBKJ_INFO where SBKJ = #{sbkj}
+	</select>
+	
+	<insert id="addTbSbkjInfo" parameterType="com.efs.bus.base.sbkj.mapper.TbSbkjInfo">
+		insert into TB_SBKJ_INFO(
+		
+			SBKJ
+			,
+		
+			ZXYL
+			,
+		
+			GCYL
+			,
+		
+			ZDYL
+			,
+		
+			RJYL
+			,
+		
+			BJSL
+			)
+			values(
+					#{sbkj}
+					,
+					#{zxyl}
+					,
+					#{gcyl}
+					,
+					#{zdyl}
+					,
+					#{rjyl}
+					,
+					#{bjsl}
+		)
+	</insert>
+	
+	<update id="updateTbSbkjInfo" parameterType="com.efs.bus.base.sbkj.mapper.TbSbkjInfo">
+		UPDATE TB_SBKJ_INFO
+		   SET 
+			   ZXYL = #{zxyl}
+				,
+			   GCYL = #{gcyl}
+				,
+			   ZDYL = #{zdyl}
+				,
+			   RJYL = #{rjyl}
+				,
+			   BJSL = #{bjsl}
+		 WHERE SBKJ = #{sbkj}
+	</update>
+	
+	<delete id="deleteTbSbkjInfo"  parameterType="string">
+		delete from TB_SBKJ_INFO where SBKJ = #{sbkj}
+	</delete>
+	
+	<select id="listTbSbkjInfo" resultMap="TbSbkjInfo" parameterType="com.efs.bus.base.sbkj.mapper.TbSbkjInfo">
+		select T.* from TB_SBKJ_INFO T where 1=1
+		
+			<if test="zxyl != null and zxyl != ''">
+				and T.ZXYL = #{zxyl}
+			</if>
+			<if test="gcyl != null and gcyl != ''">
+				and T.GCYL = #{gcyl}
+			</if>
+			<if test="zdyl != null and zdyl != ''">
+				and T.ZDYL = #{zdyl}
+			</if>
+			<if test="rjyl != null and rjyl != ''">
+				and T.RJYL = #{rjyl}
+			</if>
+			<if test="bjsl != null and bjsl != ''">
+				and T.BJSL = #{bjsl}
+			</if>
+		
+		ORDER BY SBKJ
+	</select>
+
+	<select id="listAllValidSbkj" resultMap="TbSbkjInfo">
+		select * from TB_SBKJ_INFO t ORDER BY T.SBKJ
+	</select>
+</mapper>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.bus.base.jtdj.mapper.TbJtdjMapper">
+	<resultMap type="com.efs.bus.base.jtdj.mapper.TbJtdj" id="TbJtdj">
+		<id property="dbId" column="DB_ID"/>
+		<result property="ysxz" column="YSXZ"/>
+		<result property="fydm" column="FYDM"/>
+		<result property="jth" column="JTH"/>
+		<result property="jtdj" column="JTDJ"/>
+		<result property="jtqs" column="JTQS"/>
+		<result property="jtjs" column="JTJS"/>
+		<result property="delbz" column="DELBZ"/>
+		<result property="csrq" column="CSRQ"/>
+		<result property="xzmc" column="XZMC"/>
+		<result property="fymc" column="FYMC"/>
+	</resultMap>
+	
+	<select id="getTbJtdj" resultMap="TbJtdj" parameterType="string">
+		select * from TB_JTDJ where DB_ID = #{dbId}
+	</select>
+	
+	<insert id="addTbJtdj" parameterType="com.efs.bus.base.jtdj.mapper.TbJtdj">
+		insert into TB_JTDJ(
+		
+			DB_ID
+			,
+		
+			YSXZ
+			,
+		
+			FYDM
+			,
+		
+			JTH
+			,
+		
+			JTDJ
+			,
+		
+			JTQS
+			,
+		
+			JTJS
+			,
+		
+			DELBZ
+			,
+		
+			CSRQ
+			)
+			values(
+					#{dbId}
+					,
+					#{ysxz}
+					,
+					#{fydm}
+					,
+					#{jth}
+					,
+					#{jtdj}
+					,
+					#{jtqs}
+					,
+					#{jtjs}
+					,
+					'0'
+					,
+					trunc(sysdate)
+		)
+	</insert>
+	
+	<update id="updateTbJtdj" parameterType="com.efs.bus.base.jtdj.mapper.TbJtdj">
+		UPDATE TB_JTDJ
+		   SET 
+			   YSXZ = #{ysxz}
+				,
+			   FYDM = #{fydm}
+				,
+			   JTH = #{jth}
+				,
+			   JTDJ = #{jtdj}
+				,
+			   JTQS = #{jtqs}
+				,
+			   JTJS = #{jtjs}
+				,
+			   DELBZ = '0'
+				,
+			   CSRQ = trunc(sysdate)
+		 WHERE DB_ID = #{dbId}
+	</update>
+	
+	<delete id="deleteTbJtdj"  parameterType="string">
+		delete from TB_JTDJ where DB_ID = #{dbId}
+	</delete>
+	
+	<select id="listTbJtdj" resultMap="TbJtdj" parameterType="com.efs.bus.base.jtdj.mapper.TbJtdj">
+		select T.*,T1.XZMC,T2.FYMC from TB_JTDJ T LEFT JOIN TB_YSXZ_INFO T1 ON T.YSXZ = T1.XZDM LEFT JOIN TB_FYXX T2 ON T.FYDM = T2.FYDM where 1=1
+		
+			<if test="ysxz != null and ysxz != ''">
+				and T.YSXZ = #{ysxz}
+			</if>
+			<if test="fydm != null and fydm != ''">
+				and T.FYDM = #{fydm}
+			</if>
+			<if test="jth != null and jth != ''">
+				and T.JTH = #{jth}
+			</if>
+			<if test="jtdj != null and jtdj != ''">
+				and T.JTDJ = #{jtdj}
+			</if>
+			<if test="jtqs != null and jtqs != ''">
+				and T.JTQS = #{jtqs}
+			</if>
+			<if test="jtjs != null and jtjs != ''">
+				and T.JTJS = #{jtjs}
+			</if>
+			<if test="delbz != null and delbz != ''">
+				and T.DELBZ = #{delbz}
+			</if>
+			<if test="csrq != null and csrq != ''">
+				and T.CSRQ = #{csrq}
+			</if>
+		
+		ORDER BY DB_ID
+	</select>
+</mapper>

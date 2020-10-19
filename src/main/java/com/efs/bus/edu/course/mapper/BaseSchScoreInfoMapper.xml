@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.bus.edu.course.mapper.BaseSchScoreInfoMapper">
+	<cache/>
+	<resultMap type="com.efs.bus.edu.course.mapper.BaseSchScoreInfo" id="BaseSchScoreInfo">
+		<id property="ssId" column="SS_ID"/>
+		<result property="ssTerm" column="SS_TERM"/>
+		<result property="ssTermName" column="SS_TERM_NAME"/>
+		<result property="ssScore" column="SS_SCORE"/>
+		<result property="ssScoreName" column="SS_SCORE_NAME"/>
+		<result property="ssShortName" column="SS_SHORT_NAME"/>
+		<result property="ssClass" column="SS_CLASS"/>
+		<result property="ssClassName" column="SS_CLASS_NAME"/>
+		<result property="ssCount" column="SS_COUNT"/>
+		<result property="ssCredit" column="SS_CREDIT"/>
+		<result property="ssFullMark" column="SS_FULL_MARK"/>
+		<result property="ssHighMark" column="SS_HIGH_MARK"/>
+		<result property="ssExcelMark" column="SS_EXCEL_MARK"/>
+		<result property="ssPassMark" column="SS_PASS_MARK"/>
+		<result property="ssLowMark" column="SS_LOW_MARK"/>
+		<result property="ssStudyType" column="SS_STUDY_TYPE"/>
+		<result property="ssTestType" column="SS_TEST_TYPE"/>
+		<result property="ssTestTypeVal" column="SS_TEST_TYPE_VAL"/>
+		<result property="ssTeacher" column="SS_TEACHER"/>
+		<result property="ssTeacherName" column="SS_TEACHER_NAME"/>
+		<result property="ssChkStatus" column="SS_CHK_STATUS"/>
+		<result property="addDate" column="ADD_DATE"/>
+		<result property="addTime" column="ADD_TIME"/>
+		<result property="addUser" column="ADD_USER"/>
+		<result property="addUserName" column="ADD_USER_NAME"/>
+		<result property="updDate" column="UPD_DATE"/>
+		<result property="updTime" column="UPD_TIME"/>
+		<result property="updUser" column="UPD_USER"/>
+		<result property="updUserName" column="UPD_USER_NAME"/>
+		<result property="chkUser" column="CHK_USER"/>
+		<result property="chkUserName" column="CHK_USER_NAME"/>
+		<result property="chkDate" column="CHK_DATE"/>
+		<result property="chkTime" column="CHK_TIME"/>
+	</resultMap>
+	
+	<select id="getBaseSchScoreInfo" resultMap="BaseSchScoreInfo" parameterType="string">
+		select * from BASE_SCH_SCORE_INFO where SS_ID = #{ssId}
+	</select>
+	
+	<insert id="addBaseSchScoreInfo" parameterType="com.efs.bus.edu.course.mapper.BaseSchScoreInfo">
+		insert into BASE_SCH_SCORE_INFO(
+		SS_ID
+		,
+		SS_TERM
+		,
+		SS_SCORE
+		,
+		SS_CLASS
+		,
+		SS_COUNT
+		,
+		SS_CREDIT
+		,
+		SS_FULL_MARK
+		,
+		SS_HIGH_MARK
+		,
+		SS_EXCEL_MARK
+		,
+		SS_PASS_MARK
+		,
+		SS_LOW_MARK
+		,
+		SS_STUDY_TYPE
+		,
+		SS_TEST_TYPE
+		,
+		SS_TEACHER
+		,
+		SS_CHK_STATUS
+		,
+		ADD_DATE
+		,
+		ADD_TIME
+		,
+		ADD_USER
+		,
+		ADD_USER_NAME
+		,
+		UPD_DATE
+		,
+		UPD_TIME
+		,
+		UPD_USER
+		,
+		UPD_USER_NAME
+		,
+		CHK_USER
+		,
+		CHK_USER_NAME
+		,
+		CHK_DATE
+		,
+		CHK_TIME
+		)
+		values(
+		#{ssId}
+		,
+		#{ssTerm}
+		,
+		#{ssScore}
+		,
+		#{ssClass}
+		,
+		#{ssCount}
+		,
+		#{ssCredit}
+		,
+		#{ssFullMark}
+		,
+		#{ssHighMark}
+		,
+		#{ssExcelMark}
+		,
+		#{ssPassMark}
+		,
+		#{ssLowMark}
+		,
+		#{ssStudyType}
+		,
+		#{ssTestType}
+		,
+		#{ssTeacher}
+		,
+		#{ssChkStatus}
+		,
+		#{addDate}
+		,
+		#{addTime}
+		,
+		#{addUser}
+		,
+		#{addUserName}
+		,
+		#{updDate}
+		,
+		#{updTime}
+		,
+		#{updUser}
+		,
+		#{updUserName}
+		,
+		#{chkUser}
+		,
+		#{chkUserName}
+		,
+		#{chkDate}
+		,
+		#{chkTime}
+		)
+	</insert>
+	
+	<update id="updateBaseSchScoreInfo" parameterType="com.efs.bus.edu.course.mapper.BaseSchScoreInfo">
+		UPDATE BASE_SCH_SCORE_INFO
+		   SET 
+		   SS_COUNT = #{ssCount}
+			,
+		   SS_CREDIT = #{ssCredit}
+			,
+		   SS_FULL_MARK = #{ssFullMark}
+			,
+		   SS_HIGH_MARK = #{ssHighMark}
+			,
+		   SS_EXCEL_MARK = #{ssExcelMark}
+			,
+		   SS_PASS_MARK = #{ssPassMark}
+			,
+		   SS_LOW_MARK = #{ssLowMark}
+			,
+		   SS_STUDY_TYPE = #{ssStudyType}
+			,
+		   SS_TEST_TYPE = #{ssTestType}
+			,
+		   SS_TEACHER = #{ssTeacher}
+			,
+		   SS_CHK_STATUS = #{ssChkStatus}
+			,
+		   UPD_DATE = #{updDate}
+			,
+		   UPD_TIME = #{updTime}
+			,
+		   UPD_USER = #{updUser}
+			,
+		   UPD_USER_NAME = #{updUserName}
+		 WHERE SS_ID = #{ssId}
+	</update>
+	
+	<delete id="deleteBaseSchScoreInfo"  parameterType="string">
+		delete from BASE_SCH_SCORE_INFO where SS_ID = #{ssId}
+	</delete>
+	
+	<select id="listBaseSchScoreInfo" resultMap="BaseSchScoreInfo" parameterType="com.efs.bus.edu.course.mapper.BaseSchScoreInfo">
+		select T.* from BASE_SCH_SCORE_INFO T where 1=1
+		
+			<if test="ssTerm != null and ssTerm != ''">
+				and T.SS_TERM = #{ssTerm}
+			</if>
+			<if test="ssTermName != null and ssTermName != ''">
+				and T.SS_TERM_NAME = #{ssTermName}
+			</if>
+			<if test="ssScore != null and ssScore != ''">
+				and T.SS_SCORE = #{ssScore}
+			</if>
+			<if test="ssScoreName != null and ssScoreName != ''">
+				and T.SS_SCORE_NAME = #{ssScoreName}
+			</if>
+			<if test="ssShortName != null and ssShortName != ''">
+				and T.SS_SHORT_NAME = #{ssShortName}
+			</if>
+			<if test="ssClass != null and ssClass != ''">
+				and T.SS_CLASS = #{ssClass}
+			</if>
+			<if test="ssClassName != null and ssClassName != ''">
+				and T.SS_CLASS_NAME = #{ssClassName}
+			</if>
+			<if test="ssCount != null and ssCount != ''">
+				and T.SS_COUNT = #{ssCount}
+			</if>
+			<if test="ssCredit != null and ssCredit != ''">
+				and T.SS_CREDIT = #{ssCredit}
+			</if>
+			<if test="ssFullMark != null and ssFullMark != ''">
+				and T.SS_FULL_MARK = #{ssFullMark}
+			</if>
+			<if test="ssHighMark != null and ssHighMark != ''">
+				and T.SS_HIGH_MARK = #{ssHighMark}
+			</if>
+			<if test="ssExcelMark != null and ssExcelMark != ''">
+				and T.SS_EXCEL_MARK = #{ssExcelMark}
+			</if>
+			<if test="ssPassMark != null and ssPassMark != ''">
+				and T.SS_PASS_MARK = #{ssPassMark}
+			</if>
+			<if test="ssLowMark != null and ssLowMark != ''">
+				and T.SS_LOW_MARK = #{ssLowMark}
+			</if>
+			<if test="ssStudyType != null and ssStudyType != ''">
+				and T.SS_STUDY_TYPE = #{ssStudyType}
+			</if>
+			<if test="ssTestType != null and ssTestType != ''">
+				and T.SS_TEST_TYPE = #{ssTestType}
+			</if>
+			<if test="ssTestTypeVal != null and ssTestTypeVal != ''">
+				and T.SS_TEST_TYPE_VAL = #{ssTestTypeVal}
+			</if>
+			<if test="ssTeacher != null and ssTeacher != ''">
+				and T.SS_TEACHER = #{ssTeacher}
+			</if>
+			<if test="ssTeacherName != null and ssTeacherName != ''">
+				and T.SS_TEACHER_NAME = #{ssTeacherName}
+			</if>
+			<if test="ssChkStatus != null and ssChkStatus != ''">
+				and T.SS_CHK_STATUS = #{ssChkStatus}
+			</if>
+			<if test="addDate != null and addDate != ''">
+				and T.ADD_DATE = #{addDate}
+			</if>
+			<if test="addTime != null and addTime != ''">
+				and T.ADD_TIME = #{addTime}
+			</if>
+			<if test="addUser != null and addUser != ''">
+				and T.ADD_USER = #{addUser}
+			</if>
+			<if test="addUserName != null and addUserName != ''">
+				and T.ADD_USER_NAME = #{addUserName}
+			</if>
+			<if test="updDate != null and updDate != ''">
+				and T.UPD_DATE = #{updDate}
+			</if>
+			<if test="updTime != null and updTime != ''">
+				and T.UPD_TIME = #{updTime}
+			</if>
+			<if test="updUser != null and updUser != ''">
+				and T.UPD_USER = #{updUser}
+			</if>
+			<if test="updUserName != null and updUserName != ''">
+				and T.UPD_USER_NAME = #{updUserName}
+			</if>
+			<if test="chkUser != null and chkUser != ''">
+				and T.CHK_USER = #{chkUser}
+			</if>
+			<if test="chkUserName != null and chkUserName != ''">
+				and T.CHK_USER_NAME = #{chkUserName}
+			</if>
+			<if test="chkDate != null and chkDate != ''">
+				and T.CHK_DATE = #{chkDate}
+			</if>
+			<if test="chkTime != null and chkTime != ''">
+				and T.CHK_TIME = #{chkTime}
+			</if>
+		
+		ORDER BY T.SS_TERM DESC,T.SS_CLASS,T.SS_SCORE
+	</select>
+
+	<insert id="copyBaseSchScoreInfo" parameterType="com.efs.bus.edu.course.mapper.BaseSchScoreInfo">
+		INSERT INTO BASE_SCH_SCORE_INFO
+           (SS_ID
+           ,SS_TERM
+           ,SS_SCORE
+           ,SS_CLASS
+           ,SS_COUNT
+           ,SS_CREDIT
+           ,SS_FULL_MARK
+           ,SS_HIGH_MARK
+           ,SS_EXCEL_MARK
+           ,SS_PASS_MARK
+           ,SS_LOW_MARK
+           ,SS_STUDY_TYPE
+           ,SS_TEST_TYPE
+           ,SS_TEACHER
+           ,SS_CHK_STATUS
+           ,ADD_DATE
+           ,ADD_TIME
+           ,ADD_USER
+           ,ADD_USER_NAME
+           ,UPD_DATE
+           ,UPD_TIME
+           ,UPD_USER
+           ,UPD_USER_NAME
+           )
+		SELECT
+		   'K2_' + dbo.FUN_COMMON_PAD_LEFT((NEXT VALUE FOR SQ_SYS),'0',6)
+		  ,#{newSsTerm}
+		  ,SS_SCORE
+
+		<choose>
+			<when test="newClasses != null and newClasses != ''">
+				,#{newClasses}
+			</when>
+			<otherwise>
+				,SS_CLASS
+			</otherwise>
+		</choose>
+
+		  ,SS_COUNT
+		  ,SS_CREDIT
+		  ,SS_FULL_MARK
+		  ,SS_HIGH_MARK
+		  ,SS_EXCEL_MARK
+		  ,SS_PASS_MARK
+		  ,SS_LOW_MARK
+		  ,SS_STUDY_TYPE
+		  ,SS_TEST_TYPE
+		  ,SS_TEACHER
+		  ,SS_CHK_STATUS
+		  ,CONVERT(varchar(10), GETDATE(), 23)
+		  ,CONVERT(varchar(10), GETDATE(), 108)
+		  ,#{addUser}
+		  ,#{addUserName}
+		  ,CONVERT(varchar(10), GETDATE(), 23)
+		  ,CONVERT(varchar(10), GETDATE(), 108)
+		  ,#{addUser}
+		  ,#{addUserName}
+	  FROM BASE_SCH_SCORE_INFO T WHERE T.SS_TERM=#{ssTerm}
+		<if test="ssClass != null and ssClass != ''">
+			and T.SS_CLASS = #{ssClass}
+		</if>
+	</insert>
+
+	<select id="getTermHasCourse" parameterType="map" resultType="int">
+		SELECT COUNT(1) AS CNT FROM BASE_SCH_SCORE_INFO T WHERE T.SS_TERM=#{ssTerm}
+
+		<if test="ssClass != null and ssClass != ''">
+		AND T.SS_CLASS=#{ssClass}
+		</if>
+	</select>
+
+	<select id="listTeacherHasCourClass" resultType="string" parameterType="map">
+		SELECT DISTINCT T.SS_CLASS FROM BASE_SCH_SCORE_INFO T WHERE T.SS_TERM=#{ssTerm} AND T.SS_TEACHER=#{teacherId} ORDER BY T.SS_CLASS
+	</select>
+
+	<select id="listTermClassCourForTest" resultMap="BaseSchScoreInfo" parameterType="map">
+		SELECT T.SS_SCORE,T.SS_SCORE_NAME
+		  FROM BASE_SCH_SCORE_INFO T
+		  LEFT JOIN TS_PARAM_INFO T1
+			ON T.SS_SCORE = T1.PA_KEY
+		 WHERE T.SS_TERM = #{ssTerm}
+		   AND T.SS_CLASS = #{ssClass}
+		   AND T.SS_TEST_TYPE = '01'
+		   AND T1.PA_TYPE = 'BASE_SCORE_SHORT_INFO'
+		 ORDER BY T1.PA_ORDER
+	</select>
+</mapper>

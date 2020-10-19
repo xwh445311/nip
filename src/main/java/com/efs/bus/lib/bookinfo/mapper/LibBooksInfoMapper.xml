@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.bus.lib.bookinfo.mapper.LibBooksInfoMapper">
+	<resultMap type="com.efs.bus.lib.bookinfo.mapper.LibBooksInfo" id="LibBooksInfo">
+		<id property="biCode" column="BI_CODE"/>
+		<result property="biStatus" column="BI_STATUS"/>
+		<result property="biSendStatus" column="BI_SEND_STATUS"/>
+		<result property="biName" column="BI_NAME"/>
+		<result property="biOriName" column="BI_ORI_NAME"/>
+		<result property="biIsbn" column="BI_ISBN"/>
+		<result property="biPublishDate" column="BI_PUBLISH_DATE"/>
+		<result property="biAuth" column="BI_AUTH"/>
+		<result property="biTranslater" column="BI_TRANSLATER"/>
+		<result property="biVersion" column="BI_VERSION"/>
+		<result property="biTypeCode" column="BI_TYPE_CODE"/>
+		<result property="biType" column="BI_TYPE"/>
+		<result property="biPress" column="BI_PRESS"/>
+		<result property="biPrice" column="BI_PRICE"/>
+		<result property="biPageCount" column="BI_PAGE_COUNT"/>
+		<result property="biBookSize" column="BI_BOOK_SIZE"/>
+		<result property="biBookBrief" column="BI_BOOK_BRIEF"/>
+		<result property="biBookCata" column="BI_BOOK_CATA"/>
+		<result property="biRemSmImg" column="BI_REM_SM_IMG"/>
+		<result property="biRemLgImg" column="BI_REM_LG_IMG"/>
+		<result property="biLocSmImg" column="BI_LOC_SM_IMG"/>
+		<result property="biLocLgImg" column="BI_LOC_LG_IMG"/>
+		<result property="biAddr" column="BI_ADDR"/>
+		<result property="biEbookUrl" column="BI_EBOOK_URL"/>
+		<result property="biAuthInfo" column="BI_AUTH_INFO"/>
+		<result property="biInDate" column="BI_IN_DATE"/>
+		<result property="biInUser" column="BI_IN_USER"/>
+		<result property="biInBatchNo" column="BI_IN_BATCH_NO"/>
+		<result property="addDate" column="ADD_DATE"/>
+		<result property="addTime" column="ADD_TIME"/>
+		<result property="addUser" column="ADD_USER"/>
+		<result property="updDate" column="UPD_DATE"/>
+		<result property="updTime" column="UPD_TIME"/>
+		<result property="updUser" column="UPD_USER"/>
+		<result property="sendUserId" column="SEND_USER_ID"/>
+		<result property="sendUserName" column="SEND_USER_NAME"/>
+	</resultMap>
+	
+	<select id="getLibBooksInfo" resultMap="LibBooksInfo" parameterType="string">
+		select TOP 1 T.*, T3.UI_ID AS SEND_USER_ID, T3.UI_NAME AS SEND_USER_NAME
+		  from LIB_BOOKS_INFO T
+		  LEFT JOIN LIB_IN_SEND_INFO T2
+			ON T.BI_CODE = T2.IS_BOOK_CODE
+		   AND T2.IS_SEND_STATUS IN ('01', '02')
+		  LEFT JOIN TS_USER_INFO T3
+			ON T2.IS_USER_ID = T3.UI_ID
+		 where BI_CODE = #{biCode}
+	</select>
+	
+	<insert id="addLibBooksInfo" parameterType="list">
+		<foreach collection="list" item="it" separator=";" close=";">
+		insert into LIB_BOOKS_INFO(
+		BI_CODE
+		,
+		BI_STATUS
+		,
+		BI_SEND_STATUS
+		,
+		BI_NAME
+		,
+		BI_ORI_NAME
+		,
+		BI_ISBN
+		,
+		BI_PUBLISH_DATE
+		,
+		BI_AUTH
+		,
+		BI_TRANSLATER
+		,
+		BI_VERSION
+		,
+		BI_TYPE_CODE
+		,
+		BI_TYPE
+		,
+		BI_PRESS
+		,
+		BI_PRICE
+		,
+		BI_PAGE_COUNT
+		,
+		BI_BOOK_SIZE
+		,
+		BI_BOOK_BRIEF
+		,
+		BI_BOOK_CATA
+		,
+		BI_REM_SM_IMG
+		,
+		BI_REM_LG_IMG
+		,
+		BI_LOC_SM_IMG
+		,
+		BI_LOC_LG_IMG
+		,
+		BI_ADDR
+		,
+		BI_EBOOK_URL
+		,
+		BI_AUTH_INFO
+		,
+		BI_IN_DATE
+		,
+		BI_IN_USER
+		,
+		BI_IN_BATCH_NO
+		,
+		ADD_DATE
+		,
+		ADD_TIME
+		,
+		ADD_USER
+		,
+		UPD_DATE
+		,
+		UPD_TIME
+		,
+		UPD_USER
+		)
+		values(
+		#{it.biCode}
+		,
+		'00'
+		,
+		'1'
+		,
+		#{it.biName}
+		,
+		#{it.biOriName}
+		,
+		#{it.biIsbn}
+		,
+		#{it.biPublishDate}
+		,
+		#{it.biAuth}
+		,
+		#{it.biTranslater}
+		,
+		#{it.biVersion}
+		,
+		#{it.biTypeCode}
+		,
+		#{it.biType}
+		,
+		#{it.biPress}
+		,
+		#{it.biPrice}
+		,
+		#{it.biPageCount}
+		,
+		#{it.biBookSize}
+		,
+		#{it.biBookBrief}
+		,
+		#{it.biBookCata}
+		,
+		#{it.biRemSmImg}
+		,
+		#{it.biRemLgImg}
+		,
+		#{it.biLocSmImg}
+		,
+		#{it.biLocLgImg}
+		,
+		#{it.biAddr}
+		,
+		#{it.biEbookUrl}
+		,
+		#{it.biAuthInfo}
+		,
+		#{it.biInDate}
+		,
+		#{it.biInUser}
+		,
+		#{it.biInBatchNo}
+		,
+		#{it.addDate}
+		,
+		#{it.addTime}
+		,
+		#{it.addUser}
+		,
+		#{it.updDate}
+		,
+		#{it.updTime}
+		,
+		#{it.updUser}
+		)
+		</foreach>
+	</insert>
+	
+	<update id="updateLibBooksInfo" parameterType="com.efs.bus.lib.bookinfo.mapper.LibBooksInfo">
+		UPDATE LIB_BOOKS_INFO
+		   SET 
+		   BI_SEND_STATUS = '1'
+			,
+		   BI_NAME = #{biName}
+			,
+		   BI_ORI_NAME = #{biOriName}
+			,
+		   BI_ISBN = #{biIsbn}
+			,
+		   BI_PUBLISH_DATE = #{biPublishDate}
+			,
+		   BI_AUTH = #{biAuth}
+			,
+		   BI_TRANSLATER = #{biTranslater}
+			,
+		   BI_VERSION = #{biVersion}
+			,
+		   BI_TYPE_CODE = #{biTypeCode}
+			,
+		   BI_TYPE = #{biType}
+			,
+		   BI_PRESS = #{biPress}
+			,
+		   BI_PRICE = #{biPrice}
+			,
+		   BI_PAGE_COUNT = #{biPageCount}
+			,
+		   BI_BOOK_SIZE = #{biBookSize}
+			,
+		   BI_BOOK_BRIEF = #{biBookBrief}
+			,
+		   BI_BOOK_CATA = #{biBookCata}
+			,
+		   BI_REM_SM_IMG = #{biRemSmImg}
+			,
+		   BI_REM_LG_IMG = #{biRemLgImg}
+			,
+		   BI_LOC_SM_IMG = #{biLocSmImg}
+			,
+		   BI_LOC_LG_IMG = #{biLocLgImg}
+			,
+		   BI_ADDR = #{biAddr}
+			,
+		   BI_EBOOK_URL = #{biEbookUrl}
+			,
+		   BI_AUTH_INFO = #{biAuthInfo}
+			,
+		   UPD_DATE = #{updDate}
+			,
+		   UPD_TIME = #{updTime}
+			,
+		   UPD_USER = #{updUser}
+		 WHERE BI_CODE = #{biCode}
+	</update>
+	
+	<delete id="deleteLibBooksInfo"  parameterType="string">
+		delete from LIB_BOOKS_INFO where BI_CODE = #{biCode} and BI_STATUS in ('00','03')
+	</delete>
+	
+	<select id="listLibBooksInfo" resultMap="LibBooksInfo" parameterType="com.efs.bus.lib.bookinfo.mapper.LibBooksInfo">
+		select T.BI_CODE
+		,T.BI_STATUS
+		,T.BI_SEND_STATUS
+		,T.BI_NAME
+		,T.BI_ORI_NAME
+		,T.BI_ISBN
+		,T.BI_PUBLISH_DATE
+		,T.BI_AUTH
+		,T.BI_TRANSLATER
+		,T.BI_VERSION
+		,T.BI_TYPE_CODE
+		,T.BI_TYPE
+		,T.BI_PRESS
+		,T.BI_PRICE
+		,T.BI_PAGE_COUNT
+		,T.BI_BOOK_SIZE
+		,T.BI_ADDR
+		,T.BI_EBOOK_URL
+		,T.BI_IN_DATE
+		,T.BI_IN_USER
+		,T.BI_IN_BATCH_NO
+		,T.ADD_DATE
+		,T.ADD_TIME
+		,T.ADD_USER
+		,T.UPD_DATE
+		,T.UPD_TIME
+		,T.UPD_USER
+
+		from LIB_BOOKS_INFO T where 1=1
+
+			<if test="biCode != null and biCode != ''">
+				and T.BI_CODE = #{biCode}
+			</if>
+			<if test="biStatus != null and biStatus != ''">
+				and T.BI_STATUS = #{biStatus}
+			</if>
+			<if test="biSendStatus != null and biSendStatus != ''">
+				and T.BI_SEND_STATUS = #{biSendStatus}
+			</if>
+			<if test="biName != null and biName != ''">
+				and T.BI_NAME LIKE '%${biName}%'
+			</if>
+			<if test="biOriName != null and biOriName != ''">
+				and T.BI_ORI_NAME = #{biOriName}
+			</if>
+			<if test="biIsbn != null and biIsbn != ''">
+				and T.BI_ISBN = #{biIsbn}
+			</if>
+			<if test="biPublishDate != null and biPublishDate != ''">
+				and T.BI_PUBLISH_DATE = #{biPublishDate}
+			</if>
+			<if test="biAuth != null and biAuth != ''">
+				and (T.BI_AUTH LIKE  '%${biAuth}%' ||  T.BI_TRANSLATER LIKE  '%${biAuth}%')
+			</if>
+			<if test="biTranslater != null and biTranslater != ''">
+				and T.BI_TRANSLATER = #{biTranslater}
+			</if>
+			<if test="biVersion != null and biVersion != ''">
+				and T.BI_VERSION = #{biVersion}
+			</if>
+			<if test="biTypeCode != null and biTypeCode != ''">
+				and T.BI_TYPE_CODE = #{biTypeCode}
+			</if>
+			<if test="biType != null and biType != ''">
+				and T.BI_TYPE LIKE '%${biType}%'
+			</if>
+			<if test="biPress != null and biPress != ''">
+				and T.BI_PRESS LIKE '%${biPress}%'
+			</if>
+			<if test="biPrice != null and biPrice != ''">
+				and T.BI_PRICE = #{biPrice}
+			</if>
+			<if test="biPageCount != null and biPageCount != ''">
+				and T.BI_PAGE_COUNT = #{biPageCount}
+			</if>
+			<if test="biBookSize != null and biBookSize != ''">
+				and T.BI_BOOK_SIZE = #{biBookSize}
+			</if>
+			<if test="biBookBrief != null and biBookBrief != ''">
+				and T.BI_BOOK_BRIEF = #{biBookBrief}
+			</if>
+			<if test="biBookCata != null and biBookCata != ''">
+				and T.BI_BOOK_CATA = #{biBookCata}
+			</if>
+			<if test="biRemSmImg != null and biRemSmImg != ''">
+				and T.BI_REM_SM_IMG = #{biRemSmImg}
+			</if>
+			<if test="biRemLgImg != null and biRemLgImg != ''">
+				and T.BI_REM_LG_IMG = #{biRemLgImg}
+			</if>
+			<if test="biLocSmImg != null and biLocSmImg != ''">
+				and T.BI_LOC_SM_IMG = #{biLocSmImg}
+			</if>
+			<if test="biLocLgImg != null and biLocLgImg != ''">
+				and T.BI_LOC_LG_IMG = #{biLocLgImg}
+			</if>
+			<if test="biAddr != null and biAddr != ''">
+				and T.BI_ADDR = #{biAddr}
+			</if>
+			<if test="biEbookUrl != null and biEbookUrl != ''">
+				and T.BI_EBOOK_URL = #{biEbookUrl}
+			</if>
+			<if test="biAuthInfo != null and biAuthInfo != ''">
+				and T.BI_AUTH_INFO = #{biAuthInfo}
+			</if>
+			<if test="biInDate != null and biInDate != ''">
+				and T.BI_IN_DATE = #{biInDate}
+			</if>
+			<if test="biInUser != null and biInUser != ''">
+				and T.BI_IN_USER = #{biInUser}
+			</if>
+
+			<if test="biInBatchNo != null and biInBatchNo != ''">
+				and T.BI_IN_BATCH_NO = #{biInBatchNo}
+			</if>
+
+		<if test="isUser != null and isUser !=''">
+			AND BI_STATUS NOT IN ('03','04')
+		</if>
+
+		ORDER BY T.BI_STATUS,T.BI_TYPE,T.BI_ISBN, T.BI_CODE DESC
+	</select>
+
+	<select id="findLibBooksInfoFromIsbn" resultMap="LibBooksInfo" parameterType="string">
+		SELECT TOP 1 T.* FROM LIB_BOOKS_INFO T WHERE T.BI_ISBN=#{isbn}
+	</select>
+
+	<select id="listLibPress" resultType="string">
+		SELECT * FROM LIB_PRESS_INFO T ORDER BY T.LP_NAME
+	</select>
+
+	<insert id="addToDelInfo" parameterType="com.efs.bus.lib.bookinfo.mapper.LibBooksInfo">
+		INSERT INTO LIB_BOOKS_DEL_INFO
+					  (BI_CODE,
+					   BI_STATUS,
+					   BI_SEND_STATUS,
+					   BI_NAME,
+					   BI_ORI_NAME,
+					   BI_ISBN,
+					   BI_PUBLISH_DATE,
+					   BI_AUTH,
+					   BI_TRANSLATER,
+					   BI_VERSION,
+					   BI_TYPE_CODE,
+					   BI_TYPE,
+					   BI_PRESS,
+					   BI_PRICE,
+					   BI_PAGE_COUNT,
+					   BI_BOOK_SIZE,
+					   BI_BOOK_BRIEF,
+					   BI_BOOK_CATA,
+					   BI_REM_SM_IMG,
+					   BI_REM_LG_IMG,
+					   BI_LOC_SM_IMG,
+					   BI_LOC_LG_IMG,
+					   BI_ADDR,
+					   BI_EBOOK_URL,
+					   BI_AUTH_INFO,
+					   BI_IN_DATE,
+					   BI_IN_USER,
+					   BI_IN_BATCH_NO,
+					   ADD_DATE,
+					   ADD_TIME,
+					   ADD_USER,
+					   UPD_DATE,
+					   UPD_TIME,
+					   UPD_USER,
+					   DEL_DATE,
+					   DEL_TIME,
+					   DEL_USER,
+					   DEL_REASON)
+
+					  SELECT BI_CODE,
+							 BI_STATUS,
+							 BI_SEND_STATUS,
+							 BI_NAME,
+							 BI_ORI_NAME,
+							 BI_ISBN,
+							 BI_PUBLISH_DATE,
+							 BI_AUTH,
+							 BI_TRANSLATER,
+							 BI_VERSION,
+							 BI_TYPE_CODE,
+							 BI_TYPE,
+							 BI_PRESS,
+							 BI_PRICE,
+							 BI_PAGE_COUNT,
+							 BI_BOOK_SIZE,
+							 BI_BOOK_BRIEF,
+							 BI_BOOK_CATA,
+							 BI_REM_SM_IMG,
+							 BI_REM_LG_IMG,
+							 BI_LOC_SM_IMG,
+							 BI_LOC_LG_IMG,
+							 BI_ADDR,
+							 BI_EBOOK_URL,
+							 BI_AUTH_INFO,
+							 BI_IN_DATE,
+							 BI_IN_USER,
+							 BI_IN_BATCH_NO,
+							 ADD_DATE,
+							 ADD_TIME,
+							 ADD_USER,
+							 UPD_DATE,
+							 UPD_TIME,
+							 UPD_USER,
+							 #{delDate},
+							 #{delTime},
+							 #{delUser},
+							 #{delReason}
+						FROM LIB_BOOKS_INFO T
+					   WHERE T.BI_CODE = #{biCode}
+	</insert>
+
+	<update id="updateBookStatus" parameterType="map">
+		UPDATE LIB_BOOKS_INFO SET BI_STATUS=#{status} WHERE BI_CODE=#{biCode}
+	</update>
+
+	<select id="checkBookInSend" parameterType="string" resultType="int">
+		SELECT COUNT(1) AS RES_CONT FROM LIB_IN_SEND_INFO T WHERE T.IS_BOOK_CODE=#{biCode}
+	</select>
+</mapper>

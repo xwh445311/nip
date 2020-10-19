@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.efs.bus.fee.yhzl.mapper.TcYhzlMapper">
+	<resultMap type="com.efs.bus.fee.yhzl.mapper.TcYhzl" id="TcYhzl">
+		<id property="yhbh" column="YHBH"/>
+		<result property="yhmc" column="YHMC"/>
+		<result property="sfzh" column="SFZH"/>
+		<result property="ch" column="CH"/>
+		<result property="qh" column="QH"/>
+		<result property="yhzz" column="YHZZ"/>
+		<result property="lxr" column="LXR"/>
+		<result property="dh" column="DH"/>
+		<result property="yddh" column="YDDH"/>
+		<result property="call" column="CALL"/>
+		<result property="cblx" column="CBLX"/>
+		<result property="xzrq" column="XZRQ"/>
+		<result property="xhrq" column="XHRQ"/>
+		<result property="fzbz" column="FZBZ"/>
+		<result property="yhzt" column="YHZT"/>
+		<result property="czy" column="CZY"/>
+		<result property="ye" column="YE"/>
+		<result property="zsfs" column="ZSFS"/>
+		<result property="dkbz" column="DKBZ"/>
+		<result property="yjfr1" column="YJFR1"/>
+		<result property="yjfr2" column="YJFR2"/>
+		<result property="qybj" column="QYBJ"/>
+		<result property="jyfw" column="JYFW"/>
+		<result property="yjfbz" column="YJFBZ"/>
+		<result property="billline" column="BILLLINE"/>
+		<result property="billpage" column="BILLPAGE"/>
+		<result property="oldbh" column="OLDBH"/>
+		<result property="yhzh" column="YHZH"/>
+		<result property="sfyc" column="SFYC"/>
+	</resultMap>
+	
+	<select id="getTcYhzl" resultMap="TcYhzl" parameterType="string">
+		select * from TC_YHZL where YHBH = #{yhbh}
+	</select>
+	
+	<insert id="addTcYhzl" parameterType="com.efs.bus.fee.yhzl.mapper.TcYhzl">
+		insert into TC_YHZL(
+		
+			YHBH
+			,
+		
+			YHMC
+			,
+		
+			SFZH
+			,
+		
+			CH
+			,
+		
+			QH
+			,
+		
+			YHZZ
+			,
+		
+			LXR
+			,
+		
+			DH
+			,
+		
+			YDDH
+			,
+		
+			CALL
+			,
+		
+			CBLX
+			,
+		
+			XZRQ
+			,
+		
+			XHRQ
+			,
+		
+			FZBZ
+			,
+		
+			YHZT
+			,
+		
+			CZY
+			,
+		
+			YE
+			,
+		
+			ZSFS
+			,
+		
+			DKBZ
+			,
+		
+			YJFR1
+			,
+		
+			YJFR2
+			,
+		
+			QYBJ
+			,
+		
+			JYFW
+			,
+		
+			YJFBZ
+			,
+		
+			BILLLINE
+			,
+		
+			BILLPAGE
+			,
+		
+			OLDBH
+			,
+		
+			YHZH
+			,
+		
+			SFYC
+			)
+			values(
+					#{yhbh}
+					,
+					#{yhmc}
+					,
+					#{sfzh}
+					,
+					#{ch}
+					,
+					#{qh}
+					,
+					#{yhzz}
+					,
+					#{lxr}
+					,
+					#{dh}
+					,
+					#{yddh}
+					,
+					#{call}
+					,
+					#{cblx}
+					,
+					#{xzrq}
+					,
+					#{xhrq}
+					,
+					#{fzbz}
+					,
+					#{yhzt}
+					,
+					#{czy}
+					,
+					#{ye}
+					,
+					#{zsfs}
+					,
+					#{dkbz}
+					,
+					#{yjfr1}
+					,
+					#{yjfr2}
+					,
+					#{qybj}
+					,
+					#{jyfw}
+					,
+					#{yjfbz}
+					,
+					#{billline}
+					,
+					#{billpage}
+					,
+					#{oldbh}
+					,
+					#{yhzh}
+					,
+					#{sfyc}
+		)
+	</insert>
+	
+	<update id="updateTcYhzl" parameterType="com.efs.bus.fee.yhzl.mapper.TcYhzl">
+		UPDATE TC_YHZL
+		   SET 
+			   YHMC = #{yhmc}
+				,
+			   SFZH = #{sfzh}
+				,
+			   CH = #{ch}
+				,
+			   QH = #{qh}
+				,
+			   YHZZ = #{yhzz}
+				,
+			   LXR = #{lxr}
+				,
+			   DH = #{dh}
+				,
+			   YDDH = #{yddh}
+				,
+			   CALL = #{call}
+				,
+			   CBLX = #{cblx}
+				,
+			   XZRQ = #{xzrq}
+				,
+			   XHRQ = #{xhrq}
+				,
+			   FZBZ = #{fzbz}
+				,
+			   YHZT = #{yhzt}
+				,
+			   CZY = #{czy}
+				,
+			   YE = #{ye}
+				,
+			   ZSFS = #{zsfs}
+				,
+			   DKBZ = #{dkbz}
+				,
+			   YJFR1 = #{yjfr1}
+				,
+			   YJFR2 = #{yjfr2}
+				,
+			   QYBJ = #{qybj}
+				,
+			   JYFW = #{jyfw}
+				,
+			   YJFBZ = #{yjfbz}
+				,
+			   BILLLINE = #{billline}
+				,
+			   BILLPAGE = #{billpage}
+				,
+			   OLDBH = #{oldbh}
+				,
+			   YHZH = #{yhzh}
+				,
+			   SFYC = #{sfyc}
+		 WHERE YHBH = #{yhbh}
+	</update>
+	
+	<delete id="deleteTcYhzl"  parameterType="string">
+		delete from TC_YHZL where YHBH = #{yhbh}
+	</delete>
+	
+	<select id="listTcYhzl" resultMap="TcYhzl" parameterType="com.efs.bus.fee.yhzl.mapper.TcYhzl">
+		select T.* from TC_YHZL T where 1=1
+		
+			<if test="yhmc != null and yhmc != ''">
+				and T.YHMC = #{yhmc}
+			</if>
+			<if test="sfzh != null and sfzh != ''">
+				and T.SFZH = #{sfzh}
+			</if>
+			<if test="ch != null and ch != ''">
+				and T.CH = #{ch}
+			</if>
+			<if test="qh != null and qh != ''">
+				and T.QH = #{qh}
+			</if>
+			<if test="yhzz != null and yhzz != ''">
+				and T.YHZZ = #{yhzz}
+			</if>
+			<if test="lxr != null and lxr != ''">
+				and T.LXR = #{lxr}
+			</if>
+			<if test="dh != null and dh != ''">
+				and T.DH = #{dh}
+			</if>
+			<if test="yddh != null and yddh != ''">
+				and T.YDDH = #{yddh}
+			</if>
+			<if test="call != null and call != ''">
+				and T.CALL = #{call}
+			</if>
+			<if test="cblx != null and cblx != ''">
+				and T.CBLX = #{cblx}
+			</if>
+			<if test="xzrq != null and xzrq != ''">
+				and T.XZRQ = #{xzrq}
+			</if>
+			<if test="xhrq != null and xhrq != ''">
+				and T.XHRQ = #{xhrq}
+			</if>
+			<if test="fzbz != null and fzbz != ''">
+				and T.FZBZ = #{fzbz}
+			</if>
+			<if test="yhzt != null and yhzt != ''">
+				and T.YHZT = #{yhzt}
+			</if>
+			<if test="czy != null and czy != ''">
+				and T.CZY = #{czy}
+			</if>
+			<if test="ye != null and ye != ''">
+				and T.YE = #{ye}
+			</if>
+			<if test="zsfs != null and zsfs != ''">
+				and T.ZSFS = #{zsfs}
+			</if>
+			<if test="dkbz != null and dkbz != ''">
+				and T.DKBZ = #{dkbz}
+			</if>
+			<if test="yjfr1 != null and yjfr1 != ''">
+				and T.YJFR1 = #{yjfr1}
+			</if>
+			<if test="yjfr2 != null and yjfr2 != ''">
+				and T.YJFR2 = #{yjfr2}
+			</if>
+			<if test="qybj != null and qybj != ''">
+				and T.QYBJ = #{qybj}
+			</if>
+			<if test="jyfw != null and jyfw != ''">
+				and T.JYFW = #{jyfw}
+			</if>
+			<if test="yjfbz != null and yjfbz != ''">
+				and T.YJFBZ = #{yjfbz}
+			</if>
+			<if test="billline != null and billline != ''">
+				and T.BILLLINE = #{billline}
+			</if>
+			<if test="billpage != null and billpage != ''">
+				and T.BILLPAGE = #{billpage}
+			</if>
+			<if test="oldbh != null and oldbh != ''">
+				and T.OLDBH = #{oldbh}
+			</if>
+			<if test="yhzh != null and yhzh != ''">
+				and T.YHZH = #{yhzh}
+			</if>
+			<if test="sfyc != null and sfyc != ''">
+				and T.SFYC = #{sfyc}
+			</if>
+		
+		ORDER BY YHBH
+	</select>
+</mapper>
